@@ -76,13 +76,21 @@
 			searchResultsContainer.innerHTML = ''; // Clear previous search results
 			
 			results.forEach(movie => {
+				// Construct the URL for the movie poster image
+				var posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w342${movie.poster_path}` : 'placeholder.jpg'; // 'placeholder.jpg' can be a fallback image
+				
 				var movieElement = document.createElement('div');
 				movieElement.classList.add('movie');
 				movieElement.innerHTML = `
-					<h3>${movie.title}</h3>
-					<p>Release Date: ${movie.release_date}</p>
-					<p>Rating: ${movie.vote_average}</p>
-					<!-- Add more movie details as needed -->
+					<div class="movie-details">
+						<img src="${posterUrl}" alt="${movie.title} Poster" class="movie-poster">
+						<div class="movie-info">
+							<h3>${movie.title}</h3>
+							<p>Release Date: ${movie.release_date}</p>
+							<p>Rating: ${movie.vote_average}</p>
+							<!-- Add more movie details as needed -->
+						</div>
+					</div>
 				`;
 				searchResultsContainer.appendChild(movieElement);
 			});
