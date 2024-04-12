@@ -1,0 +1,58 @@
+/* Add your custom CSS styles here */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 20px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+main {
+  padding: 20px;
+}
+
+#search-filter {
+  margin-bottom: 20px;
+}
+
+#search-filter input,
+#search-filter select,
+#search-filter button {
+  margin-right: 10px;
+}
+
+.movie {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}

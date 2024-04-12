@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MovieCompare - Home</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>MovieCompare</h1>
+    <nav>
+      <ul>
+        <li><a href="#">Comparison</a></li>
+        <li><a href="#">Recommendations</a></li>
+        <li><a href="#">Movie Details</a></li>
+        <li><a href="#">Profile</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="search-filter">
+      <input type="text" id="search" placeholder="Search for a movie...">
+      <select id="genre">
+        <option value="">All Genres</option>
+        <option value="action">Action</option>
+        <option value="comedy">Comedy</option>
+        <option value="drama">Drama</option>
+        <!-- Add more genres as needed -->
+      </select>
+      <button onclick="searchMovies()">Search</button>
+    </section>
+
+    <section id="about">
+      <h2>About MovieCompare</h2>
+      <p>Welcome to MovieCompare, your go-to destination for making informed decisions about which movies to watch! We offer a range of amazing features to enhance your movie-watching experience:</p>
+      <ul>
+        <li>Compare ratings, reviews, and other relevant information of blockbuster movies side by side.</li>
+        <li>Receive personalized recommendations based on your preferences and viewing history.</li>
+        <li>Access detailed information about each movie, including plot summaries, cast and crew, trailers, and more.</li>
+        <li>Manage your profile and preferences to tailor your movie recommendations and experience.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 MovieCompare. All rights reserved.</p>
+  </footer>
+
+  <script>
+		// Sample JavaScript code for handling search functionality and displaying recommendations
+		function searchMovies() {
+			// Get search query and genre filter
+			var searchQuery = document.getElementById('search').value;
+			var genreFilter = document.getElementById('genre').value;
+
+			// Perform search and filter movies (not implemented in this example)
+			// Replace this with actual code to fetch and display search results
+
+			// For demonstration purposes, let's display a sample recommendation
+			displayRecommendation({
+				title: 'Sample Movie',
+				year: 'YYYY',
+				rating: 'X.X'
+			});
+		}
+
+		function displayRecommendation(movie) {
+			var recommendationSection = document.getElementById('recommendations');
+			var movieElement = document.createElement('div');
+			movieElement.classList.add('movie');
+			movieElement.innerHTML = `
+				<h3>${movie.title}</h3>
+				<p>Release Year: <span class="year">${movie.year}</span></p>
+				<p>Rating: <span class="rating">${movie.rating}</span></p>
+				<!-- Add more movie details as needed -->
+			`;
+			recommendationSection.appendChild(movieElement);
+		}
+	</script>
+</body>
+</html>
