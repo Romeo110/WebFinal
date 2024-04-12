@@ -22,12 +22,11 @@
   <main>
     <section id="search-filter">
       <input type="text" id="search" placeholder="Search for a movie...">
-      <select id="genre">
-        <option value="">All Genres</option>
-        <option value="action">Action</option>
-        <option value="comedy">Comedy</option>
-        <option value="drama">Drama</option>
-        <!-- Add more genres as needed -->
+      <select id="search-type">
+        <option value="title">Movie Title</option>
+        <option value="genre">Genre</option>
+        <option value="year">Release Year</option>
+        <!-- Add more search options as needed -->
       </select>
       <button onclick="searchMovies()">Search</button>
     </section>
@@ -54,17 +53,35 @@
 
   <script>
 		function searchMovies() {
+			var searchType = document.getElementById('search-type').value;
 			var searchQuery = document.getElementById('search').value;
 			
-			// Replace 'YOUR_API_KEY' with your actual TMDB API key
-			var apiKey = 'd5697eb16a89b204a004af1f8fea130c';
+			var apiKey = 'd5697eb16a89b204a004af1f8fea130c'; 
 			
-			// Make an HTTP request to the TMDB API
-			fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchQuery}`)
+			var apiUrl = '';
+			switch (searchType) {
+				case 'title':
+					apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchQuery}`;
+					break;
+				case 'genre':
+					apiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${searchQuery}`;
+					break;
+				case 'year':
+					apiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&primary_release_year=${searchQuery}`;
+					break;
+				// Add more cases for additional search options
+				default:
+					apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchQuery}`;
+			}
+			
+			fetch(apiUrl)
 				.then(response => response.json())
 				.then(data => {
-					// Process the response data and display search results
-					displaySearchResults(data.results);
+					if (data.results.length === 0) {
+						displayNoResultsMessage();
+					} else {
+						displaySearchResults(data.results);
+					}
 				})
 				.catch(error => {
 					console.error('Error fetching data:', error);
@@ -75,25 +92,71 @@
 			var searchResultsContainer = document.getElementById('search-results');
 			searchResultsContainer.innerHTML = ''; // Clear previous search results
 			
-			results.forEach(movie => {
-				// Construct the URL for the movie poster image
-				var posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w342${movie.poster_path}` : 'placeholder.jpg'; // 'placeholder.jpg' can be a fallback image
-				
-				var movieElement = document.createElement('div');
-				movieElement.classList.add('movie');
-				movieElement.innerHTML = `
-					<div class="movie-details">
-						<img src="${posterUrl}" alt="${movie.title} Poster" class="movie-poster">
-						<div class="movie-info">
-							<h3>${movie.title}</h3>
-							<p>Release Date: ${movie.release_date}</p>
-							<p>Rating: ${movie.vote_average}</p>
-							<!-- Add more movie details as needed -->
+			results.forEach((movie, index) => {
+				if (index < 20) { // Show only the first 20 movies
+					var posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w342${movie.poster_path}` : 'placeholder.jpg';
+					
+					var movieElement = document.createElement('div');
+					movieElement.classList.add('movie');
+					movieElement.innerHTML = `
+						<div class="movie-details">
+							<img src="${posterUrl}" alt="${movie.title} Poster" class="movie-poster">
+							<div class="movie-info">
+								<h3>${movie.title}</h3>
+								<p>Release Date: ${movie.release_date}</p>
+								<p>Rating: ${movie.vote_average}</p>
+								<!-- Add more movie details as needed -->
+							</div>
 						</div>
-					</div>
-				`;
-				searchResultsContainer.appendChild(movieElement);
+					`;
+					searchResultsContainer.appendChild(movieElement);
+				}
 			});
+			
+			// Show "See more" button if there are more than 20 movies
+			if (results.length > 20) {
+				var seeMoreButton = document.createElement('button');
+				seeMoreButton.textContent = 'See more';
+				seeMoreButton.classList.add('see-more-button');
+				seeMoreButton.addEventListener('click', function() {
+					displayAdditionalResults(results);
+				});
+				searchResultsContainer.appendChild(seeMoreButton);
+			}
+		}
+
+		function displayAdditionalResults(results) {
+			var searchResultsContainer = document.getElementById('search-results');
+			
+			// Remove the "See more" button
+			searchResultsContainer.removeChild(searchResultsContainer.lastChild);
+			
+			// Display additional results
+			results.forEach((movie, index) => {
+				if (index >= 20) { // Start from the 21st movie
+					var posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w342${movie.poster_path}` : 'placeholder.jpg';
+					
+					var movieElement = document.createElement('div');
+					movieElement.classList.add('movie');
+					movieElement.innerHTML = `
+						<div class="movie-details">
+							<img src="${posterUrl}" alt="${movie.title} Poster" class="movie-poster">
+							<div class="movie-info">
+								<h3>${movie.title}</h3>
+								<p>Release Date: ${movie.release_date}</p>
+								<p>Rating: ${movie.vote_average}</p>
+								<!-- Add more movie details as needed -->
+							</div>
+						</div>
+					`;
+					searchResultsContainer.appendChild(movieElement);
+				}
+			});
+		}
+
+		function displayNoResultsMessage() {
+			var searchResultsContainer = document.getElementById('search-results');
+			searchResultsContainer.innerHTML = '<p>No movies were found.</p>';
 		}
 	</script>
 </body>
