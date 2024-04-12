@@ -49,34 +49,39 @@
   </footer>
 
   <script>
-		// Sample JavaScript code for handling search functionality and displaying recommendations
 		function searchMovies() {
-			// Get search query and genre filter
 			var searchQuery = document.getElementById('search').value;
-			var genreFilter = document.getElementById('genre').value;
-
-			// Perform search and filter movies (not implemented in this example)
-			// Replace this with actual code to fetch and display search results
-
-			// For demonstration purposes, let's display a sample recommendation
-			displayRecommendation({
-				title: 'Sample Movie',
-				year: 'YYYY',
-				rating: 'X.X'
-			});
+			
+			// Replace 'YOUR_API_KEY' with your actual TMDB API key
+			var apiKey = 'd5697eb16a89b204a004af1f8fea130c';
+			
+			// Make an HTTP request to the TMDB API
+			fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchQuery}`)
+				.then(response => response.json())
+				.then(data => {
+					// Process the response data and display search results
+					displaySearchResults(data.results);
+				})
+				.catch(error => {
+					console.error('Error fetching data:', error);
+				});
 		}
 
-		function displayRecommendation(movie) {
-			var recommendationSection = document.getElementById('recommendations');
-			var movieElement = document.createElement('div');
-			movieElement.classList.add('movie');
-			movieElement.innerHTML = `
-				<h3>${movie.title}</h3>
-				<p>Release Year: <span class="year">${movie.year}</span></p>
-				<p>Rating: <span class="rating">${movie.rating}</span></p>
-				<!-- Add more movie details as needed -->
-			`;
-			recommendationSection.appendChild(movieElement);
+		function displaySearchResults(results) {
+			var searchResultsContainer = document.getElementById('search-results');
+			searchResultsContainer.innerHTML = ''; // Clear previous search results
+			
+			results.forEach(movie => {
+				var movieElement = document.createElement('div');
+				movieElement.classList.add('movie');
+				movieElement.innerHTML = `
+					<h3>${movie.title}</h3>
+					<p>Release Date: ${movie.release_date}</p>
+					<p>Rating: ${movie.vote_average}</p>
+					<!-- Add more movie details as needed -->
+				`;
+				searchResultsContainer.appendChild(movieElement);
+			});
 		}
 	</script>
 </body>
