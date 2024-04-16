@@ -64,6 +64,11 @@ main {
   flex: 1;
 }
 
+/* Recommended movies */
+#recommendations {
+  margin-top: 20px;
+}
+
 footer {
   background-color: #333;
   color: #fff;

@@ -84,13 +84,21 @@
       // Merge and display recommended movies
       $recommendedMovies = array_merge($actorMovies, $directorMovies);
       if (!empty($recommendedMovies)) {
-        echo '<ul>';
         foreach ($recommendedMovies as $movie) {
-          echo '<li>' . $movie['title'] . '</li>';
+          echo '<div class="movie">';
+          echo '<div class="movie-details">';
+          echo '<img src="https://image.tmdb.org/t/p/w342/' . $movie['poster_path'] . '" alt="' . $movie['title'] . ' Poster" class="movie-poster">';
+          echo '<div class="movie-info">';
+          echo '<h3>' . $movie['title'] . '</h3>';
+          echo '<p>Release Date: ' . $movie['release_date'] . '</p>';
+          echo '<p>Rating: ' . $movie['vote_average'] . '</p>';
+          echo '<p>Description: ' . $movie['overview'] . '</p>'; // Include movie description
+          echo '</div>';
+          echo '</div>';
+          echo '</div>';
         }
-        echo '</ul>';
-        
-        // Pagination controls
+
+				// Pagination controls
         $totalPages = max(isset($actorMoviesData['total_pages']) ? $actorMoviesData['total_pages'] : 1, isset($directorMoviesData['total_pages']) ? $directorMoviesData['total_pages'] : 1);
         echo '<div class="pagination">';
         if ($currentPage > 1) {
