@@ -11,9 +11,10 @@
     <h1>FilmFinder</h1>
     <nav>
       <ul>
+        <li><a href="index.html">Home</a></li>
         <li><a href="#">Comparison</a></li>
-        <li><a href="#">Recommendations</a></li>
-        <li><a href="#">Movie Details</a></li>
+        <li><a href="recommend.php">Recommendations</a></li>
+        <li><a href="movies.html">Movie Details</a></li>
         <li><a href="#">Profile</a></li>
       </ul>
     </nav>
