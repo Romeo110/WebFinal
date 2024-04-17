@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FilmFinder - Home</title>
+  <title>FilmFinder - Movies</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -35,6 +35,10 @@
     <section id="search-results">
       <!-- This is where the search results will be displayed -->
     </section>
+
+    <section id="random-movies">
+      <!-- This is where the random movies will be displayed -->
+    </section>
   </main>
 
   <footer>
@@ -59,6 +63,76 @@
         .catch(error => {
           console.error('Error fetching genre data:', error);
         });
+    }
+
+    // Fetch random movies
+    function fetchRandomMovies() {
+      var apiKey = 'd5697eb16a89b204a004af1f8fea130c';
+      var randomMoviesUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&sort_by=popularity.desc`;
+
+      fetch(randomMoviesUrl)
+        .then(response => response.json())
+        .then(data => {
+          if (data.results.length > 0) {
+            displayRandomMovies(data.results);
+          } else {
+            console.error('No random movies found.');
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching random movies:', error);
+        });
+    }
+
+    // Display random movies
+    function displayRandomMovies(movies) {
+      var randomMoviesContainer = document.getElementById('random-movies');
+      randomMoviesContainer.innerHTML = ''; // Clear previous random movies
+
+      movies.forEach((movie, index) => {
+        if (index < 10) { // Show only the first 10 random movies
+          var posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w342${movie.poster_path}` : 'placeholder.jpg';
+
+          var movieElement = document.createElement('div');
+          movieElement.classList.add('movie');
+
+          // Wrap movie title and image inside an anchor tag
+          var movieLink = document.createElement('a');
+          movieLink.href = `movie_details.html?movieId=${movie.id}`; // Pass movie ID as a query parameter
+          movieLink.innerHTML = `
+            <div class="movie-details">
+              <a href="movie_details.html?movieId=${movie.id}">
+                <img src="${posterUrl}" alt="${movie.title} Poster" class="movie-poster">
+              </a>
+            </div>
+          `;
+          movieElement.appendChild(movieLink);
+
+          // Create movie info elements
+          var movieInfo = document.createElement('div');
+          movieInfo.classList.add('movie-info');
+          var movieTitle = document.createElement('h3');
+          var titleLink = document.createElement('a'); // New anchor tag for movie title
+          titleLink.href = `movie_details.html?movieId=${movie.id}`; // Pass movie ID as a query parameter
+          titleLink.textContent = movie.title; // Set movie title text
+          movieTitle.appendChild(titleLink); // Append title link to movie title element
+          var releaseDate = document.createElement('p');
+          releaseDate.textContent = `Release Date: ${movie.release_date}`;
+          var rating = document.createElement('p');
+          rating.textContent = `Rating: ${movie.vote_average}`;
+
+          // Append movie info to movie details
+          movieInfo.appendChild(movieTitle);
+          movieInfo.appendChild(releaseDate);
+          movieInfo.appendChild(rating);
+
+          // Append movie info to movie element
+          movieElement.appendChild(movieInfo);
+
+          // Append movie element to random movies container
+          randomMoviesContainer.appendChild(movieElement);
+        }
+      });
     }
 
     // Search movies by genre
@@ -217,8 +291,12 @@
       var searchResultsContainer = document.getElementById('search-results');
       searchResultsContainer.innerHTML = '<p>No movies were found.</p>';
     }
+
     // Call fetchGenreIds function when the page loads
     fetchGenreIds();
+
+    // Fetch random movies when the page loads
+    fetchRandomMovies();
   </script>
 </body>
 </html>
