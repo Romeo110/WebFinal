@@ -1,5 +1,5 @@
 body {
-    /* background: linear-gradient(to bottom right, #333333, #1a1a1a); */
+    background: linear-gradient(to bottom right, #ffd8e6, #b3e0ff);
     font-family: Arial, sans-serif;
 }
 
@@ -186,7 +186,8 @@ body {
 }
 
 .movie p {
-    margin: 5px 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
     font-size: 14px;
     color: #666;
 }
@@ -262,4 +263,19 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     grid-gap: 30px;
     /* Increased grid gap */
+}
+
+
+/* hyperlink styling */
+
+.movie-info a {
+    color: inherit;
+    /* Inherit the font color */
+    text-decoration: none;
+    /* Remove underline */
+}
+
+.movie-info a:hover {
+    color: #ff5722;
+    /* Change the hover color to a more modern look */
 }
