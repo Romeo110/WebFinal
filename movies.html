@@ -99,6 +99,9 @@
 </body>
 
 <script>
+		// Define a global variable to store the current page number
+    var currentPage = 1;
+		
     // Fetch genre IDs
     function fetchGenreIds() {
         var apiKey = 'd5697eb16a89b204a004af1f8fea130c';
@@ -189,7 +192,7 @@
     }
 
     // Search movies by genre
-    function searchMoviesByGenre(genreName) {
+    function searchMoviesByGenre(genreName, currentPage) {
         var genreMap = JSON.parse(localStorage.getItem('genreMap'));
         var genreId = genreMap[genreName.toLowerCase()];
         if (!genreId) {
@@ -198,7 +201,7 @@
         }
 
         var apiKey = 'd5697eb16a89b204a004af1f8fea130c';
-        var apiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genreId}`;
+        var apiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genreId}&page=${currentPage}`;
 
         fetch(apiUrl)
             .then(response => response.json())
@@ -206,7 +209,7 @@
                 if (data.results.length === 0) {
                     displayNoResultsMessage();
                 } else {
-                    displaySearchResults(data.results);
+                    displaySearchResults(data.results, data.total_pages);
                 }
             })
             .catch(error => {
@@ -225,9 +228,6 @@
         var randomMoviesContainer = document.getElementById('random-movies');
         randomMoviesContainer.style.display = 'block';
     }
-
-    // Define a global variable to store the current page number
-    var currentPage = 1;
 
     function searchMovies() {
         var searchType = document.getElementById('search-type').value;
