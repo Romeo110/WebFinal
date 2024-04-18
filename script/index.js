@@ -138,3 +138,30 @@ document.addEventListener("DOMContentLoaded", function() {
     // Observe the homepage section
     observer.observe(homepageSection);
 });
+
+// Get the icon and icon container elements
+const iconContainer = document.getElementById('icon-container');
+const icon = iconContainer.querySelector('i');
+
+// Add a scroll event listener to the window
+window.addEventListener('scroll', () => {
+    // Get the current scroll position
+    const scrollPosition = window.scrollY;
+
+    // Define a factor to slow down the rotation
+    const rotationFactor = 0.5; // Adjust this value to change the rotation speed
+
+    // Rotate the icon based on the scroll position
+    icon.style.transform = `rotate(${scrollPosition * rotationFactor}deg)`;
+
+    // Fade out the icon and change to a new icon if scrolled down enough
+    if (scrollPosition > 200) { // Adjust the threshold as needed
+        iconContainer.style.opacity = '0';
+        setTimeout(() => {
+            icon.className = 'bx bx-wink-smile';
+            iconContainer.style.opacity = '1';
+        }, 500); // Adjust the delay as needed
+    } else {
+        iconContainer.style.opacity = '1';
+    }
+});
