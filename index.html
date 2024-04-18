@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -38,4 +38,159 @@
   </footer>
 
 </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://kit.fontawesome.com/46b7ceee20.js" crossorigin="anonymous"></script>
+    <title>Home</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <h1>BINGE </br> WATCH with FilmFinder</h1>
+
+    <section class="top"></section>
+
+    <section>
+        <div class="img"></div>
+        <div class="img"></div>
+        <div class="img"></div>
+        <div class="img"></div>
+        <div class="img"></div>
+        <div class="img"></div>
+        <div class="img"></div>
+        <div class="img"></div>
+
+    </section>
+
+    <section class="bottom"></section>
+
+    <!-- New Homepage Section -->
+    <section class="homepage" id="homepage">
+        <div class="container">
+            <div class="sidebar">
+                <ul>
+                    <li>
+                        <a href="index.html" class="nav-link">
+                            <span class="item-icon">
+                                <i class='bx bxs-home'></i>
+                            </span>
+                            <span class="item-txt">
+                                Home
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="movies.html" class="nav-link">
+                            <span class="item-icon">
+                                <i class='bx bx-movie'></i>
+                            </span>
+                            <span class="item-txt">
+                                Movies
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="recommend.php" class="nav-link">
+                            <span class="item-icon">
+                                <i class='bx bxs-user'></i>
+                            </span>
+                            <span class="item-txt">
+                                MadeForYou
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link">
+                            <span class="item-icon">
+                                <i class='bx bxs-user'></i>
+                            </span>
+                            <span class="item-txt">
+                                Compare
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link">
+                            <span class="item-icon">
+                                <i class='bx bxs-user'></i>
+                            </span>
+                            <span class="item-txt">
+                                Profile
+                            </span>
+                        </a>
+                    </li>
+                    <!-- Additional menu items if needed -->
+                </ul>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="carousel">
+                <input class="carousel__input" type="radio" name="carousel" id="slide1">
+                <input class="carousel__input" type="radio" name="carousel" id="slide2">
+                <input class="carousel__input" type="radio" name="carousel" id="slide3">
+
+                <div class="carousel__slides">
+                    <div class="carousel__slide">
+                        <img src="img/img-1.jpg" alt="Image 1">
+                    </div>
+                    <div class="carousel__slide">
+                        <img src="img/img-2.jpg" alt="Image 2">
+                    </div>
+                    <div class="carousel__slide">
+                        <img src="img/img-3.jpg" alt="Image 3">
+                    </div>
+                </div>
+
+                <div class="carousel__indicators">
+                    <label class="carousel__indicator" for="slide1"></label>
+                    <label class="carousel__indicator" for="slide2"></label>
+                    <label class="carousel__indicator" for="slide3"></label>
+                </div>
+            </div>
+
+            <div class="info-container">
+                <div class="info-text">
+                    <h2>What is FilmFinder?</h2>
+                    <p>Welcome to FilmFinder, your premier destination for informed movie choices! Our platform offers a comprehensive suite of features designed to enhance your movie-watching experience. Easily compare ratings, reviews, and other relevant
+                        information of blockbuster movies side by side. Receive personalized recommendations tailored to your preferences and viewing history. Dive deep into detailed movie information including plot summaries, cast and crew details, trailers,
+                        and more. Customize your profile and preferences to ensure your movie recommendations align perfectly with your tastes. With FilmFinder, make every movie night a memorable one.</p>
+                </div>
+            </div>
+
+            <div class="info-container">
+                <div class="info-text">
+                    <h2>What is the official domain of FilmFinder?</h2>
+                    <p>FilmFinder.to is currently our one and only official domain. Please be aware of fake sites that might look similar to avoid data loss and identity theft.</p>
+                </div>
+            </div>
+
+            <div class="info-container">
+                <div class="info-text">
+                    <h2>Is FilmFinder.to safe? Is it legal to use FilmFinder.to?</h2>
+                    <p>One of the most basic lessons everyone learns before joining the risky Internet is that we should leave no private information if not necessary. You might think watching movies online for free is necessary, true, but at FilmFinder.to,
+                        you don’t need to trade your information for that. As no signup or registration needed, we don’t store your name, your email address, and your bank account details on our servers. Therefore, you can leave no trace behind by using
+                        a VPN (if preferred). And with no ads and popups, the site is also completely free from viruses and malware.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional information containers can be added here -->
+
+    </section>
+
+
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1/bundled/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEGkTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" integrity="sha512-Ic9xkERjyZ1xgJ5svx3y0u3xrvfT/uPkV99LBwe68xjy/mGtO+4eURHZBW2xW4SZbFrF1Tf090XqB+EVgXnVjw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="script/index.js"></script>
+</body>
+
 </html>
