@@ -1,302 +1,351 @@
+<!-- version from before apr 18 depracated to past_code_files -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FilmFinder - Movies</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <header>
-    <h1>FilmFinder</h1>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="#">Comparison</a></li>
-        <li><a href="recommend.php">Recommendations</a></li>
-        <li><a href="movies.html">Movies</a></li>
-        <li><a href="#">Profile</a></li>
-      </ul>
-    </nav>
-  </header>
 
-  <main>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://kit.fontawesome.com/46b7ceee20.js" crossorigin="anonymous"></script>
+    <title>Home</title>
+    <title>FilmFinder - Movies</title>
+    <link rel="stylesheet" href="css/other_style.css">
+</head>
+
+<body>
+    <section class="homepage" id="homepage">
+        <div class="container">
+            <div class="sidebar">
+                <ul>
+                    <li>
+                        <a href="index.html" class="nav-link">
+                            <span class="item-icon">
+                            <i class='bx bxs-home'></i>
+                        </span>
+                            <span class="item-txt">
+                            Home
+                        </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="movies.html" class="nav-link">
+                            <span class="item-icon">
+                            <i class='bx bx-movie'></i>
+                        </span>
+                            <span class="item-txt">
+                            Movies
+                        </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="recommend.php" class="nav-link">
+                            <span class="item-icon">
+                            <i class='bx bxs-dish'></i>
+                        </span>
+                            <span class="item-txt">
+                            MadeForYou
+                        </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link">
+                            <span class="item-icon">
+                            <i class='bx bxs-objects-vertical-bottom'></i>
+                        </span>
+                            <span class="item-txt">
+                            Compare
+                        </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link">
+                            <span class="item-icon">
+                            <i class='bx bxs-user'></i>
+                        </span>
+                            <span class="item-txt">
+                            Profile
+                        </span>
+                        </a>
+                    </li>
+                    <!-- Additional menu items if needed -->
+                </ul>
+            </div>
+        </div>
+    </section>
+
     <section id="search-filter">
-      <input type="text" id="search" placeholder="Search for a movie...">
-      <select id="search-type">
-        <option value="title">Movie Title</option>
-        <option value="genre">Genre</option>
-        <option value="year">Release Year</option>
-        <!-- Add more search options as needed -->
-      </select>
-      <button onclick="searchMovies()">Search</button>
+        <input type="text" id="search" placeholder="Search for a movie...">
+        <select id="search-type">
+    <option value="title">Movie Title</option>
+    <option value="genre">Genre</option>
+    <option value="year">Release Year</option>
+    <!-- Add more search options as needed -->
+  </select>
+        <button onclick="searchMovies()">Search</button>
     </section>
 
     <section id="search-results">
-      <!-- This is where the search results will be displayed -->
+        <!-- This is where the search results will be displayed -->
     </section>
 
     <section id="random-movies">
-      <!-- This is where the random movies will be displayed -->
+        <!-- This is where the random movies will be displayed -->
     </section>
 
-		<section id="pagination">
-			<!-- This is where the "See more" button will be displayed -->
-		</section>
-  </main>
+    <section id="pagination">
+        <!-- This is where the "See more" button will be displayed -->
+    </section>
 
-  <footer>
-    <p>&copy; 2024 FilmFinder. All rights reserved.</p>
-  </footer>
+</body>
 
-  <script>
+<script>
     // Fetch genre IDs
     function fetchGenreIds() {
-      var apiKey = 'd5697eb16a89b204a004af1f8fea130c';
+        var apiKey = 'd5697eb16a89b204a004af1f8fea130c';
 
-      fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US`)
-        .then(response => response.json())
-        .then(data => {
-          var genres = data.genres;
-          var genreMap = {};
-          genres.forEach(genre => {
-            genreMap[genre.name.toLowerCase()] = genre.id;
-          });
-          localStorage.setItem('genreMap', JSON.stringify(genreMap)); // Store genre map in localStorage
-        })
-        .catch(error => {
-          console.error('Error fetching genre data:', error);
-        });
+        fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US`)
+            .then(response => response.json())
+            .then(data => {
+                var genres = data.genres;
+                var genreMap = {};
+                genres.forEach(genre => {
+                    genreMap[genre.name.toLowerCase()] = genre.id;
+                });
+                localStorage.setItem('genreMap', JSON.stringify(genreMap)); // Store genre map in localStorage
+            })
+            .catch(error => {
+                console.error('Error fetching genre data:', error);
+            });
     }
 
     // Fetch random movies
     function fetchRandomMovies() {
-      var apiKey = 'd5697eb16a89b204a004af1f8fea130c';
-      var randomMoviesUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&sort_by=popularity.desc`;
+        var apiKey = 'd5697eb16a89b204a004af1f8fea130c';
+        var randomMoviesUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&sort_by=popularity.desc`;
 
-      fetch(randomMoviesUrl)
-        .then(response => response.json())
-        .then(data => {
-          if (data.results.length > 0) {
-            displayRandomMovies(data.results);
-          } else {
-            console.error('No random movies found.');
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching random movies:', error);
-        });
+        fetch(randomMoviesUrl)
+            .then(response => response.json())
+            .then(data => {
+                if (data.results.length > 0) {
+                    displayRandomMovies(data.results);
+                } else {
+                    console.error('No random movies found.');
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching random movies:', error);
+            });
     }
 
     // Display random movies
     function displayRandomMovies(movies) {
-      var randomMoviesContainer = document.getElementById('random-movies');
-      randomMoviesContainer.innerHTML = ''; // Clear previous random movies
+        var randomMoviesContainer = document.getElementById('random-movies');
+        randomMoviesContainer.innerHTML = ''; // Clear previous random movies
 
-      movies.forEach((movie, index) => {
-        if (index < 10) { // Show only the first 10 random movies
-          var posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w342${movie.poster_path}` : 'placeholder.jpg';
+        movies.forEach((movie, index) => {
+            if (index < 10) { // Show only the first 10 random movies
+                var posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w342${movie.poster_path}` : 'placeholder.jpg';
 
-          var movieElement = document.createElement('div');
-          movieElement.classList.add('movie');
+                var movieElement = document.createElement('div');
+                movieElement.classList.add('movie');
 
-          // Wrap movie title and image inside an anchor tag
-          var movieLink = document.createElement('a');
-          movieLink.href = `movie_details.html?movieId=${movie.id}`; // Pass movie ID as a query parameter
-          movieLink.innerHTML = `
+                // Wrap movie title and image inside an anchor tag
+                var movieLink = document.createElement('a');
+                movieLink.href = `movie_details.html?movieId=${movie.id}`; // Pass movie ID as a query parameter
+                movieLink.innerHTML = `
             <div class="movie-details">
               <a href="movie_details.html?movieId=${movie.id}">
                 <img src="${posterUrl}" alt="${movie.title} Poster" class="movie-poster">
               </a>
             </div>
           `;
-          movieElement.appendChild(movieLink);
+                movieElement.appendChild(movieLink);
 
-          // Create movie info elements
-          var movieInfo = document.createElement('div');
-          movieInfo.classList.add('movie-info');
-          var movieTitle = document.createElement('h3');
-          var titleLink = document.createElement('a'); // New anchor tag for movie title
-          titleLink.href = `movie_details.html?movieId=${movie.id}`; // Pass movie ID as a query parameter
-          titleLink.textContent = movie.title; // Set movie title text
-          movieTitle.appendChild(titleLink); // Append title link to movie title element
-          var releaseDate = document.createElement('p');
-          releaseDate.textContent = `Release Date: ${movie.release_date}`;
-          var rating = document.createElement('p');
-          rating.textContent = `Rating: ${movie.vote_average}`;
+                // Create movie info elements
+                var movieInfo = document.createElement('div');
+                movieInfo.classList.add('movie-info');
+                var movieTitle = document.createElement('h3');
+                var titleLink = document.createElement('a'); // New anchor tag for movie title
+                titleLink.href = `movie_details.html?movieId=${movie.id}`; // Pass movie ID as a query parameter
+                titleLink.textContent = movie.title; // Set movie title text
+                movieTitle.appendChild(titleLink); // Append title link to movie title element
+                var releaseDate = document.createElement('p');
+                releaseDate.textContent = `Release Date: ${movie.release_date}`;
+                var rating = document.createElement('p');
+                rating.textContent = `Rating: ${movie.vote_average}`;
 
-          // Append movie info to movie details
-          movieInfo.appendChild(movieTitle);
-          movieInfo.appendChild(releaseDate);
-          movieInfo.appendChild(rating);
+                // Append movie info to movie details
+                movieInfo.appendChild(movieTitle);
+                movieInfo.appendChild(releaseDate);
+                movieInfo.appendChild(rating);
 
-          // Append movie info to movie element
-          movieElement.appendChild(movieInfo);
+                // Append movie info to movie element
+                movieElement.appendChild(movieInfo);
 
-          // Append movie element to random movies container
-          randomMoviesContainer.appendChild(movieElement);
-        }
-      });
+                // Append movie element to random movies container
+                randomMoviesContainer.appendChild(movieElement);
+            }
+        });
     }
 
     // Search movies by genre
     function searchMoviesByGenre(genreName) {
-      var genreMap = JSON.parse(localStorage.getItem('genreMap'));
-      var genreId = genreMap[genreName.toLowerCase()];
-      if (!genreId) {
-        console.error('Genre not found:', genreName);
-        return;
-      }
+        var genreMap = JSON.parse(localStorage.getItem('genreMap'));
+        var genreId = genreMap[genreName.toLowerCase()];
+        if (!genreId) {
+            console.error('Genre not found:', genreName);
+            return;
+        }
 
-      var apiKey = 'd5697eb16a89b204a004af1f8fea130c';
-      var apiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genreId}`;
+        var apiKey = 'd5697eb16a89b204a004af1f8fea130c';
+        var apiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genreId}`;
 
-      fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-          if (data.results.length === 0) {
-            displayNoResultsMessage();
-          } else {
-            displaySearchResults(data.results);
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error);
-        });
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                if (data.results.length === 0) {
+                    displayNoResultsMessage();
+                } else {
+                    displaySearchResults(data.results);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
     }
 
-		// Function to hide random movies container
-		function hideRandomMoviesContainer() {
-			var randomMoviesContainer = document.getElementById('random-movies');
-			randomMoviesContainer.style.display = 'none';
-		}
+    // Function to hide random movies container
+    function hideRandomMoviesContainer() {
+        var randomMoviesContainer = document.getElementById('random-movies');
+        randomMoviesContainer.style.display = 'none';
+    }
 
-		// Function to show random movies container
-		function showRandomMoviesContainer() {
-			var randomMoviesContainer = document.getElementById('random-movies');
-			randomMoviesContainer.style.display = 'block';
-		}
+    // Function to show random movies container
+    function showRandomMoviesContainer() {
+        var randomMoviesContainer = document.getElementById('random-movies');
+        randomMoviesContainer.style.display = 'block';
+    }
 
-		// Define a global variable to store the current page number
-		var currentPage = 1;
+    // Define a global variable to store the current page number
+    var currentPage = 1;
 
     function searchMovies() {
-			var searchType = document.getElementById('search-type').value;
-			var searchQuery = document.getElementById('search').value;
+        var searchType = document.getElementById('search-type').value;
+        var searchQuery = document.getElementById('search').value;
 
-			// Hide random movies container
-  		hideRandomMoviesContainer();
+        // Hide random movies container
+        hideRandomMoviesContainer();
 
-			var apiKey = 'd5697eb16a89b204a004af1f8fea130c';
-			var apiUrl = '';
+        var apiKey = 'd5697eb16a89b204a004af1f8fea130c';
+        var apiUrl = '';
 
-			switch (searchType) {
-				case 'title':
-					apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchQuery}&page=${currentPage}`;
-					break;
-				case 'genre':
-					searchMoviesByGenre(searchQuery, currentPage);
-					return;
-				case 'year':
-					apiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&primary_release_year=${searchQuery}&page=${currentPage}`;
-					break;
-				default:
-					apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchQuery}&page=${currentPage}`;
-			}
+        switch (searchType) {
+            case 'title':
+                apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchQuery}&page=${currentPage}`;
+                break;
+            case 'genre':
+                searchMoviesByGenre(searchQuery, currentPage);
+                return;
+            case 'year':
+                apiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&primary_release_year=${searchQuery}&page=${currentPage}`;
+                break;
+            default:
+                apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchQuery}&page=${currentPage}`;
+        }
 
-			fetch(apiUrl)
-				.then(response => response.json())
-				.then(data => {
-					if (data.results.length === 0) {
-						displayNoResultsMessage();
-					} else {
-						displaySearchResults(data.results, data.total_pages); // Pass total_pages to displaySearchResults
-					}
-				})
-				.catch(error => {
-					console.error('Error fetching data:', error);
-				});
-		}
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                if (data.results.length === 0) {
+                    displayNoResultsMessage();
+                } else {
+                    displaySearchResults(data.results, data.total_pages); // Pass total_pages to displaySearchResults
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }
 
     function displaySearchResults(results, totalPages) {
-			var searchResultsContainer = document.getElementById('search-results');
-			searchResultsContainer.innerHTML = ''; // Clear previous search results
+        var searchResultsContainer = document.getElementById('search-results');
+        searchResultsContainer.innerHTML = ''; // Clear previous search results
 
-			results.forEach((movie) => {
-				var posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w342${movie.poster_path}` : 'placeholder.jpg';
+        results.forEach((movie) => {
+            var posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w342${movie.poster_path}` : 'placeholder.jpg';
 
-				var movieElement = document.createElement('div');
-				movieElement.classList.add('movie');
+            var movieElement = document.createElement('div');
+            movieElement.classList.add('movie');
 
-				// Wrap movie title and image inside an anchor tag
-				var movieLink = document.createElement('a');
-				movieLink.href = `movie_details.html?movieId=${movie.id}`; // Pass movie ID as a query parameter
-				movieLink.innerHTML = `
+            // Wrap movie title and image inside an anchor tag
+            var movieLink = document.createElement('a');
+            movieLink.href = `movie_details.html?movieId=${movie.id}`; // Pass movie ID as a query parameter
+            movieLink.innerHTML = `
 					<div class="movie-details">
 						<a href="movie_details.html?movieId=${movie.id}">
 							<img src="${posterUrl}" alt="${movie.title} Poster" class="movie-poster">
 						</a>
 					</div>
 				`;
-				movieElement.appendChild(movieLink);
+            movieElement.appendChild(movieLink);
 
-				// Create movie info elements
-				var movieInfo = document.createElement('div');
-				movieInfo.classList.add('movie-info');
-				var movieTitle = document.createElement('h3');
-				var titleLink = document.createElement('a'); // New anchor tag for movie title
-				titleLink.href = `movie_details.html?movieId=${movie.id}`; // Pass movie ID as a query parameter
-				titleLink.textContent = movie.title; // Set movie title text
-				movieTitle.appendChild(titleLink); // Append title link to movie title element
-				var releaseDate = document.createElement('p');
-				releaseDate.textContent = `Release Date: ${movie.release_date}`;
-				var rating = document.createElement('p');
-				rating.textContent = `Rating: ${movie.vote_average}`;
+            // Create movie info elements
+            var movieInfo = document.createElement('div');
+            movieInfo.classList.add('movie-info');
+            var movieTitle = document.createElement('h3');
+            var titleLink = document.createElement('a'); // New anchor tag for movie title
+            titleLink.href = `movie_details.html?movieId=${movie.id}`; // Pass movie ID as a query parameter
+            titleLink.textContent = movie.title; // Set movie title text
+            movieTitle.appendChild(titleLink); // Append title link to movie title element
+            var releaseDate = document.createElement('p');
+            releaseDate.textContent = `Release Date: ${movie.release_date}`;
+            var rating = document.createElement('p');
+            rating.textContent = `Rating: ${movie.vote_average}`;
 
-				// Append movie info to movie details
-				movieInfo.appendChild(movieTitle);
-				movieInfo.appendChild(releaseDate);
-				movieInfo.appendChild(rating);
+            // Append movie info to movie details
+            movieInfo.appendChild(movieTitle);
+            movieInfo.appendChild(releaseDate);
+            movieInfo.appendChild(rating);
 
-				// Append movie info to movie element
-				movieElement.appendChild(movieInfo);
+            // Append movie info to movie element
+            movieElement.appendChild(movieInfo);
 
-				// Append movie element to search results container
-				searchResultsContainer.appendChild(movieElement);
-			});
+            // Append movie element to search results container
+            searchResultsContainer.appendChild(movieElement);
+        });
 
-			// Pagination controls
-			var paginationContainer = document.getElementById('pagination');
-			paginationContainer.innerHTML = ''; // Clear previous pagination
+        // Pagination controls
+        var paginationContainer = document.getElementById('pagination');
+        paginationContainer.innerHTML = ''; // Clear previous pagination
 
-			if (currentPage > 1) {
-				var previousPageButton = document.createElement('button');
-				previousPageButton.textContent = 'Previous';
-				previousPageButton.classList.add('previous-page-button');
-				previousPageButton.addEventListener('click', function() {
-					currentPage--; // Decrement current page
-					searchMovies(); // Fetch and display previous page of search results
-				});
-				paginationContainer.appendChild(previousPageButton);
-			}
+        if (currentPage > 1) {
+            var previousPageButton = document.createElement('button');
+            previousPageButton.textContent = 'Previous';
+            previousPageButton.classList.add('previous-page-button');
+            previousPageButton.addEventListener('click', function() {
+                currentPage--; // Decrement current page
+                searchMovies(); // Fetch and display previous page of search results
+            });
+            paginationContainer.appendChild(previousPageButton);
+        }
 
-			paginationContainer.insertAdjacentText('beforeend', ` Page ${currentPage}/${totalPages} `);
+        paginationContainer.insertAdjacentText('beforeend', ` Page ${currentPage}/${totalPages} `);
 
-			if (currentPage < totalPages) {
-				var nextPageButton = document.createElement('button');
-				nextPageButton.textContent = 'Next';
-				nextPageButton.classList.add('next-page-button');
-				nextPageButton.addEventListener('click', function() {
-					currentPage++; // Increment current page
-					searchMovies(); // Fetch and display next page of search results
-				});
-				paginationContainer.appendChild(nextPageButton);
-			}
-		}
+        if (currentPage < totalPages) {
+            var nextPageButton = document.createElement('button');
+            nextPageButton.textContent = 'Next';
+            nextPageButton.classList.add('next-page-button');
+            nextPageButton.addEventListener('click', function() {
+                currentPage++; // Increment current page
+                searchMovies(); // Fetch and display next page of search results
+            });
+            paginationContainer.appendChild(nextPageButton);
+        }
+    }
 
     function displayNoResultsMessage() {
-      var searchResultsContainer = document.getElementById('search-results');
-      searchResultsContainer.innerHTML = '<p>No movies were found.</p>';
+        var searchResultsContainer = document.getElementById('search-results');
+        searchResultsContainer.innerHTML = '<p>No movies were found.</p>';
     }
 
     // Call fetchGenreIds function when the page loads
@@ -304,6 +353,7 @@
 
     // Fetch random movies when the page loads
     fetchRandomMovies();
-  </script>
+</script>
 </body>
+
 </html>

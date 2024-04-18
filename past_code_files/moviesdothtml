@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FilmFinder - Movies</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>FilmFinder</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Comparison</a></li>
+                <li><a href="recommend.php">Recommendations</a></li>
+                <li><a href="movies.html">Movies</a></li>
+                <li><a href="#">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="search-filter">
+            <input type="text" id="search" placeholder="Search for a movie...">
+            <select id="search-type">
+          <option value="title">Movie Title</option>
+          <option value="genre">Genre</option>
+          <option value="year">Release Year</option>
+          <!-- Add more search options as needed -->
+        </select>
+            <button onclick="searchMovies()">Search</button>
+        </section>
+
+        <section id="search-results">
+            <!-- This is where the search results will be displayed -->
+        </section>
+
+        <section id="random-movies">
+            <!-- This is where the random movies will be displayed -->
+        </section>
+
+        <section id="pagination">
+            <!-- This is where the "See more" button will be displayed -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 FilmFinder. All rights reserved.</p>
+    </footer>
