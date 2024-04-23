@@ -23,8 +23,7 @@
             echo "<p>No favorite genres selected.</p>";
         }
 
-        // Display selected actor/director
-        // Retrieve selected actors/directors from the form submission
+        // Display selected actors/directors
         $selectedActorsDirectors = json_decode($_POST['selected_actors_directors'], true) ?? [];
 
         // Check if any actors/directors were selected
@@ -49,13 +48,20 @@
         }
 
         // Display selected languages
-        if (isset($_POST['languages']) && !empty($_POST['languages'])) {
-            echo "<p><strong>Language Preference:</strong> ";
-            $selectedLanguages = $_POST['languages'];
-            echo implode(', ', $selectedLanguages);
-            echo "</p>";
+        $selectedLanguages = json_decode($_POST['selected_languages'], true) ?? [];
+
+        // Check if any languages were selected
+        if (!empty($selectedLanguages)) {
+            // Output each selected language
+            echo "<h2>Selected Languages</h2>";
+            echo "<ul>";
+            foreach ($selectedLanguages as $language) {
+                echo "<li>$language</li>";
+            }
+            echo "</ul>";
         } else {
-            echo "<p>No language preference selected.</p>";
+            // If no languages were selected, display a message
+            echo "<p>No languages selected.</p>";
         }
 
     } else {

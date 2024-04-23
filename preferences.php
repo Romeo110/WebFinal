@@ -104,6 +104,7 @@
             <legend>Language Preference</legend>
             <div class="selected-items" id="selectedLanguages"></div>
             <input type="text" id="languageInput" placeholder="Type a language">
+            <input type="hidden" name="selected_languages" id="selectedLanguagesInput">
             <ul id="languageDropdown" class="dropdown"></ul>
             <label><input type="checkbox" id="noPreferenceLanguage" name="no_preference_language" value="no_preference"> No Preference</label>
         </fieldset>
@@ -132,10 +133,11 @@
             // Array to store selected languages
             const selectedLanguageSet = new Set();
 
-            // Function to update the selected languages display
+            // Function to update the selected languages and the hidden input field
             function updateSelectedLanguages() {
                 selectedLanguages.innerHTML = "";
-                selectedLanguageSet.forEach(language => {
+                const selectedLanguagesArray = Array.from(selectedLanguageSet); // Convert set to array
+                selectedLanguagesArray.forEach(language => {
                     const span = document.createElement("span");
                     span.textContent = language;
                     const button = document.createElement("button");
@@ -147,6 +149,9 @@
                     span.appendChild(button);
                     selectedLanguages.appendChild(span);
                 });
+
+                // Update the hidden input field with the selected languages
+                document.getElementById("selectedLanguagesInput").value = JSON.stringify(selectedLanguagesArray);
             }
 
             // Fetch list of languages from TMDB API
