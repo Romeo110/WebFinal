@@ -65,8 +65,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         
                         // Attempt to execute the prepared statement
                         if(mysqli_stmt_execute($stmt)){
+                            // Retrieve the user ID of the newly inserted user
+                            $user_id = mysqli_insert_id($conn);
+
+                            // Close statement
+                            mysqli_stmt_close($stmt);
+
+                            // Store user ID in local storage
+                            echo "<script>localStorage.setItem('userID', $user_id);</script>";
+
                             // Redirect user to index.html
                             header("location: index.html");
+                            exit;
                         } else{
                             $signup_err = "Oops! Something went wrong. Please try again later.";
                         }

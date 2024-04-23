@@ -111,5 +111,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <span class="error"><?php echo $login_err; ?></span>
         </form>
     </div>
+    <script>
+        // Store user ID in local storage after successful login
+        <?php if(isset($_SESSION['id'])) : ?>
+            localStorage.setItem('userID', <?php echo $_SESSION['id']; ?>);
+        <?php endif; ?>
+    </script>
 </body>
 </html>
