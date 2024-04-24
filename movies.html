@@ -150,10 +150,10 @@
 
                     // Wrap movie title and image inside an anchor tag
                     var movieLink = document.createElement('a');
-                    movieLink.href = `movie_details.html?movieId=${movie.id}`; // Pass movie ID as a query parameter
+                    movieLink.href = `movie_details.php?movieId=${movie.id}`; // Pass movie ID as a query parameter
                     movieLink.innerHTML = `
                         <div class="movie-details">
-                            <a href="movie_details.html?movieId=${movie.id}">
+                            <a href="movie_details.php?movieId=${movie.id}">
                                 <img src="${posterUrl}" alt="${movie.title} Poster" class="movie-poster">
                             </a>
                         </div>
@@ -165,7 +165,7 @@
                     movieInfo.classList.add('movie-info');
                     var movieTitle = document.createElement('h3');
                     var titleLink = document.createElement('a'); // New anchor tag for movie title
-                    titleLink.href = `movie_details.html?movieId=${movie.id}`; // Pass movie ID as a query parameter
+                    titleLink.href = `movie_details.php?movieId=${movie.id}`; // Pass movie ID as a query parameter
                     titleLink.textContent = movie.title; // Set movie title text
                     movieTitle.appendChild(titleLink); // Append title link to movie title element
                     var releaseDate = document.createElement('p');
@@ -275,10 +275,10 @@
 
                 // Wrap movie title and image inside an anchor tag
                 var movieLink = document.createElement('a');
-                movieLink.href = `movie_details.html?movieId=${movie.id}`; // Pass movie ID as a query parameter
+                movieLink.href = `movie_details.php?movieId=${movie.id}`; // Pass movie ID as a query parameter
                 movieLink.innerHTML = `
                     <div class="movie-details">
-                        <a href="movie_details.html?movieId=${movie.id}">
+                        <a href="movie_details.php?movieId=${movie.id}">
                             <img src="${posterUrl}" alt="${movie.title} Poster" class="movie-poster">
                         </a>
                     </div>
@@ -290,7 +290,7 @@
                 movieInfo.classList.add('movie-info');
                 var movieTitle = document.createElement('h3');
                 var titleLink = document.createElement('a'); // New anchor tag for movie title
-                titleLink.href = `movie_details.html?movieId=${movie.id}`; // Pass movie ID as a query parameter
+                titleLink.href = `movie_details.php?movieId=${movie.id}`; // Pass movie ID as a query parameter
                 titleLink.textContent = movie.title; // Set movie title text
                 movieTitle.appendChild(titleLink); // Append title link to movie title element
                 var releaseDate = document.createElement('p');
