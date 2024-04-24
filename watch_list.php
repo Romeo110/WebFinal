@@ -19,7 +19,7 @@ if (isset($_POST['ajax']) && $_POST['ajax'] == 1) {
 
     // Prevent SQL injection, validate and sanitize $user_id here
     
-    $sql = "SELECT movie_name, movie_description FROM favorite_movies WHERE user_id = ?";
+    $sql = "SELECT movie_id FROM favorite_movies WHERE user_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('i', $user_id);
     $stmt->execute();

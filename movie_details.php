@@ -112,9 +112,13 @@ $conn->close();
         <li><a href="#">Profile</a></li>
       </ul>
     </nav>
+   
   </header>
 
+  
+
   <main>
+  <button onclick="goBack()">Back</button>
     <section id="movie-details">
       <!-- This is where the movie details will be displayed -->
     </section>
@@ -125,6 +129,10 @@ $conn->close();
   </footer>
 
   <script>
+
+        function goBack() {
+            window.history.back();
+        }
         function addToWatchlist(movieId) {
 
         }
