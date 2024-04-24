@@ -1,10 +1,14 @@
 <?php
 // Initialize the session and database connection variables
 $server = "localhost";
-$userid = "u0kg2ws5z36zq";
-$pw = "rzuoxy5bnggz";
-$db = "dbioookmqfj5gb";
+$userid = "uw05kxucdm6hu";
+$pw = "n6zlygfdot3s";
+$db = "dbbyejddos2r5c";
 $conn = new mysqli($server, $userid, $pw, $db);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }

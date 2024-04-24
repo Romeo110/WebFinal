@@ -1,8 +1,8 @@
 <?php
 $server = "localhost";
-$userid = "u0kg2ws5z36zq";
-$pw = "rzuoxy5bnggz";
-$db = "dbioookmqfj5gb";
+$userid = "uw05kxucdm6hu";
+$pw = "n6zlygfdot3s";
+$db = "dbbyejddos2r5c";
 $conn = new mysqli($server, $userid, $pw, $db);
 
 if ($conn->connect_error) {
@@ -17,11 +17,21 @@ function sanitize_input($data) {
     return $data;
 }
 
+// Start the session
+session_start();
+
+// Check if the user is logged in
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+  // Redirect the user to the login page if not logged in
+  header("location: login.php");
+  exit;
+}
+
 // Get movie ID from URL parameter
 $movie_id = isset($_GET['movieId']) ? sanitize_input($_GET['movieId']) : '';
 
 // Directly adding the movie to the watchlist
-$user_id = 1; // Replace with the actual user_id value
+$user_id = $_SESSION["id"];
 
 // Use prepared statements to prevent SQL injection
 $sql = "INSERT INTO favorite_movies (user_id, movie_id) VALUES (?, ?)";
