@@ -181,16 +181,6 @@
                     // Append movie info to movie element
                     movieElement.appendChild(movieInfo);
 
-                    // Create and append "Add to Watchlist" button
-                    var addToWatchlistButton = document.createElement('button');
-                    addToWatchlistButton.textContent = 'Add to Watchlist';
-                    addToWatchlistButton.classList.add('add-to-watchlist-button');
-                    addToWatchlistButton.addEventListener('click', function() {
-                        // Logic to add the movie to the watchlist goes here
-                        alert('Movie added to watchlist!');
-                    });
-                    movieElement.appendChild(addToWatchlistButton);
-
                     // Append movie element to random movies container
                     randomMoviesContainer.appendChild(movieElement);
                 }
@@ -277,8 +267,6 @@
             var searchResultsContainer = document.getElementById('search-results');
             searchResultsContainer.innerHTML = ''; // Clear previous search results
 
-            
-
             results.forEach((movie) => {
                 var posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w342${movie.poster_path}` : 'placeholder.jpg';
 
@@ -317,17 +305,6 @@
 
                 // Append movie info to movie element
                 movieElement.appendChild(movieInfo);
-
-
-                var addToWatchlistButton = document.createElement('button');
-                addToWatchlistButton.textContent = 'Add to Watchlist';
-                addToWatchlistButton.classList.add('add-to-watchlist-button');
-                addToWatchlistButton.addEventListener('click', function() {
-                    // Redirect to watch_list.php page with movie ID as a query parameter
-                    window.location.href = `watch_list.php?movieId=${movie.id}`;
-                });
-                movieInfo.appendChild(addToWatchlistButton); // Append button to movie info
-
 
                 // Append movie element to search results container
                 searchResultsContainer.appendChild(movieElement);
