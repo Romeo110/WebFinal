@@ -1,72 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Preferences</title>
-</head>
-<body>
-    <h1>Movie Preferences</h1>
+<?php
+// Start a session
+session_start();
 
-    <?php
-    // Check if preferences are submitted
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        echo "<h2>Your Preferences:</h2>";
+// Check if the user is logged in
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    // Redirect the user to the login page if not logged in
+    header("location: login.php");
+    exit;
+}
 
-        // Display selected genres
-        if (isset($_POST['genres']) && !empty($_POST['genres'])) {
-            echo "<p><strong>Favorite Genres:</strong> ";
-            $selectedGenres = $_POST['genres'];
-            echo implode(', ', $selectedGenres);
-            echo "</p>";
-        } else {
-            echo "<p>No favorite genres selected.</p>";
-        }
+$server = "localhost";
+$userid = "uw05kxucdm6hu";
+$pw = "n6zlygfdot3s";
+$db = "dbbyejddos2r5c";
+$conn = new mysqli($server, $userid, $pw, $db);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-        // Display selected actors/directors
-        $selectedActorsDirectors = json_decode($_POST['selected_actors_directors'], true) ?? [];
+// Check if preferences are submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve user ID from session
+    $user_id = $_SESSION["id"];
 
-        // Check if any actors/directors were selected
-        if (!empty($selectedActorsDirectors)) {
-            // Output each selected actor/director
-            echo "<h2>Selected Actors/Directors</h2>";
-            echo "<ul>";
-            foreach ($selectedActorsDirectors as $actorDirector) {
-                echo "<li>$actorDirector</li>";
-            }
-            echo "</ul>";
-        } else {
-            // If no actors/directors were selected, display a message
-            echo "<p>No actors/directors selected.</p>";
-        }
+    // Retrieve preferences from POST data
+    $genre = implode(', ', $_POST['genres'] ?? []);
+    $actor_director = json_encode($_POST['selected_actors_directors'] ?? []);
+    $min_decade = $_POST['min_decade'] ?? "";
+    $max_decade = $_POST['max_decade'] ?? "";
+    $language = json_encode($_POST['selected_languages'] ?? []);
 
-        // Display selected decades
-        if (isset($_POST['min_decade']) && isset($_POST['max_decade']) && !empty($_POST['min_decade']) && !empty($_POST['max_decade'])) {
-            echo "<p><strong>Decade Preference:</strong> {$_POST['min_decade']} to {$_POST['max_decade']}</p>";
-        } else {
-            echo "<p>No decade preference selected.</p>";
-        }
+    // Prepare and bind SQL statement
+    $sql = "INSERT INTO preferences (user_id, genre, actor_director, min_decade, max_decade, language) 
+            VALUES (?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("isssss", $user_id, $genre, $actor_director, $min_decade, $max_decade, $language);
 
-        // Display selected languages
-        $selectedLanguages = json_decode($_POST['selected_languages'], true) ?? [];
+    // Execute the prepared statement
+    $stmt->execute();
 
-        // Check if any languages were selected
-        if (!empty($selectedLanguages)) {
-            // Output each selected language
-            echo "<h2>Selected Languages</h2>";
-            echo "<ul>";
-            foreach ($selectedLanguages as $language) {
-                echo "<li>$language</li>";
-            }
-            echo "</ul>";
-        } else {
-            // If no languages were selected, display a message
-            echo "<p>No languages selected.</p>";
-        }
+    // Close the statement
+    $stmt->close();
+} else {
+    // Redirect the user to an appropriate page if preferences are not submitted
+    header("location: error.php");
+    exit;
+}
 
-    } else {
-        echo "<p>No preferences submitted.</p>";
-    }
-    ?>
-</body>
-</html>
+$conn->close();
+header("location: index.html");
+?>

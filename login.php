@@ -64,7 +64,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["email"] = $email;                            
                             
                             // Redirect user to index.html
-                            header("location: index.html");
+                            header("location: preferences.php");
                             exit;
                         } else{
                             // Password is not valid, display a generic error message
