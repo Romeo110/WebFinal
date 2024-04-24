@@ -33,6 +33,29 @@
     .review-author {
       font-weight: bold;
     }
+
+    /* Additional CSS for Add to Watchlist button */
+    .watchlist-button {
+      margin-top: 20px;
+    }
+
+    .watchlist-button button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .watchlist-button button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Positioning for movie image and button */
+    .movie-image {
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 <body>
@@ -132,9 +155,22 @@
 
       // Display movie image
       var movieImage = document.createElement('img');
+      movieImage.classList.add('movie-image'); // Add class for styling
       movieImage.src = `https://image.tmdb.org/t/p/w342${movie.poster_path}`;
       movieImage.alt = `${movie.title} Poster`;
       movieDetailsContainer.appendChild(movieImage);
+
+      // Add to Watchlist button
+      var watchlistButtonContainer = document.createElement('div');
+      watchlistButtonContainer.classList.add('watchlist-button');
+      var addToWatchlistButton = document.createElement('button');
+      addToWatchlistButton.textContent = 'Add to Watchlist';
+      addToWatchlistButton.addEventListener('click', function() {
+        // Logic to add the movie to the watchlist goes here
+        alert('Movie added to watchlist!');
+      });
+      watchlistButtonContainer.appendChild(addToWatchlistButton);
+      movieDetailsContainer.appendChild(watchlistButtonContainer);
 
       // Append movie details to container
       movieDetailsContainer.appendChild(title);
