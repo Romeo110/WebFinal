@@ -1,3 +1,45 @@
+<?php
+$server = "localhost";
+$userid = "u0kg2ws5z36zq";
+$pw = "rzuoxy5bnggz";
+$db = "dbioookmqfj5gb";
+$conn = new mysqli($server, $userid, $pw, $db);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Function to sanitize input
+function sanitize_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
+// Get movie ID from URL parameter
+$movie_id = isset($_GET['movieId']) ? sanitize_input($_GET['movieId']) : '';
+
+// Directly adding the movie to the watchlist
+$user_id = 1; // Replace with the actual user_id value
+
+// Use prepared statements to prevent SQL injection
+$sql = "INSERT INTO favorite_movies (user_id, movie_id) VALUES (?, ?)";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('ii', $user_id, $movie_id);
+
+if ($stmt->execute()) {
+    echo "Movie added to your watchlist.";
+} else {
+    echo "Error adding movie to your watchlist: " . $stmt->error;
+}
+
+$stmt->close();
+$conn->close();
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,6 +125,20 @@
   </footer>
 
   <script>
+        function addToWatchlist(movieId) {
+
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            var addToWatchlistButtons = document.querySelectorAll('.add-to-watchlist-button');
+            addToWatchlistButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    var movieId = button.getAttribute('data-movie-id');
+                    addToWatchlist(movieId);
+                });
+            });
+        });
+    
     // Function to extract movie ID from URL
     function getMovieIdFromUrl() {
       var queryString = window.location.search;
@@ -227,16 +283,18 @@
         movieDetailsContainer.appendChild(reviewDiv);
       });
     }
-
-    // Fetch movie details when the page loads
+        
     document.addEventListener('DOMContentLoaded', function() {
-      var movieId = getMovieIdFromUrl();
-      if (movieId) {
-        fetchMovieDetails(movieId);
-      } else {
-        console.error('Movie ID not found in URL.');
-      }
+        var movieId = getMovieIdFromUrl();
+        console.log('Movie ID:', movieId); // Log movieId to console
+        if (movieId) {
+            localStorage.setItem('movie_id', movieId); // Store movieId in local storage
+            fetchMovieDetails(movieId);
+        } else {
+            console.error('Movie ID not found in URL.');
+        }
     });
   </script>
 </body>
 </html>
+
