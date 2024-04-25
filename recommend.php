@@ -1,3 +1,13 @@
+<?php
+// Start a session
+session_start();
+// Check if the user is logged in
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    // Redirect the user to the login page if not logged in
+    header("location: login.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,104 +34,145 @@
     <section id="recommendations">
       <h2>Recommended Movies</h2>
       <?php
-      // Hardcoded user preferences
-      $preferences = array(
-        'genre' => 'action',
-        'year' => '2020',
-        'language' => 'en', // English
-        'min_rating' => 7, // Minimum rating out of 10
-        'min_year' => 2010, // Minimum release year
-        'actor' => 'Tom Hanks', // Favorite actor
-        'director' => 'Christopher Nolan', // Favorite director
-        // Add more preferences as needed
-      );
+      // Start a session
+      session_start();
+
+      $server = "localhost";
+      $userid = "uw05kxucdm6hu";
+      $pw = "n6zlygfdot3s";
+      $db = "dbbyejddos2r5c";
+      $conn = new mysqli($server, $userid, $pw, $db);
+      if ($conn->connect_error) {
+          die("Connection failed: " . $conn->connect_error);
+      }
+
+      // Prepare and execute query to fetch user preferences
+      $user_id = $_SESSION["id"]; // Assuming you store user ID in the session
+      $query = "SELECT genre, actor_director, min_decade, max_decade, language FROM preferences WHERE user_id = ?";
+      $stmt = $conn->prepare($query);
+      $stmt->bind_param("i", $user_id); // 'i' for integer
+      $stmt->execute();
+
+      // Fetch preferences (assuming only one row)
+      $result = $stmt->get_result();
+      $row = $result->fetch_assoc();
+      if ($row) {
+          // Access fetched preferences
+          $genres = explode(', ', $row["genre"]);
+          $actorDirectors = json_decode($row["actor_director"], true);
+          $minDecade = $row["min_decade"];
+          $maxDecade = $row["max_decade"];
+          $languages = json_decode($row["language"], true);
+          
+      } else {
+          echo "No preferences found for the user.";
+      }
+
+      // Close statement and database connection
+      $stmt->close();
+      $conn->close();
       
       // Query TMDB API to fetch recommended movies based on user preferences
       $apiKey = 'd5697eb16a89b204a004af1f8fea130c';
-      $genreId = getGenreId($preferences['genre']);
-      $year = $preferences['year'];
-      $language = $preferences['language'];
-      $minRating = $preferences['min_rating'];
-      $minYear = $preferences['min_year'];
-      $actor = urlencode($preferences['actor']); // URL encode actor name
-      $director = urlencode($preferences['director']); // URL encode director name
       $currentPage = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1; // Get current page number from URL query parameter or default to 1
-      
-      // Search for movies featuring favorite actor
-      $actorSearchUrl = "https://api.themoviedb.org/3/search/person?api_key={$apiKey}&query={$actor}";
-      $actorResponse = file_get_contents($actorSearchUrl);
-      $actorData = json_decode($actorResponse, true);
-      $actorId = isset($actorData['results'][0]['id']) ? $actorData['results'][0]['id'] : null;
-      
-      // Search for movies directed by favorite director
-      $directorSearchUrl = "https://api.themoviedb.org/3/search/person?api_key={$apiKey}&query={$director}";
-      $directorResponse = file_get_contents($directorSearchUrl);
-      $directorData = json_decode($directorResponse, true);
-      $directorId = isset($directorData['results'][0]['id']) ? $directorData['results'][0]['id'] : null;
-      
-      // Fetch movies featuring favorite actor
-      $actorMovies = array();
-      if ($actorId) {
-        $actorMoviesUrl = "https://api.themoviedb.org/3/discover/movie?api_key={$apiKey}&language={$language}&with_people={$actorId}&vote_average.gte={$minRating}&primary_release_date.gte={$minYear}&page={$currentPage}";
-        $actorMoviesResponse = file_get_contents($actorMoviesUrl);
-        $actorMoviesData = json_decode($actorMoviesResponse, true);
-        if ($actorMoviesData && isset($actorMoviesData['results'])) {
-          $actorMovies = $actorMoviesData['results'];
-        }
-      }
-      
-      // Fetch movies directed by favorite director
-      $directorMovies = array();
-      if ($directorId) {
-        $directorMoviesUrl = "https://api.themoviedb.org/3/discover/movie?api_key={$apiKey}&language={$language}&with_crew={$directorId}&vote_average.gte={$minRating}&primary_release_date.gte={$minYear}&page={$currentPage}";
-        $directorMoviesResponse = file_get_contents($directorMoviesUrl);
-        $directorMoviesData = json_decode($directorMoviesResponse, true);
-        if ($directorMoviesData && isset($directorMoviesData['results'])) {
-          $directorMovies = $directorMoviesData['results'];
-        }
-      }
-      
-      // Merge and display recommended movies
-      $recommendedMovies = array_merge($actorMovies, $directorMovies);
-      if (!empty($recommendedMovies)) {
-        foreach ($recommendedMovies as $movie) {
-          echo '<div class="movie">';
-          echo '<div class="movie-details">';
-          echo '<img src="https://image.tmdb.org/t/p/w342/' . $movie['poster_path'] . '" alt="' . $movie['title'] . ' Poster" class="movie-poster">';
-          echo '<div class="movie-info">';
-          echo '<h3>' . $movie['title'] . '</h3>';
-          echo '<p>Release Date: ' . $movie['release_date'] . '</p>';
-          echo '<p>Rating: ' . $movie['vote_average'] . '</p>';
-          echo '<p>Description: ' . $movie['overview'] . '</p>'; // Include movie description
-          echo '</div>';
-          echo '</div>';
-          echo '</div>';
-        }
+      $itemsPerPage = 20; // Set the number of items per page
 
-				// Pagination controls
-        $totalPages = max(isset($actorMoviesData['total_pages']) ? $actorMoviesData['total_pages'] : 1, isset($directorMoviesData['total_pages']) ? $directorMoviesData['total_pages'] : 1);
-        echo '<div class="pagination">';
-        if ($currentPage > 1) {
-          echo '<a href="?page=' . ($currentPage - 1) . '">Previous</a>';
+      // Initialize an empty array to store all recommended movies
+      $allRecommendedMovies = array();
+
+      // Example nested loops structure
+      foreach ($genres as $genre) {
+        foreach ($languages as $language) {
+            foreach ($actorDirectors as $actorDirector) {
+                $actor = urlencode($actorDirector);
+                $discoverMoviesUrl = "https://api.themoviedb.org/3/discover/movie";
+                $discoverMoviesUrl .= "?api_key={$apiKey}";
+                $discoverMoviesUrl .= "&language={$language}";
+                $discoverMoviesUrl .= "&with_genres={$genre}";
+                $discoverMoviesUrl .= "&with_people={$actorId}";
+                $discoverMoviesUrl .= "&vote_average.gte=6"; // Minimum rating of 6
+                $discoverMoviesUrl .= "&primary_release_date.gte={$minDecade}";
+                $discoverMoviesUrl .= "&primary_release_date.lte={$maxDecade}";
+                $discoverMoviesUrl .= "&page={$currentPage}";
+    
+                // Fetch movies based on the constructed URL
+                $discoverMoviesResponse = file_get_contents($discoverMoviesUrl);
+                $discoverMoviesData = json_decode($discoverMoviesResponse, true);
+    
+                // Check if the fetched data is not empty
+                if (!empty($discoverMoviesData['results'])) {
+                    foreach ($discoverMoviesData['results'] as $movie) {
+                        // Check if the movie already exists in the array
+                        if (!in_array($movie, $allRecommendedMovies)) {
+                            $allRecommendedMovies[] = $movie;
+                        }
+                    }
+                }
+            }
         }
-        echo ' Page ' . $currentPage . '/' . $totalPages . ' ';
-        if ($currentPage < $totalPages) {
-          echo '<a href="?page=' . ($currentPage + 1) . '">Next</a>';
-        }
-        echo '</div>';
-      } else {
-        echo '<p>No recommended movies found.</p>';
       }
-      
-      // Function to get genre ID based on genre name
-      function getGenreId($genreName) {
-        $genres = array(
-          'action' => 28,
-          'comedy' => 35,
-          'drama' => 18,
-          // Add more genres as needed
-        );
-        return isset($genres[$genreName]) ? $genres[$genreName] : null;
+
+      // foreach ($genres as $genre) {
+      //   $discoverMoviesUrl = "https://api.themoviedb.org/3/discover/movie";
+      //   $discoverMoviesUrl .= "?api_key={$apiKey}";
+      //   $discoverMoviesUrl .= "&with_genres={$genre}";
+      //   $discoverMoviesUrl .= "&page={$currentPage}";
+
+      //   // Fetch movies based on the constructed URL
+      //   $discoverMoviesResponse = file_get_contents($discoverMoviesUrl);
+      //   if ($discoverMoviesResponse === false) {
+      //       echo "Failed to fetch movies from TMDB API.";
+      //   } else {
+      //       $discoverMoviesData = json_decode($discoverMoviesResponse, true);
+      //       if ($discoverMoviesData === null) {
+      //           echo "Failed to decode JSON response from TMDB API.";
+      //       } else {
+      //           // Add fetched movies to the allRecommendedMovies array
+      //           if (!empty($discoverMoviesData['results'])) {
+      //               echo "Found " . count($discoverMoviesData['results']) . " movies in TMDB API response.";
+      //               foreach ($discoverMoviesData['results'] as $movie) {
+      //                   // Check if the movie already exists in the array
+      //                   if (!in_array($movie, $allRecommendedMovies)) {
+      //                       $allRecommendedMovies[] = $movie;
+      //                   }
+      //               }
+      //               echo "Completed adding movies.";
+      //           } else {
+      //               echo "No movies found in TMDB API response.";
+      //           }
+      //       }
+      //   }
+      // }
+
+      // Display recommended movies
+      if (!empty($allRecommendedMovies)) {
+          foreach ($allRecommendedMovies as $movie) {
+              echo '<div class="movie">';
+              echo '<div class="movie-details">';
+              echo '<img src="https://image.tmdb.org/t/p/w342/' . $movie['poster_path'] . '" alt="' . $movie['title'] . ' Poster" class="movie-poster">';
+              echo '<div class="movie-info">';
+              echo '<h3>' . $movie['title'] . '</h3>';
+              echo '<p>Release Date: ' . $movie['release_date'] . '</p>';
+              echo '<p>Rating: ' . $movie['vote_average'] . '</p>';
+              echo '<p>Description: ' . $movie['overview'] . '</p>'; // Include movie description
+              echo '</div>';
+              echo '</div>';
+              echo '</div>';
+          }
+
+          // Pagination controls
+          $totalPages = ceil(count($allRecommendedMovies) / $itemsPerPage);
+          echo '<div class="pagination">';
+          if ($currentPage > 1) {
+              echo '<a href="?page=' . ($currentPage - 1) . '">Previous</a>';
+          }
+          echo ' Page ' . $currentPage . '/' . $totalPages . ' ';
+          if ($currentPage < $totalPages) {
+              echo '<a href="?page=' . ($currentPage + 1) . '">Next</a>';
+          }
+          echo '</div>';
+      } else {
+          echo '<p>No recommended movies found for the selected preferences.</p>';
       }
       ?>
     </section>
