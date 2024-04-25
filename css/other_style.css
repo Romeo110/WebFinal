@@ -222,9 +222,10 @@ body {
 }
 
 #pagination button {
+    font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
     padding: 10px 20px;
     margin: 10px 10px;
-    background-color: #007bff;
+    background-color: #cf66c5;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -234,10 +235,11 @@ body {
 }
 
 #pagination button:hover {
-    background-color: #0056b3;
+    background-color: #b346a7;
 }
 
-.previous-page-button,
+
+/* .previous-page-button,
 .next-page-button {
     background-color: #ccc;
     color: #333;
@@ -246,7 +248,7 @@ body {
 .previous-page-button:hover,
 .next-page-button:hover {
     background-color: #bbb;
-}
+} */
 
 #search-type option {
     font-size: 16px;
