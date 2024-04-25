@@ -9,9 +9,9 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
     height: 100%;
-    background: linear-gradient(to bottom right, #ffd8e6, #b3e0ff);
+    /* background: linear-gradient(to bottom right, #ffd8e6, #b3e0ff); */
     /* Light pink to light blue */
     background-position: center 600px;
 }
@@ -27,17 +27,52 @@ body::-webkit-scrollbar {
     display: none;
 }
 
-h1 {
+
+/* h1 {
     font-size: 7rem;
-    font-family: "Arial";
+    font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
     position: fixed;
     left: 50%;
-    top: 35%;
+    top: 45%;
     transform: translate(-50%, -50%);
     z-index: 1;
     margin: 0;
     color: #2b2b2b;
     animation: bounceIn 2s ease forwards;
+} */
+
+h1 {
+    font-size: 7rem;
+    font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
+    position: fixed;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    margin: 0;
+    color: #2b2b2b;
+    animation: bounceIn 2s ease forwards;
+}
+
+
+/* Add the following CSS */
+
+#icon-container {
+    color: #953889;
+    position: relative;
+    top: 0.08em;
+    /* Adjust this value as needed to vertically align the icon */
+}
+
+#film-icon-container {
+    color: #953889;
+    position: relative;
+    top: 0.08em;
+    /* Adjust this value as needed to vertically align the icon */
+}
+
+#film-icon-container:hover i {
+    color: #b346a7;
 }
 
 @keyframes bounceIn {
@@ -259,13 +294,15 @@ section {
 
 .carousel {
     position: relative;
-    width: 1450px;
-    height: 815px;
+    width: 800px;
+    /* Reduced width for the carousel */
+    height: 450px;
+    /* Adjusted height proportionally */
     overflow: hidden;
     border-radius: 10px;
-    margin-left: 40px;
-    margin-right: 20px;
-    margin-top: -20px;
+    margin-left: 100px;
+    /* Center the carousel horizontally */
+    /* Adjusted margin-top to ensure proper spacing */
 }
 
 .carousel__slides {
@@ -330,25 +367,43 @@ section {
     padding: 20px;
     display: flex;
     flex-direction: column;
+    margin: 0 auto;
+    /* Center the main content horizontally */
+    max-width: 800px;
+    /* Match the width of the carousel */
+    margin-left: 100px;
+    /* Add larger left margin */
+    margin-right: 100px;
+    /* Add larger right margin */
 }
+
+
+/* Adjusted CSS for info container */
 
 .info-container {
     margin-top: 20px;
-    margin-left: 40px;
-    width: calc(1450px);
-    /* 1450px (carousel width) - 40px (left margin) - 20px (right margin) */
+    /* Add top margin for spacing */
+    margin-left: auto;
+    /* Auto left margin to center the content */
+    margin-right: auto;
+    /* Auto right margin to center the content */
+    width: calc(800px + 200px);
+    /* Adjusted width including side margins */
 }
 
+
+/* Adjusted CSS for info text */
+
 .info-text {
-    font-family: Arial, sans-serif;
     background-color: #f9f9f9;
     border-radius: 10px;
     padding: 20px;
-    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
-    width: 100%;
-    /* Set the width to 100% to match its parent's width */
-    max-width: calc(1450px);
-    /* Set max-width to prevent overflow */
+    width: 800px;
+    /* Match the width of the carousel */
+    max-width: 800px;
+    /* Limit the maximum width to match the carousel */
+    margin: 20px auto;
+    /* Center the info text horizontally and add vertical margin */
 }
 
 .info-text h2 {
@@ -368,4 +423,23 @@ section {
 
 #icon-container {
     transition: opacity 0.5s ease-in-out;
+}
+
+
+/* filmfinder home title*/
+
+.bottom {
+    color: black;
+    padding: 50px 0;
+    place-items: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.film-finder-text {
+    font-size: 4rem;
+    margin: 0;
+    /* Reset margin to ensure proper alignment */
+    text-align: center;
+    /* Center the text horizontally */
 }

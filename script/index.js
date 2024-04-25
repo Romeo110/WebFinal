@@ -13,154 +13,111 @@ function raf(time) {
 requestAnimationFrame(raf)
 
 const tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.img',
-            scrub: true
-        }
-    })
-    .to('.img', {
-        stagger: .5,
-        y: -500,
-        scale: 1,
+    scrollTrigger: {
+        trigger: '.img',
         scrub: true
-    })
-
-
-
-// Get the div element
-const header = document.querySelector('h1');
-
-// Add a scroll event listener to the window
-window.addEventListener('scroll', () => {
-    // Get the viewport height
-    const viewportHeight = window.innerHeight;
-
-    // Get the current scroll position
-    const scrollPosition = window.scrollY;
-
-    // Calculate the scroll position for 50% of the viewport
-    const scrollThreshold = viewportHeight / 2;
-
-    // Check if the scroll position is greater than or equal to the threshold
-    if (scrollPosition >= scrollThreshold) {
-        // Add the 'scroll' class to change the text color
-        header.classList.add('active');
-    } else {
-        // Remove the 'scroll' class if the scroll position is less than the threshold
-        header.classList.remove('active');
     }
+}).to('.img', {
+    stagger: .5,
+    y: -500,
+    scale: 1,
+    scrub: true
 });
 
-// Add a scroll event listener to the window
-window.addEventListener('scroll', () => {
-    // Get the viewport height
-    const viewportHeight = window.innerHeight;
+const header = document.querySelector('h1');
+let prevScrollPosition = window.scrollY;
 
-    // Get the current scroll position
+window.addEventListener('scroll', () => {
     const scrollPosition = window.scrollY;
 
-    // Calculate the scroll position for revealing the new homepage
-    const revealThreshold = viewportHeight / 2;
+    const hideThreshold = 870;
 
-    // Check if the scroll position is greater than or equal to the threshold
+    if (scrollPosition >= hideThreshold) {
+        // Use GSAP to fade out the h1 element
+        gsap.to(header, {
+            opacity: 0,
+            duration: 0.1, // Adjust duration as needed for the fade animation
+            onComplete: () => {
+                header.style.display = "none"; // Hide the text after fading out
+            }
+        });
+    } else {
+        // Use GSAP to fade in the h1 element
+        gsap.to(header, {
+            opacity: 1,
+            duration: 0.3 // Adjust duration as needed for the fade animation
+        });
+
+        // Gradually change text color to white as scrolling to 860 pixels
+        const maxColorValue = 255; // Maximum color value for RGB
+        const textColor = Math.min(maxColorValue, Math.round((scrollPosition / hideThreshold) * maxColorValue));
+        header.style.color = `rgb(${textColor}, ${textColor}, ${textColor})`;
+    }
+
+    // Check if scrolling up and the header is hidden, then show it again
+    if (scrollPosition < prevScrollPosition && header.style.display === "none") {
+        header.style.display = "block";
+        gsap.to(header, { opacity: 1, duration: 0.3 });
+    }
+
+    prevScrollPosition = scrollPosition;
+});
+
+
+// Revealing homepage section on scroll
+window.addEventListener('scroll', () => {
+    const viewportHeight = window.innerHeight;
+    const scrollPosition = window.scrollY;
+    const revealThreshold = viewportHeight * .1;
+
     if (scrollPosition >= revealThreshold) {
-        // Add the 'active' class to reveal the new homepage
         document.querySelector('.homepage').classList.add('active');
     } else {
-        // Remove the 'active' class to hide the new homepage
         document.querySelector('.homepage').classList.remove('active');
     }
 });
 
-// Wait for the DOM content to load
-document.addEventListener("DOMContentLoaded", function() {
-    // Get the homepage section
-    const homepageSection = document.querySelector(".homepage");
-
-    // Get the h1 element
-    const h1Element = document.querySelector("h1");
-
-    // Function to check if the user has scrolled to the homepage section
-    function isScrolledIntoView(element) {
-        const rect = element.getBoundingClientRect();
-        const elemHeight = rect.bottom - rect.top;
-        return (
-            rect.top >= -elemHeight / 2 &&
-            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) + elemHeight / 2
-        );
-    }
-
-
-    // Function to handle scroll events
-    function handleScroll() {
-        // Check if the homepage section is in view
-        if (isScrolledIntoView(homepageSection)) {
-            // Hide the h1 element
-            h1Element.style.display = "none";
-        } else {
-            // Show the h1 element
-            h1Element.style.display = "block";
-        }
-    }
-
-    // Add scroll event listener to the window
-    window.addEventListener("scroll", handleScroll);
-
-    // Trigger initial check on page load
-    handleScroll();
-});
-
+// Intersection observer for sidebar floating effect
 document.addEventListener("DOMContentLoaded", function() {
     const homepageSection = document.getElementById("homepage");
     const sidebar = document.querySelector(".homepage .sidebar");
 
-    // Options for the intersection observer
     const options = {
-        threshold: 0.6 // Trigger when 50% of the element is visible
+        threshold: 0.6
     };
 
-    // Callback function to handle intersection changes
     function handleIntersection(entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 sidebar.classList.add("floating");
-                sidebar.style.opacity = '1'; // Make sidebar visible when in view
+                sidebar.style.opacity = '1';
             } else {
                 sidebar.classList.remove("floating");
-                sidebar.style.opacity = '0'; // Hide sidebar when out of view
+                sidebar.style.opacity = '0';
             }
         });
     }
 
-    // Create an intersection observer
     const observer = new IntersectionObserver(handleIntersection, options);
-
-    // Observe the homepage section
     observer.observe(homepageSection);
 });
 
-// Get the icon and icon container elements
+// Icon rotation and change animation on scroll
 const iconContainer = document.getElementById('icon-container');
 const icon = iconContainer.querySelector('i');
 
-// Add a scroll event listener to the window
 window.addEventListener('scroll', () => {
-    // Get the current scroll position
     const scrollPosition = window.scrollY;
+    const rotationFactor = 0.5;
 
-    // Define a factor to slow down the rotation
-    const rotationFactor = 0.5; // Adjust this value to change the rotation speed
-
-    // Rotate the icon based on the scroll position
     icon.style.transform = `rotate(${scrollPosition * rotationFactor}deg)`;
 
-    // Fade out the icon and change to a new icon if scrolled down enough
-    if (scrollPosition > 200) { // Adjust the threshold as needed
+    if (scrollPosition > 200) {
         iconContainer.style.opacity = '0';
         setTimeout(() => {
             icon.className = 'bx bx-wink-smile';
             iconContainer.style.opacity = '1';
-        }, 500); // Adjust the delay as needed
+        }, 500);
     } else {
         iconContainer.style.opacity = '1';
     }
