@@ -122,3 +122,23 @@ window.addEventListener('scroll', () => {
         iconContainer.style.opacity = '1';
     }
 });
+
+// footer swap
+window.addEventListener('scroll', function() {
+    var scrollPosition = window.scrollY;
+    var windowHeight = window.innerHeight;
+    var documentHeight = document.documentElement.scrollHeight;
+    var threshold = 200;
+
+    // Check if the scrollbar is at the bottom of the page
+    if (scrollPosition + windowHeight >= documentHeight - threshold) {
+        // Show animated footer
+        document.body.classList.add('show-footer');
+    } else {
+        // Hide animated footer
+        document.body.classList.remove('show-footer');
+    }
+});
+
+// Trigger the scroll event once to ensure the appropriate footer is initially shown
+window.dispatchEvent(new Event('scroll'));

@@ -168,6 +168,10 @@ section {
 
 /* Homepage CSS */
 
+.homepage {
+    margin-bottom: 600px;
+}
+
 .homepage body {
     margin: 0;
     padding: 0;
@@ -442,4 +446,27 @@ section {
     /* Reset margin to ensure proper alignment */
     text-align: center;
     /* Center the text horizontally */
+}
+
+
+/* Footer Styles */
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    opacity: 0;
+    /* Initially hide the footer */
+    transition: opacity 0.5s ease-in-out;
+    /* Add transition for opacity */
+}
+
+.footer {
+    display: block;
+}
+
+.show-footer footer {
+    opacity: 1;
+    /* Show the footer */
 }
