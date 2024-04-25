@@ -291,3 +291,75 @@ body {
     color: #b346a7;
     /* Change the hover color to a more modern look */
 }
+
+
+/* Footer Styles */
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    opacity: 0;
+    /* Initially hide the footer */
+    transition: opacity 0.5s ease-in-out;
+    /* Add transition for opacity */
+    z-index: -1;
+}
+
+.footer {
+    display: block;
+}
+
+.show-footer footer {
+    opacity: 1;
+    /* Show the footer */
+}
+
+
+/* CSS for horizontal navbar */
+
+.horizontal-navbar {
+    background-color: #333;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.horizontal-navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.horizontal-navbar li {
+    margin-right: 20px;
+}
+
+.horizontal-navbar a {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.horizontal-navbar a .item-icon {
+    margin-right: 5px;
+}
+
+.horizontal-navbar a:hover {
+    background-color: #555;
+}
+
+@media (max-width: 768px) {
+    .horizontal-navbar .item-txt {
+        display: none;
+        /* Hide the text labels on small screens */
+    }
+}
