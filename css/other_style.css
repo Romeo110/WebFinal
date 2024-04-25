@@ -142,15 +142,21 @@ body {
 
 #search-filter button {
     font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
-    margin-left: 10px;
-    padding: 10px 20px;
+    margin-left: 15px;
+    width: 40px;
+    height: 40px;
+    /* padding: 10px 20px; */
     background-color: #cf66c5;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 50%;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+}
+
+#search-filter button i {
+    margin-top: 4px;
 }
 
 #search-filter button:hover {
