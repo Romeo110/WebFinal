@@ -1,6 +1,9 @@
+html {
+    font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
+}
+
 body {
-    background: linear-gradient(to bottom right, #ffd8e6, #b3e0ff);
-    font-family: Arial, sans-serif;
+    margin-bottom: 400px;
 }
 
 .homepage body {
@@ -14,7 +17,7 @@ body {
 
 .homepage .item-txt {
     padding-left: .5rem;
-    font-family: Arial, sans-serif;
+    font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
 }
 
 .homepage .container {
@@ -116,14 +119,16 @@ body {
 }
 
 #search {
+    font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
     width: 300px;
-    padding: 10px;
+    padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
 }
 
 #search-type {
+    font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
     margin-left: 10px;
     padding: 8px;
     border: 1px solid #ccc;
@@ -136,9 +141,10 @@ body {
 }
 
 #search-filter button {
+    font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
     margin-left: 10px;
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #cf66c5;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -148,7 +154,7 @@ body {
 }
 
 #search-filter button:hover {
-    background-color: #0056b3;
+    background-color: #b346a7;
 }
 
 
@@ -165,7 +171,7 @@ body {
     background-color: #f9f9f9;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
     padding: 20px;
 }
 
@@ -242,17 +248,23 @@ body {
     background-color: #bbb;
 }
 
+#search-type option {
+    font-size: 16px;
+    /* Adjust the font size as needed */
+    font-weight: lighter;
+    /* Reduce the font weight */
+}
+
 #search-filter {
     margin-top: 20px;
-    margin-left: 150px;
-    /* Adjusted margin to shift to the right */
+    margin-left: 300px;
 }
 
 #search-results,
 #random-movies,
 #pagination {
-    margin-left: 150px;
-    margin-right: 100px;
+    margin-left: 300px;
+    margin-right: 300px;
     /* Adjusted margin to shift to the right */
 }
 
@@ -276,6 +288,6 @@ body {
 }
 
 .movie-info a:hover {
-    color: #ff5722;
+    color: #b346a7;
     /* Change the hover color to a more modern look */
 }
