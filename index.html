@@ -11,6 +11,65 @@
 </head>
 
 <body>
+    <!-- horizontal navbar -->
+    <div class="navbar">
+        <div class="horizontal-navbar">
+            <ul>
+                <li>
+                    <a href="index.html" class="nav-link">
+                        <span class="item-icon">
+                            <i class='bx bxs-home'></i>
+                        </span>
+                        <span class="item-txt">
+                            Home
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="movies.html" class="nav-link">
+                        <span class="item-icon">
+                            <i class='bx bx-movie'></i>
+                        </span>
+                        <span class="item-txt">
+                            Movies
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="recommend.php" class="nav-link">
+                        <span class="item-icon">
+                            <i class='bx bxs-dish'></i>
+                        </span>
+                        <span class="item-txt">
+                            MadeForYou
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link">
+                        <span class="item-icon">
+                            <i class='bx bxs-objects-vertical-bottom'></i>
+                        </span>
+                        <span class="item-txt">
+                            Compare
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link">
+                        <span class="item-icon">
+                            <i class='bx bxs-user'></i>
+                        </span>
+                        <span class="item-txt">
+                            Profile
+                        </span>
+                    </a>
+                </li>
+                <!-- Additional menu items if needed -->
+            </ul>
+        </div>
+    </div>
+
 
     <h1>Your Next </br> MOVIE </br> SORTED
         <span id="icon-container"><i class='bx bx-down-arrow-circle'></i></span>
@@ -98,31 +157,22 @@
             </div>
         </div>
         <div class="main-content">
-            <div class="carousel">
-                <input class="carousel__input" type="radio" name="carousel" id="slide1">
-                <input class="carousel__input" type="radio" name="carousel" id="slide2">
-                <input class="carousel__input" type="radio" name="carousel" id="slide3">
-
-                <div class="carousel__slides">
-                    <div class="carousel__slide">
+            <div class="info-container">
+                <div class="carousel">
+                    <div class="carousel__slides">
                         <img src="img/img-1.jpg" alt="Image 1">
-                    </div>
-                    <div class="carousel__slide">
                         <img src="img/img-2.jpg" alt="Image 2">
-                    </div>
-                    <div class="carousel__slide">
                         <img src="img/img-3.jpg" alt="Image 3">
                     </div>
-                </div>
-
-                <div class="carousel__indicators">
-                    <label class="carousel__indicator" for="slide1"></label>
-                    <label class="carousel__indicator" for="slide2"></label>
-                    <label class="carousel__indicator" for="slide3"></label>
+                    <div class="carousel__controls">
+                        <button id="prevBtn" class="prev">&#10094;</button>
+                        <button id="nextBtn" class="next">&#10095;</button>
+                    </div>
                 </div>
             </div>
 
             <div class="info-container">
+
                 <div class="info-text">
                     <h2>What is FilmFinder?</h2>
                     <p>Welcome to FilmFinder, your premier destination for informed movie choices! Our platform offers a comprehensive suite of features designed to enhance your movie-watching experience. Easily compare ratings, reviews, and other relevant
@@ -154,8 +204,6 @@
 
 
     <!-- Footer -->
-    <footer class="rectangular-footer">© 2024 FilmFinder. All rights reserved.</footer>
-
     <footer class="footer">
         <div class="background">
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100%" height="100%" viewBox="0 0 1600 900">

@@ -128,7 +128,7 @@ window.addEventListener('scroll', function() {
     var scrollPosition = window.scrollY;
     var windowHeight = window.innerHeight;
     var documentHeight = document.documentElement.scrollHeight;
-    var threshold = 200;
+    var threshold = 30;
 
     // Check if the scrollbar is at the bottom of the page
     if (scrollPosition + windowHeight >= documentHeight - threshold) {
@@ -142,3 +142,44 @@ window.addEventListener('scroll', function() {
 
 // Trigger the scroll event once to ensure the appropriate footer is initially shown
 window.dispatchEvent(new Event('scroll'));
+
+//image carousel toggle
+let currentSlide = 0;
+const slides = document.querySelectorAll('.carousel__slides img');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+function showSlide(index) {
+    // Loop around if index is out of bounds
+    if (index < 0) {
+        currentSlide = slides.length - 1;
+    } else if (index >= slides.length) {
+        currentSlide = 0;
+    } else {
+        currentSlide = index;
+    }
+
+    // Show the current slide and hide others
+    slides.forEach((slide, i) => {
+        if (i === currentSlide) {
+            slide.style.display = 'block';
+        } else {
+            slide.style.display = 'none';
+        }
+    });
+}
+
+function prevSlide() {
+    showSlide(currentSlide - 1);
+}
+
+function nextSlide() {
+    showSlide(currentSlide + 1);
+}
+
+// Attach event listeners to the previous and next buttons
+prevBtn.addEventListener('click', prevSlide);
+nextBtn.addEventListener('click', nextSlide);
+
+// Show the initial slide
+showSlide(currentSlide);
