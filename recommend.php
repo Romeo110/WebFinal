@@ -81,25 +81,53 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       $allRecommendedMovies = array();
 
       // Example nested loops structure
+      // foreach ($genres as $genre) {
+      //   foreach ($languages as $language) {
+      //       foreach ($actorDirectors as $actorDirector) {
+      //           $actor = urlencode($actorDirector);
+      //           $discoverMoviesUrl = "https://api.themoviedb.org/3/discover/movie";
+      //           $discoverMoviesUrl .= "?api_key={$apiKey}";
+      //           $discoverMoviesUrl .= "&language={$language}";
+      //           $discoverMoviesUrl .= "&with_genres={$genre}";
+      //           $discoverMoviesUrl .= "&with_people={$actorId}";
+      //           $discoverMoviesUrl .= "&vote_average.gte=6"; // Minimum rating of 6
+      //           $discoverMoviesUrl .= "&primary_release_date.gte={$minDecade}";
+      //           $discoverMoviesUrl .= "&primary_release_date.lte={$maxDecade}";
+      //           $discoverMoviesUrl .= "&page={$currentPage}";
+    
+      //           // Fetch movies based on the constructed URL
+      //           $discoverMoviesResponse = file_get_contents($discoverMoviesUrl);
+      //           $discoverMoviesData = json_decode($discoverMoviesResponse, true);
+    
+      //           // Check if the fetched data is not empty
+      //           if (!empty($discoverMoviesData['results'])) {
+      //               foreach ($discoverMoviesData['results'] as $movie) {
+      //                   // Check if the movie already exists in the array
+      //                   if (!in_array($movie, $allRecommendedMovies)) {
+      //                       $allRecommendedMovies[] = $movie;
+      //                   }
+      //               }
+      //           }
+      //       }
+      //   }
+      // }
+
       foreach ($genres as $genre) {
-        foreach ($languages as $language) {
-            foreach ($actorDirectors as $actorDirector) {
-                $actor = urlencode($actorDirector);
-                $discoverMoviesUrl = "https://api.themoviedb.org/3/discover/movie";
-                $discoverMoviesUrl .= "?api_key={$apiKey}";
-                $discoverMoviesUrl .= "&language={$language}";
-                $discoverMoviesUrl .= "&with_genres={$genre}";
-                $discoverMoviesUrl .= "&with_people={$actorId}";
-                $discoverMoviesUrl .= "&vote_average.gte=6"; // Minimum rating of 6
-                $discoverMoviesUrl .= "&primary_release_date.gte={$minDecade}";
-                $discoverMoviesUrl .= "&primary_release_date.lte={$maxDecade}";
-                $discoverMoviesUrl .= "&page={$currentPage}";
-    
-                // Fetch movies based on the constructed URL
-                $discoverMoviesResponse = file_get_contents($discoverMoviesUrl);
-                $discoverMoviesData = json_decode($discoverMoviesResponse, true);
-    
-                // Check if the fetched data is not empty
+        $discoverMoviesUrl = "https://api.themoviedb.org/3/discover/movie";
+        $discoverMoviesUrl .= "?api_key={$apiKey}";
+        $discoverMoviesUrl .= "&with_genres={$genre}";
+        $discoverMoviesUrl .= "&page={$currentPage}";
+
+        // Fetch movies based on the constructed URL
+        $discoverMoviesResponse = file_get_contents($discoverMoviesUrl);
+        if ($discoverMoviesResponse === false) {
+            echo "Failed to fetch movies from TMDB API.";
+        } else {
+            $discoverMoviesData = json_decode($discoverMoviesResponse, true);
+            if ($discoverMoviesData === null) {
+                echo "Failed to decode JSON response from TMDB API.";
+            } else {
+                // Add fetched movies to the allRecommendedMovies array
                 if (!empty($discoverMoviesData['results'])) {
                     foreach ($discoverMoviesData['results'] as $movie) {
                         // Check if the movie already exists in the array
@@ -107,42 +135,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                             $allRecommendedMovies[] = $movie;
                         }
                     }
+                } else {
+                    echo "No movies found in TMDB API response.";
                 }
             }
         }
       }
-
-      // foreach ($genres as $genre) {
-      //   $discoverMoviesUrl = "https://api.themoviedb.org/3/discover/movie";
-      //   $discoverMoviesUrl .= "?api_key={$apiKey}";
-      //   $discoverMoviesUrl .= "&with_genres={$genre}";
-      //   $discoverMoviesUrl .= "&page={$currentPage}";
-
-      //   // Fetch movies based on the constructed URL
-      //   $discoverMoviesResponse = file_get_contents($discoverMoviesUrl);
-      //   if ($discoverMoviesResponse === false) {
-      //       echo "Failed to fetch movies from TMDB API.";
-      //   } else {
-      //       $discoverMoviesData = json_decode($discoverMoviesResponse, true);
-      //       if ($discoverMoviesData === null) {
-      //           echo "Failed to decode JSON response from TMDB API.";
-      //       } else {
-      //           // Add fetched movies to the allRecommendedMovies array
-      //           if (!empty($discoverMoviesData['results'])) {
-      //               echo "Found " . count($discoverMoviesData['results']) . " movies in TMDB API response.";
-      //               foreach ($discoverMoviesData['results'] as $movie) {
-      //                   // Check if the movie already exists in the array
-      //                   if (!in_array($movie, $allRecommendedMovies)) {
-      //                       $allRecommendedMovies[] = $movie;
-      //                   }
-      //               }
-      //               echo "Completed adding movies.";
-      //           } else {
-      //               echo "No movies found in TMDB API response.";
-      //           }
-      //       }
-      //   }
-      // }
 
       // Display recommended movies
       if (!empty($allRecommendedMovies)) {
