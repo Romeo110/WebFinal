@@ -91,26 +91,61 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="signup.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://kit.fontawesome.com/46b7ceee20.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/signup_login.css">
     <title>Login</title>
 </head>
 <body>
-    <div class="container">
-        <h2>Login to Your Account</h2>
-        <form method="POST">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <span class="error"><?php echo $email_err; ?></span>
-
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <span class="error"><?php echo $password_err; ?></span>
-
-            <button type="submit">Login</button>
-            <p class="alternate-action">Don't have an account? <a href="signup.php">Sign Up</a></p>
-            <span class="error"><?php echo $login_err; ?></span>
-        </form>
+        <!-- nav bar with only home button -->
+        <div class="navbar">
+            <div class="horizontal-navbar">
+                <ul>
+                    <li>
+                        <a href="index.html" class="nav-link">
+                            <span class="item-icon">
+                            <i class='bx bxs-home'></i>
+                        </span>
+                            <span class="item-txt">
+                            Home
+                        </span>
+                        </a>
+                    </li>
+                    <!-- Additional menu items if needed -->
+                </ul>
+            </div>
+        </div>
+        <div class="signup-card">
+    <div class="intro-section">
+        <div class="signup-intro">
+            <div class="intro-control__inner">
+                <h2>Welcome back!</h2>
+                <p>We are so excited to have you back with us. Pick out the newest and hottest shows and movies to watch today.</p>
+                <p class="alternate-action">Don't have an account? </p>
+                <p> <a href="signup.php" class="login-link">Sign up here</a></p>
+            </div>
+        </div>
     </div>
+
+    <div class="form-section">
+        <div class="container">
+            <h2>Log In</h2>
+            <form method="POST">
+                <label for="email">Enter Your Email</label>
+                <input type="email" id="email" name="email" required>
+                <span class="error"><?php echo $email_err; ?></span>
+
+                <label for="password">Enter Your Password</label>
+                <input type="password" id="password" name="password" required>
+                <span class="error"><?php echo $password_err; ?></span>
+
+                <button type="submit">Login</button>
+                <span class="error"><?php echo $login_err; ?></span>
+            </form>
+        </div>
+    </div>
+</div>
+
     <script>
         // Store user ID in local storage after successful login
         <?php if(isset($_SESSION['id'])) : ?>
@@ -119,3 +154,4 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     </script>
 </body>
 </html>
+
