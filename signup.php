@@ -177,7 +177,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <span class="error"><?php echo $password_err; ?></span>
 
                 <button type="submit">Sign Up</button>
-                <span class="error"><?php echo $signup_err; ?></span> -->
+                <span class="error"><?php echo $signup_err; ?></span>
             </form>
         </div>
     </div>
