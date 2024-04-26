@@ -93,7 +93,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     mysqli_close($conn);
 }
 ?>
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -119,4 +119,72 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         </form>
     </div>
 </body>
-</html>
+</html> -->
+<!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <script src="https://kit.fontawesome.com/46b7ceee20.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="css/signup.css">
+
+        <title>Sign Up</title>
+    </head>
+
+    <body>
+        <!-- nav bar with only home button -->
+        <div class="navbar">
+            <div class="horizontal-navbar">
+                <ul>
+                    <li>
+                        <a href="index.html" class="nav-link">
+                            <span class="item-icon">
+                            <i class='bx bxs-home'></i>
+                        </span>
+                            <span class="item-txt">
+                            Home
+                        </span>
+                        </a>
+                    </li>
+                    <!-- Additional menu items if needed -->
+                </ul>
+            </div>
+        </div>
+        <div class="signup-card">
+    <div class="intro-section">
+        <div class="signup-intro">
+            <div class="intro-control__inner">
+                <h2>Come join us!</h2>
+                <p>We are so excited to have you here. If you haven't already, create an account to get access to our services and offers.</p>
+                <p class="alternate-action">Already have an account? </p>
+                <p> <a href="login.php" class="login-link">Log in here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <div class="container">
+            <h2>Sign Up</h2>
+            <form method="POST">
+                <label for="email">Enter Your Email</label>
+                <input type="email" id="email" name="email" required>
+                <span class="error"><?php echo $email_err; ?></span>
+
+                <label for="password">Create a Password</label>
+                <input type="password" id="password" name="password" required>
+                <span class="error"><?php echo $password_err; ?></span>
+
+                <button type="submit">Sign Up</button>
+                <!-- <p class="alternate-action">Already have an account? <a href="login.php">Login</a></p>
+                <span class="error"><?php echo $signup_err; ?></span> -->
+            </form>
+        </div>
+    </div>
+</div>
+
+
+    </body>
+
+    </html>
