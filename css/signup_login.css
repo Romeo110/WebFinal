@@ -1,0 +1,142 @@
+/* CSS for horizontal navbar */
+
+html {
+    font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
+}
+
+.horizontal-navbar {
+    background-color: #333;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    left: 0px;
+}
+
+.horizontal-navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.horizontal-navbar li {
+    margin-right: 20px;
+}
+
+.horizontal-navbar a {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.horizontal-navbar a .item-icon {
+    margin-right: 5px;
+}
+
+.horizontal-navbar a:hover {
+    background-color: #555;
+}
+
+@media (max-width: 768px) {
+    .horizontal-navbar .item-txt {
+        display: none;
+        /* Hide the text labels on small screens */
+    }
+}
+
+
+/* CSS for sign-up card */
+
+.signup-card {
+    margin: 300px auto;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 800px;
+    display: flex;
+    background: linear-gradient(to right, #389544 50%, #ffffff 50%);
+}
+
+.intro-section,
+.form-section {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.intro-section {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 40px;
+    margin-right: 40px;
+}
+
+.intro-section h2,
+.intro-section p {
+    color: #fff;
+}
+
+.form-section {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.container {
+    text-align: left;
+    color: #000;
+}
+
+.container h2 {
+    margin-bottom: 20px;
+}
+
+.container label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.container input[type="email"],
+.container input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.container button[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.container button[type="submit"]:hover {
+    background-color: #555;
+}
+
+.error {
+    color: red;
+    margin-top: 10px;
+}
+
+.login-link {
+    color: #ffffff;
+    text-decoration: underline;
+    /* Add underline to indicate link */
+    font-weight: bold;
+    /* Increase font weight for better readability */
+}
