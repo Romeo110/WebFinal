@@ -81,43 +81,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       // Initialize an empty array to store all recommended movies
       $allRecommendedMovies = array();
 
-      // Example nested loops structure
-      // foreach ($genres as $genre) {
-      //   foreach ($languages as $language) {
-      //       foreach ($actorDirectors as $actorDirector) {
-      //           $actor = urlencode($actorDirector); // Assuming actor/director is the same
-      //           $actorSearchUrl = "https://api.themoviedb.org/3/search/person?api_key={$apiKey}&query={$actor}";
-      //           $actorResponse = file_get_contents($actorSearchUrl);
-      //           $actorData = json_decode($actorResponse, true);
-      //           $actorId = isset($actorData['results'][0]['id']) ? $actorData['results'][0]['id'] : null;
-
-      //           $discoverMoviesUrl = "https://api.themoviedb.org/3/discover/movie";
-      //           $discoverMoviesUrl .= "?api_key={$apiKey}";
-      //           $discoverMoviesUrl .= "&language={$language}";
-      //           $discoverMoviesUrl .= "&with_genres={$genre}";
-      //           $discoverMoviesUrl .= "&with_people={$actorId}";
-      //           $discoverMoviesUrl .= "&vote_average.gte=6"; // Minimum rating of 6
-      //           $discoverMoviesUrl .= "&primary_release_date.gte={$minDecade}";
-      //           $discoverMoviesUrl .= "&primary_release_date.lte={$maxDecade}";
-      //           $discoverMoviesUrl .= "&page={$currentPage}";
-    
-      //           // Fetch movies based on the constructed URL
-      //           $discoverMoviesResponse = file_get_contents($discoverMoviesUrl);
-      //           $discoverMoviesData = json_decode($discoverMoviesResponse, true);
-    
-      //           // Check if the fetched data is not empty
-      //           if (!empty($discoverMoviesData['results'])) {
-      //               foreach ($discoverMoviesData['results'] as $movie) {
-      //                   // Check if the movie already exists in the array
-      //                   if (!in_array($movie, $allRecommendedMovies)) {
-      //                       $allRecommendedMovies[] = $movie;
-      //                   }
-      //               }
-      //           }
-      //       }
-      //   }
-      // }
-
       $allMovies = []; // Initialize an array to store all movies
       $actorIds = [];
 
