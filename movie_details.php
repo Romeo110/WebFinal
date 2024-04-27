@@ -209,9 +209,6 @@ $conn->close();
 
     </footer>
 
-
-
-
     <script>
         function goBack() {
             window.history.back();
@@ -240,6 +237,7 @@ $conn->close();
 
         // Function to fetch movie details by ID
         function fetchMovieDetails(movieId) {
+            // var movieId = 934632;
             var apiKey = 'd5697eb16a89b204a004af1f8fea130c';
             var movieUrl = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=en-US`;
             var creditsUrl = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}`;
@@ -290,17 +288,17 @@ $conn->close();
             var backdropContainer = document.getElementById('backdrop-container');
             backdropContainer.innerHTML = ''; // Clear previous backdrops
 
-            // Loop through the backdrops and create image elements
-            backdrops.backdrops.forEach((backdrop, index) => {
+            // Loop through the first 6 backdrops and create image elements
+            for (let i = 0; i < Math.min(6, backdrops.backdrops.length); i++) {
                 var backdropImage = document.createElement('img');
-                backdropImage.src = `https://image.tmdb.org/t/p/original${backdrop.file_path}`; // Use 'original' size for high resolution
+                backdropImage.src = `https://image.tmdb.org/t/p/original${backdrops.backdrops[i].file_path}`; // Use 'original' size for high resolution
                 backdropImage.alt = 'Backdrop Image';
                 backdropImage.classList.add('backdrop-image'); // Add a class for styling
-                if (index === 0) {
+                if (i === 0) {
                     backdropImage.classList.add('large'); // Add class to make the first image larger
                 }
                 backdropContainer.appendChild(backdropImage);
-            });
+            }
 
         }
 
@@ -486,25 +484,6 @@ $conn->close();
             });
 
             // Your existing code to fetch and display backdrop images...
-
-            // Function to display movie backdrops
-            function displayMovieBackdrops(backdrops) {
-                // Assuming you have a container element with id 'backdrop-container' to display the backdrops
-                var backdropContainer = document.getElementById('backdrop-container');
-                backdropContainer.innerHTML = ''; // Clear previous backdrops
-
-            // Loop through the first 6 backdrops and create image elements
-            for (let i = 0; i < Math.min(6, backdrops.backdrops.length); i++) {
-                var backdropImage = document.createElement('img');
-                backdropImage.src = `https://image.tmdb.org/t/p/original${backdrops.backdrops[i].file_path}`; // Use 'original' size for high resolution
-                backdropImage.alt = 'Backdrop Image';
-                backdropImage.classList.add('backdrop-image'); // Add a class for styling
-                if (i === 0) {
-                    backdropImage.classList.add('large'); // Add class to make the first image larger
-                }
-                backdropContainer.appendChild(backdropImage);
-            }
-            }
         });
     </script>
 </body>
