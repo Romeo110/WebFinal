@@ -1,0 +1,331 @@
+html {
+    font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
+}
+
+body {
+    margin-bottom: 400px;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* CSS for horizontal navbar */
+
+.horizontal-navbar {
+    background-color: #333;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    left: 0px;
+}
+
+.horizontal-navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.horizontal-navbar li {
+    margin-right: 20px;
+}
+
+.horizontal-navbar a {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.horizontal-navbar a .item-icon {
+    margin-right: 5px;
+}
+
+.horizontal-navbar a:hover {
+    background-color: #555;
+}
+
+
+/* Adjustments for smaller screen sizes */
+
+@media only screen and (max-width: 768px) {
+    .horizontal-navbar ul {
+        flex-direction: row;
+        align-items: center;
+    }
+    .horizontal-navbar li {
+        margin: 0 10px;
+    }
+    .horizontal-navbar a .item-txt {
+        display: none;
+        /* Hide text labels on smaller screens */
+    }
+}
+
+
+/* Footer Styles */
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    opacity: 0;
+    /* Initially hide the footer */
+    transition: opacity 0.5s ease-in-out;
+    /* Add transition for opacity */
+    z-index: -1;
+}
+
+.footer {
+    display: block;
+}
+
+.show-footer footer {
+    opacity: 1;
+    /* Show the footer */
+}
+
+.main-content {
+    padding: 20px;
+    margin-top: 50px;
+    margin-left: 300px;
+    margin-right: 300px;
+    /* Adjust as needed */
+}
+
+#movie-details {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+.watchlist-button {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+#movie-details h2 {
+    font-size: 48px;
+    color: #401238;
+}
+
+
+/* movie_details.css */
+
+
+/* Styling for the image container */
+
+.image-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    overflow: hidden;
+}
+
+
+/* Styling for the movie image */
+
+.movie-image {
+    max-width: 100%;
+    max-height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 10px;
+    /* Round the borders */
+}
+
+.cast-item img {
+    max-width: 100%;
+    max-height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 10px;
+    /* Round the borders */
+}
+
+
+/* Stack the cast images horizontally */
+
+.cast-item {
+    display: inline-block;
+    margin-right: 50px;
+    /* Adjust spacing between images */
+}
+
+#movie-details {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    /* Add a subtle shadow */
+}
+
+#movie-details h2 {
+    font-size: 36px;
+    /* Reduce the font size for the title */
+    color: #401238;
+    margin-bottom: 10px;
+    /* Add some space below the title */
+}
+
+#movie-details p {
+    font-size: 18px;
+    /* Increase the font size for the details */
+    color: #666;
+    /* Darken the text color */
+    margin-bottom: 8px;
+    /* Add some space between details */
+}
+
+
+/* Styling for specific details */
+
+#movie-details .movie-overview {
+    font-style: italic;
+    /* Make the overview italic */
+}
+
+#movie-details .movie-tagline {
+    font-weight: bold;
+    /* Make the tagline bold */
+}
+
+#movie-details .movie-image {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    /* Add space below the movie image */
+}
+
+
+/* Styling for the cast section */
+
+#movie-details h3 {
+    font-size: 24px;
+    /* Reduce the font size for headings */
+    color: #401238;
+    margin-bottom: 10px;
+    /* Add space below headings */
+}
+
+.cast-item {
+    margin-bottom: 20px;
+    /* Add space between cast items */
+}
+
+.cast-item img {
+    width: 100px;
+    height: 150px;
+    /* Adjust the size of cast images */
+    border-radius: 10px;
+    /* Add rounded corners to images */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Add a subtle shadow to images */
+}
+
+.cast-item p {
+    font-size: 16px;
+    /* Adjust the font size for cast names */
+    color: #333;
+    /* Darken the text color */
+    margin-top: 8px;
+    /* Add space above cast names */
+}
+
+
+/* Styling for the reviews section */
+
+.review {
+    margin-bottom: 20px;
+    /* Add space between reviews */
+}
+
+.review p {
+    font-size: 16px;
+    /* Reduce the font size for reviews */
+    color: #333;
+    /* Darken the text color */
+}
+
+.review .review-author {
+    font-style: italic;
+    /* Make the author italic */
+    color: #666;
+    /* Darken the text color */
+}
+
+
+/* CSS for organizing movie backdrops */
+
+#backdrop-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    /* Adjust the column size */
+    gap: 10px;
+    /* Adjust the gap between images */
+}
+
+.backdrop-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    /* Add rounded corners to images */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Add a subtle shadow to images */
+    transition: transform 0.3s ease;
+    /* Add transition for smooth animation */
+}
+
+
+/* Apply hover animation to the small photos */
+
+.backdrop-image:not(.large):hover {
+    transform: scale(1.05);
+    /* Scale the photo slightly on hover */
+}
+
+
+/* Apply custom styles to the larger backdrop image */
+
+.backdrop-image.large {
+    grid-column: span 5;
+    /* Span five columns */
+    height: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    /* Adjust height to maintain aspect ratio */
+}
+
+
+/* Adjust the position of other images */
+
+.backdrop-image:not(.large) {
+    grid-column: span 1;
+    /* Span one column */
+}
