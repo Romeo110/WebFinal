@@ -81,7 +81,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         </div>
 
 
-        <main>
+        <div class="main-content">
             <section id="recommendations">
                 <h2>Recommended Movies</h2>
                 <?php
@@ -390,7 +390,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       }
       ?>
             </section>
-        </main>
+        </div>
 
         <footer>
             <p>&copy; 2024 FilmFinder. All rights reserved.</p>
