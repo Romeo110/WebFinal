@@ -239,7 +239,6 @@ $conn->close();
 
         // Function to fetch movie details by ID
         function fetchMovieDetails(movieId) {
-            var movieId = 934632;
             var apiKey = 'd5697eb16a89b204a004af1f8fea130c';
             var movieUrl = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=en-US`;
             var creditsUrl = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}`;
