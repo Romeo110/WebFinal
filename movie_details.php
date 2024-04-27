@@ -351,7 +351,7 @@ $conn->close();
             status.classList.add('movie-status'); // Add a class for styling
 
             var tagline = document.createElement('p');
-            tagline.textContent = `Tagline: ${movie.tagline}`;
+            tagline.textContent = `${movie.tagline}`;
             tagline.classList.add('movie-tagline'); // Add a class for styling
 
 
