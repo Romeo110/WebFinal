@@ -48,7 +48,7 @@ function fetchMovieDetails($movie_id) {
 }
 
 // Fetch movie IDs from the database
-$user_id = 1; // Replace with the actual user_id value
+$user_id = $_SESSION["id"]; // Replace with the actual user_id value
 $sql = "SELECT movie_id FROM favorite_movies WHERE user_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param('i', $user_id);
