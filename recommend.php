@@ -62,8 +62,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
           $actorDirectors = json_decode($row["actor_director"], true);
           $minDecade = $row["min_decade"];
           $maxDecade = $row["max_decade"];
+
+          // Convert language names to language codes using the reverse mapping array
           $languages = json_decode($row["language"], true);
-          
+          echo "Languages from database: ";
+          print_r($languages);
       } else {
           echo "No preferences found for the user.";
       }
@@ -79,6 +82,25 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
       // Initialize an empty array to store all recommended movies
       $allRecommendedMovies = array();
+
+      // Fetch list of languages from TMDB API and create a reverse mapping array
+      $languageMap = array();
+      $languagesResponse = file_get_contents("https://api.themoviedb.org/3/configuration/languages?api_key={$apiKey}");
+      $languagesData = json_decode($languagesResponse, true);
+      if ($languagesData) {
+          foreach ($languagesData as $language) {
+              $languageMap[$language['english_name']] = $language['iso_639_1'];
+          }
+      }
+      // echo "Language: " . reset($languages) . "<br>";
+      // foreach ($languages as &$language) {
+      //   echo "Language: $language<br>"; // Add line break after each language
+      //   $language = $languageMap[$language];
+      //   echo "Language code: $language<br>"; // Add line break after each language code
+      // }
+      foreach ($actorDirectors as $actorDirector) {
+        echo "Actor: $actorDirector<br>";
+      }
 
       // Example nested loops structure
       // foreach ($genres as $genre) {
@@ -112,10 +134,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       //   }
       // }
 
-      foreach ($genres as $genre) {
+      foreach ($languages as $language) {
         $discoverMoviesUrl = "https://api.themoviedb.org/3/discover/movie";
         $discoverMoviesUrl .= "?api_key={$apiKey}";
-        $discoverMoviesUrl .= "&with_genres={$genre}";
+        $discoverMoviesUrl .= "&language={$language}";
         $discoverMoviesUrl .= "&page={$currentPage}";
 
         // Fetch movies based on the constructed URL
