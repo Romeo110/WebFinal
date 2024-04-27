@@ -63,47 +63,37 @@ $conn->close();
 </head>
 
 <body>
-    <div class="navbar">
+<div class="navbar">
         <div class="horizontal-navbar">
             <ul>
                 <li>
                     <a href="index.html" class="nav-link">
                         <span class="item-icon">
-                                <i class='bx bxs-home'></i>
-                            </span>
+                            <i class='bx bxs-home'></i>
+                        </span>
                         <span class="item-txt">
-                                Home
-                            </span>
+                            Home
+                        </span>
                     </a>
                 </li>
                 <li>
                     <a href="movies.html" class="nav-link">
                         <span class="item-icon">
-                                <i class='bx bx-movie'></i>
-                            </span>
+                            <i class='bx bx-movie'></i>
+                        </span>
                         <span class="item-txt">
-                                Movies
-                            </span>
+                            Movies
+                        </span>
                     </a>
                 </li>
                 <li>
                     <a href="recommend.php" class="nav-link">
                         <span class="item-icon">
-                                <i class='bx bxs-dish'></i>
-                            </span>
+                            <i class='bx bxs-dish'></i>
+                        </span>
                         <span class="item-txt">
-                                MadeForYou
-                            </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link">
-                        <span class="item-icon">
-                                <i class='bx bxs-objects-vertical-bottom'></i>
-                            </span>
-                        <span class="item-txt">
-                                Compare
-                            </span>
+                            MadeForYou
+                        </span>
                     </a>
                 </li>
                 <li>
@@ -116,10 +106,21 @@ $conn->close();
                         </span>
                     </a>
                 </li>
+                <li>
+                    <a href="preferences.php" class="nav-link">
+                        <span class="item-icon">
+                            <i class='bx bx-cog'></i>
+                        </span>
+                        <span class="item-txt">
+                            Preferences
+                        </span>
+                    </a>
+                </li>
                 <!-- Additional menu items if needed -->
             </ul>
         </div>
     </div>
+
 
 
     <div class="main-content">
