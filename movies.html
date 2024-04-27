@@ -7,7 +7,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://kit.fontawesome.com/46b7ceee20.js" crossorigin="anonymous"></script>
     <title>FilmFinder - Movies</title>
-    <link rel="stylesheet" href="css/other_style.css">
+    <link rel="stylesheet" href="css/movies.css">
 </head>
 
 <body>
@@ -69,88 +69,31 @@
             </ul>
         </div>
     </div>
-    <section class="homepage" id="homepage">
-        <div class="container">
-            <div class="sidebar">
-                <ul>
-                    <li>
-                        <a href="index.html" class="nav-link">
-                            <span class="item-icon">
-                                <i class='bx bxs-home'></i>
-                            </span>
-                            <span class="item-txt">
-                                Home
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="movies.html" class="nav-link">
-                            <span class="item-icon">
-                                <i class='bx bx-movie'></i>
-                            </span>
-                            <span class="item-txt">
-                                Movies
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="recommend.php" class="nav-link">
-                            <span class="item-icon">
-                                <i class='bx bxs-dish'></i>
-                            </span>
-                            <span class="item-txt">
-                                MadeForYou
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link">
-                            <span class="item-icon">
-                                <i class='bx bxs-objects-vertical-bottom'></i>
-                            </span>
-                            <span class="item-txt">
-                                Compare
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link">
-                            <span class="item-icon">
-                                <i class='bx bxs-user'></i>
-                            </span>
-                            <span class="item-txt">
-                                Profile
-                            </span>
-                        </a>
-                    </li>
-                    <!-- Additional menu items if needed -->
-                </ul>
-            </div>
-        </div>
-    </section>
 
-    <section id="search-filter">
-        <input type="text" id="search" placeholder="Search for a movie...">
-        <select id="search-type">
+    <div class="search_and_results">
+        <section id="search-filter">
+            <input type="text" id="search" placeholder="Search for a movie...">
+            <select id="search-type">
             <option value="title">Movie Title</option>
             <option value="genre">Genre</option>
             <option value="year">Release Year</option>
             <!-- Add more search options as needed -->
         </select>
-        <button onclick="searchMovies()"><i class='bx bx-search'></i></button>
-    </section>
+            <button onclick="searchMovies()"><i class='bx bx-search'></i></button>
+        </section>
 
-    <section id="search-results">
-        <!-- This is where the search results will be displayed -->
-    </section>
+        <section id="search-results">
+            <!-- This is where the search results will be displayed -->
+        </section>
 
-    <section id="random-movies">
-        <!-- This is where the random movies will be displayed -->
-    </section>
+        <section id="random-movies">
+            <!-- This is where the random movies will be displayed -->
+        </section>
 
-    <section id="pagination">
-        <!-- This is where the "See more" button will be displayed -->
-    </section>
+        <section id="pagination">
+            <!-- This is where the "See more" button will be displayed -->
+        </section>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">

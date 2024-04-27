@@ -333,13 +333,6 @@ footer {
     background-color: #555;
 }
 
-@media (max-width: 768px) {
-    .horizontal-navbar .item-txt {
-        display: none;
-        /* Hide the text labels on small screens */
-    }
-}
-
 
 /* For smaller screens, adjust layout */
 
