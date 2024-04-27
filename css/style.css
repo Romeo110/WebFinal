@@ -255,10 +255,9 @@ section {
 
 .bottom {
     color: black;
-    padding: 50px 0;
     place-items: center;
     margin-top: 50px;
-    margin-bottom: 50px;
+    margin-bottom: 150px;
 }
 
 .film-finder-text {
@@ -338,5 +337,61 @@ footer {
     .horizontal-navbar .item-txt {
         display: none;
         /* Hide the text labels on small screens */
+    }
+}
+
+
+/* For smaller screens, adjust layout */
+
+@media (max-width: 768px) {
+    /* Navbar */
+    .horizontal-navbar ul {
+        flex-direction: row;
+        align-items: center;
+    }
+    .horizontal-navbar li {
+        margin: 0 10px;
+    }
+    .horizontal-navbar a .item-txt {
+        display: none;
+        /* Hide text labels on smaller screens */
+    }
+    h1 {
+        display: none;
+    }
+    /* Header */
+    .main-content {
+        margin-bottom: -100px;
+    }
+    /* Sections */
+    section.top,
+    section.bottom {
+        height: auto;
+    }
+    /* Carousel */
+    .carousel {
+        max-width: 90%;
+        /* Adjust maximum width for smaller screens */
+    }
+    /* Info Containers */
+    .info-container {
+        width: 90%;
+        /* Adjust width for smaller screens */
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .info-text {
+        width: 100%;
+        /* Adjust width for smaller screens */
+        max-width: 100%;
+    }
+    /* Footer */
+    footer {
+        position: static;
+        opacity: 1;
+    }
+    .bottom {
+        margin-top: 200px;
+        margin-bottom: 100px;
     }
 }
