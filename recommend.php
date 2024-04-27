@@ -59,14 +59,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       if ($row) {
           // Access fetched preferences
           $genres = explode(', ', $row["genre"]);
-          $actorDirectors = json_decode($row["actor_director"], true);
+          $actorDirectors = json_decode(json_decode($row["actor_director"], true), true);
           $minDecade = $row["min_decade"];
           $maxDecade = $row["max_decade"];
-
-          // Convert language names to language codes using the reverse mapping array
-          $languages = json_decode($row["language"], true);
-          echo "Languages from database: ";
-          print_r($languages);
+          $languages = json_decode(json_decode($row["language"], true), true);
       } else {
           echo "No preferences found for the user.";
       }
@@ -79,34 +75,21 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       $apiKey = 'd5697eb16a89b204a004af1f8fea130c';
       $currentPage = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1; // Get current page number from URL query parameter or default to 1
       $itemsPerPage = 20; // Set the number of items per page
+      $totalPages = PHP_INT_MAX;
 
       // Initialize an empty array to store all recommended movies
       $allRecommendedMovies = array();
-
-      // Fetch list of languages from TMDB API and create a reverse mapping array
-      $languageMap = array();
-      $languagesResponse = file_get_contents("https://api.themoviedb.org/3/configuration/languages?api_key={$apiKey}");
-      $languagesData = json_decode($languagesResponse, true);
-      if ($languagesData) {
-          foreach ($languagesData as $language) {
-              $languageMap[$language['english_name']] = $language['iso_639_1'];
-          }
-      }
-      // echo "Language: " . reset($languages) . "<br>";
-      // foreach ($languages as &$language) {
-      //   echo "Language: $language<br>"; // Add line break after each language
-      //   $language = $languageMap[$language];
-      //   echo "Language code: $language<br>"; // Add line break after each language code
-      // }
-      foreach ($actorDirectors as $actorDirector) {
-        echo "Actor: $actorDirector<br>";
-      }
 
       // Example nested loops structure
       // foreach ($genres as $genre) {
       //   foreach ($languages as $language) {
       //       foreach ($actorDirectors as $actorDirector) {
-      //           $actor = urlencode($actorDirector);
+      //           $actor = urlencode($actorDirector); // Assuming actor/director is the same
+      //           $actorSearchUrl = "https://api.themoviedb.org/3/search/person?api_key={$apiKey}&query={$actor}";
+      //           $actorResponse = file_get_contents($actorSearchUrl);
+      //           $actorData = json_decode($actorResponse, true);
+      //           $actorId = isset($actorData['results'][0]['id']) ? $actorData['results'][0]['id'] : null;
+
       //           $discoverMoviesUrl = "https://api.themoviedb.org/3/discover/movie";
       //           $discoverMoviesUrl .= "?api_key={$apiKey}";
       //           $discoverMoviesUrl .= "&language={$language}";
@@ -134,39 +117,231 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       //   }
       // }
 
-      foreach ($languages as $language) {
-        $discoverMoviesUrl = "https://api.themoviedb.org/3/discover/movie";
-        $discoverMoviesUrl .= "?api_key={$apiKey}";
-        $discoverMoviesUrl .= "&language={$language}";
-        $discoverMoviesUrl .= "&page={$currentPage}";
+      $allMovies = []; // Initialize an array to store all movies
+      $actorIds = [];
 
-        // Fetch movies based on the constructed URL
-        $discoverMoviesResponse = file_get_contents($discoverMoviesUrl);
-        if ($discoverMoviesResponse === false) {
-            echo "Failed to fetch movies from TMDB API.";
-        } else {
-            $discoverMoviesData = json_decode($discoverMoviesResponse, true);
-            if ($discoverMoviesData === null) {
-                echo "Failed to decode JSON response from TMDB API.";
-            } else {
-                // Add fetched movies to the allRecommendedMovies array
-                if (!empty($discoverMoviesData['results'])) {
-                    foreach ($discoverMoviesData['results'] as $movie) {
-                        // Check if the movie already exists in the array
-                        if (!in_array($movie, $allRecommendedMovies)) {
-                            $allRecommendedMovies[] = $movie;
-                        }
-                    }
-                } else {
-                    echo "No movies found in TMDB API response.";
+      // Check if genres are not empty
+      if (!empty($genres)) {
+        foreach ($genres as $genre) {
+
+          // Check if languages are not empty
+          if (!empty($languages)) {
+            foreach ($languages as $language) {
+
+              if(!empty($actorDirectors)) {
+                foreach ($actorDirectors as $actorDirector) {
+                  $actor = urlencode($actorDirector); 
+                  $actorSearchUrl = "https://api.themoviedb.org/3/search/person?api_key={$apiKey}&query={$actor}";
+                  $actorResponse = file_get_contents($actorSearchUrl);
+                  $actorData = json_decode($actorResponse, true);
+                  $actorId = isset($actorData['results'][0]['id']) ? $actorData['results'][0]['id'] : null;
+
+                  $discoverMoviesUrl = "https://api.themoviedb.org/3/discover/movie?api_key={$apiKey}";
+                  $discoverMoviesUrl .= "&with_genres={$genre}";
+                  $discoverMoviesUrl .= "&language={$language}";
+                  $discoverMoviesUrl .= "&with_people={$actorId}";
+                  $discoverMoviesUrl .= "&vote_average.gte=6"; // Minimum rating of 6
+                  if (!$minDecade == 0 && !$maxDecade == 0) {
+                    $discoverMoviesUrl .= "&primary_release_date.gte={$minDecade}";
+                    $discoverMoviesUrl .= "&primary_release_date.lte={$maxDecade}";
+                  }
+                  $discoverMoviesUrl .= "&page={$currentPage}";
+
+                  // Fetch movies based on the constructed URL
+                  $discoverMoviesResponse = file_get_contents($discoverMoviesUrl);
+                  $discoverMoviesData = json_decode($discoverMoviesResponse, true);
+
+                  // Check if the fetched data is not empty and if it has the least total_pages
+                  if (!empty($discoverMoviesData['total_pages']) && $discoverMoviesData['total_pages'] < $totalPages) {
+                    $totalPages = $discoverMoviesData['total_pages'];
+                  }
+
+                  // Check if the fetched data is not empty
+                  if (!empty($discoverMoviesData['results'])) {
+                      // Merge the movies into the array of all movies
+                      $allMovies = array_merge($allMovies, $discoverMoviesData['results']);
+                  }
                 }
+              } else {
+                $discoverMoviesUrl = "https://api.themoviedb.org/3/discover/movie?api_key={$apiKey}";
+                $discoverMoviesUrl .= "&with_genres={$genre}";
+                $discoverMoviesUrl .= "&language={$language}";
+                $discoverMoviesUrl .= "&vote_average.gte=6"; // Minimum rating of 6
+                if (!$minDecade == 0 && !$maxDecade == 0) {
+                  $discoverMoviesUrl .= "&primary_release_date.gte={$minDecade}";
+                  $discoverMoviesUrl .= "&primary_release_date.lte={$maxDecade}";
+                }
+                $discoverMoviesUrl .= "&page={$currentPage}";
+
+                // Fetch movies based on the constructed URL (without language parameter)
+                $discoverMoviesResponse = file_get_contents($discoverMoviesUrl);
+                $discoverMoviesData = json_decode($discoverMoviesResponse, true);
+
+                // Check if the fetched data is not empty and if it has the least total_pages
+                if (!empty($discoverMoviesData['total_pages']) && $discoverMoviesData['total_pages'] < $totalPages) {
+                  $totalPages = $discoverMoviesData['total_pages'];
+                }
+
+                // Check if the fetched data is not empty
+                if (!empty($discoverMoviesData['results'])) {
+                    // Merge the movies into the array of all movies
+                    $allMovies = array_merge($allMovies, $discoverMoviesData['results']);
+                }
+              }
             }
+          } else {
+            $discoverMoviesUrl = "https://api.themoviedb.org/3/discover/movie?api_key={$apiKey}";
+            $discoverMoviesUrl .= "&with_genres={$genre}";
+            $discoverMoviesUrl .= "&vote_average.gte=6"; // Minimum rating of 6
+            if (!$minDecade == 0 && !$maxDecade == 0) {
+              $discoverMoviesUrl .= "&primary_release_date.gte={$minDecade}";
+              $discoverMoviesUrl .= "&primary_release_date.lte={$maxDecade}";
+            }
+            $discoverMoviesUrl .= "&page={$currentPage}";
+
+            // Fetch movies based on the constructed URL (without language parameter)
+            $discoverMoviesResponse = file_get_contents($discoverMoviesUrl);
+            $discoverMoviesData = json_decode($discoverMoviesResponse, true);
+
+            // Check if the fetched data is not empty and if it has the least total_pages
+            if (!empty($discoverMoviesData['total_pages']) && $discoverMoviesData['total_pages'] < $totalPages) {
+              $totalPages = $discoverMoviesData['total_pages'];
+            }
+
+            // Check if the fetched data is not empty
+            if (!empty($discoverMoviesData['results'])) {
+                // Merge the movies into the array of all movies
+                $allMovies = array_merge($allMovies, $discoverMoviesData['results']);
+            }
+          }
         }
-      }
+      // Check if languages are not empty
+      } else if (!empty($languages)) {
+        foreach ($languages as $language) {
+
+          if(!empty($actorDirectors)) {
+            foreach ($actorDirectors as $actorDirector) {
+              $actor = urlencode($actorDirector); 
+              $actorSearchUrl = "https://api.themoviedb.org/3/search/person?api_key={$apiKey}&query={$actor}";
+              $actorResponse = file_get_contents($actorSearchUrl);
+              $actorData = json_decode($actorResponse, true);
+              $actorId = isset($actorData['results'][0]['id']) ? $actorData['results'][0]['id'] : null;
+
+              $discoverMoviesUrl = "https://api.themoviedb.org/3/discover/movie?api_key={$apiKey}";
+              $discoverMoviesUrl .= "&language={$language}";
+              $discoverMoviesUrl .= "&with_people={$actorId}";
+              $discoverMoviesUrl .= "&vote_average.gte=6"; // Minimum rating of 6
+              if (!$minDecade == 0 && !$maxDecade == 0) {
+                $discoverMoviesUrl .= "&primary_release_date.gte={$minDecade}";
+                $discoverMoviesUrl .= "&primary_release_date.lte={$maxDecade}";
+              }
+              $discoverMoviesUrl .= "&page={$currentPage}";
+
+              // Fetch movies based on the constructed URL
+              $discoverMoviesResponse = file_get_contents($discoverMoviesUrl);
+              $discoverMoviesData = json_decode($discoverMoviesResponse, true);
+
+              // Check if the fetched data is not empty and if it has the least total_pages
+              if (!empty($discoverMoviesData['total_pages']) && $discoverMoviesData['total_pages'] < $totalPages) {
+                $totalPages = $discoverMoviesData['total_pages'];
+              }
+
+              // Check if the fetched data is not empty
+              if (!empty($discoverMoviesData['results'])) {
+                  // Merge the movies into the array of all movies
+                  $allMovies = array_merge($allMovies, $discoverMoviesData['results']);
+              }
+            }
+          } else {
+            $discoverMoviesUrl = "https://api.themoviedb.org/3/discover/movie?api_key={$apiKey}";
+            $discoverMoviesUrl .= "&language={$language}";
+            $discoverMoviesUrl .= "&vote_average.gte=6"; // Minimum rating of 6
+            if (!$minDecade == 0 && !$maxDecade == 0) {
+              $discoverMoviesUrl .= "&primary_release_date.gte={$minDecade}";
+              $discoverMoviesUrl .= "&primary_release_date.lte={$maxDecade}";
+            }
+            $discoverMoviesUrl .= "&page={$currentPage}";
+
+            // Fetch movies based on the constructed URL (without language parameter)
+            $discoverMoviesResponse = file_get_contents($discoverMoviesUrl);
+            $discoverMoviesData = json_decode($discoverMoviesResponse, true);
+
+            // Check if the fetched data is not empty and if it has the least total_pages
+            if (!empty($discoverMoviesData['total_pages']) && $discoverMoviesData['total_pages'] < $totalPages) {
+              $totalPages = $discoverMoviesData['total_pages'];
+            }
+
+            // Check if the fetched data is not empty
+            if (!empty($discoverMoviesData['results'])) {
+                // Merge the movies into the array of all movies
+                $allMovies = array_merge($allMovies, $discoverMoviesData['results']);
+            }
+          }
+        }
+      } else if(!empty($actorDirectors)) {
+        foreach ($actorDirectors as $actorDirector) {
+          $actor = urlencode($actorDirector); 
+          $actorSearchUrl = "https://api.themoviedb.org/3/search/person?api_key={$apiKey}&query={$actor}";
+          $actorResponse = file_get_contents($actorSearchUrl);
+          $actorData = json_decode($actorResponse, true);
+          $actorId = isset($actorData['results'][0]['id']) ? $actorData['results'][0]['id'] : null;
+
+          $discoverMoviesUrl = "https://api.themoviedb.org/3/discover/movie?api_key={$apiKey}";
+          $discoverMoviesUrl .= "&with_people={$actorId}";
+          $discoverMoviesUrl .= "&vote_average.gte=6"; // Minimum rating of 6
+          if (!$minDecade == 0 && !$maxDecade == 0) {
+            $discoverMoviesUrl .= "&primary_release_date.gte={$minDecade}";
+            $discoverMoviesUrl .= "&primary_release_date.lte={$maxDecade}";
+          }
+          $discoverMoviesUrl .= "&page={$currentPage}";
+
+          // Fetch movies based on the constructed URL
+          $discoverMoviesResponse = file_get_contents($discoverMoviesUrl);
+          $discoverMoviesData = json_decode($discoverMoviesResponse, true);
+
+          // Check if the fetched data is not empty and if it has the least total_pages
+          if (!empty($discoverMoviesData['total_pages']) && $discoverMoviesData['total_pages'] < $totalPages) {
+            $totalPages = $discoverMoviesData['total_pages'];
+          }
+
+          // Check if the fetched data is not empty
+          if (!empty($discoverMoviesData['results'])) {
+              // Merge the movies into the array of all movies
+              $allMovies = array_merge($allMovies, $discoverMoviesData['results']);
+          }
+        }
+      } else {
+              // Fetch movies based on the default URL (without genre or language parameter)
+              $discoverMoviesUrl = "https://api.themoviedb.org/3/discover/movie";
+              $discoverMoviesUrl .= "?api_key={$apiKey}";
+              $discoverMoviesUrl .= "&vote_average.gte=6"; // Minimum rating of 6
+              if (!$minDecade == 0 && !$maxDecade == 0) {
+                $discoverMoviesUrl .= "&primary_release_date.gte={$minDecade}";
+                $discoverMoviesUrl .= "&primary_release_date.lte={$maxDecade}";
+              }
+              $discoverMoviesUrl .= "&page={$currentPage}";
+
+              $discoverMoviesResponse = file_get_contents($discoverMoviesUrl);
+              $discoverMoviesData = json_decode($discoverMoviesResponse, true);
+
+              // Check if the fetched data is not empty and if it has the least total_pages
+              if (!empty($discoverMoviesData['total_pages']) && $discoverMoviesData['total_pages'] < $totalPages) {
+                $totalPages = $discoverMoviesData['total_pages'];
+              }
+
+              // Check if the fetched data is not empty
+              if (!empty($discoverMoviesData['results'])) {
+                  // Merge the movies into the array of all movies
+                  $allMovies = array_merge($allMovies, $discoverMoviesData['results']);
+              }
+          }
+
+      // Remove duplicates from the merged array of all movies
+      $allMovies = array_unique($allMovies, SORT_REGULAR);
 
       // Display recommended movies
-      if (!empty($allRecommendedMovies)) {
-          foreach ($allRecommendedMovies as $movie) {
+      if (!empty($allMovies)) {
+          foreach ($allMovies as $movie) {
               echo '<div class="movie">';
               echo '<div class="movie-details">';
               echo '<img src="https://image.tmdb.org/t/p/w342/' . $movie['poster_path'] . '" alt="' . $movie['title'] . ' Poster" class="movie-poster">';
@@ -181,7 +356,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
           }
 
           // Pagination controls
-          $totalPages = ceil(count($allRecommendedMovies) / $itemsPerPage);
+          // $totalPages = ceil(count($allMovies) / $itemsPerPage);
           echo '<div class="pagination">';
           if ($currentPage > 1) {
               echo '<a href="?page=' . ($currentPage - 1) . '">Previous</a>';
