@@ -492,14 +492,17 @@ $conn->close();
                 var backdropContainer = document.getElementById('backdrop-container');
                 backdropContainer.innerHTML = ''; // Clear previous backdrops
 
-                // Loop through the backdrops and create image elements
-                backdrops.backdrops.forEach(backdrop => {
-                    var backdropImage = document.createElement('img');
-                    backdropImage.src = `https://image.tmdb.org/t/p/original${backdrop.file_path}`; // Use 'original' size for high resolution
-                    backdropImage.alt = 'Backdrop Image';
-                    backdropImage.classList.add('backdrop-image'); // Add a class for styling
-                    backdropContainer.appendChild(backdropImage);
-                });
+            // Loop through the first 6 backdrops and create image elements
+            for (let i = 0; i < Math.min(6, backdrops.backdrops.length); i++) {
+                var backdropImage = document.createElement('img');
+                backdropImage.src = `https://image.tmdb.org/t/p/original${backdrops.backdrops[i].file_path}`; // Use 'original' size for high resolution
+                backdropImage.alt = 'Backdrop Image';
+                backdropImage.classList.add('backdrop-image'); // Add a class for styling
+                if (i === 0) {
+                    backdropImage.classList.add('large'); // Add class to make the first image larger
+                }
+                backdropContainer.appendChild(backdropImage);
+            }
             }
         });
     </script>

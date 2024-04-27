@@ -4,6 +4,10 @@ html {
     font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
 }
 
+body::-webkit-scrollbar {
+    display: none;
+}
+
 .horizontal-navbar {
     background-color: #333;
     padding: 10px 0;
