@@ -65,6 +65,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
           $languages = json_decode(json_decode($row["language"], true), true);
       } else {
           echo "No preferences found for the user.";
+          exit;
       }
 
       // Close statement and database connection
