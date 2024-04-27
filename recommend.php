@@ -305,31 +305,35 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
       // Display recommended movies
       if (!empty($allMovies)) {
-          foreach ($allMovies as $movie) {
-              echo '<div class="movie">';
-              echo '<div class="movie-details">';
-              echo '<img src="https://image.tmdb.org/t/p/w342/' . $movie['poster_path'] . '" alt="' . $movie['title'] . ' Poster" class="movie-poster">';
-              echo '<div class="movie-info">';
-              echo '<h3>' . $movie['title'] . '</h3>';
-              echo '<p>Release Date: ' . $movie['release_date'] . '</p>';
-              echo '<p>Rating: ' . $movie['vote_average'] . '</p>';
-              echo '<p>Description: ' . $movie['overview'] . '</p>'; // Include movie description
-              echo '</div>';
-              echo '</div>';
-              echo '</div>';
-          }
-
-          // Pagination controls
-          // $totalPages = ceil(count($allMovies) / $itemsPerPage);
-          echo '<div class="pagination">';
-          if ($currentPage > 1) {
-              echo '<a href="?page=' . ($currentPage - 1) . '">Previous</a>';
-          }
-          echo ' Page ' . $currentPage . '/' . $totalPages . ' ';
-          if ($currentPage < $totalPages) {
-              echo '<a href="?page=' . ($currentPage + 1) . '">Next</a>';
-          }
+        foreach ($allMovies as $movie) {
+          echo '<div class="movie">';
+          echo '<div class="movie-details">';
+          // Add link to movie details page with movie ID as query parameter
+          echo '<a href="movie_details.php?movieId=' . $movie['id'] . '">';
+          echo '<img src="https://image.tmdb.org/t/p/w342/' . $movie['poster_path'] . '" alt="' . $movie['title'] . ' Poster" class="movie-poster">';
+          echo '</a>';
+          // Add link to movie details page with movie ID as query parameter
+          echo '<div class="movie-info">';
+          echo '<h3><a href="movie_details.php?movieId=' . $movie['id'] . '">' . $movie['title'] . '</a></h3>';
+          echo '<p>Release Date: ' . $movie['release_date'] . '</p>';
+          echo '<p>Rating: ' . $movie['vote_average'] . '</p>';
+          echo '<p>Description: ' . $movie['overview'] . '</p>'; // Include movie description
           echo '</div>';
+          echo '</div>';
+          echo '</div>';
+        }
+
+        // Pagination controls
+        // $totalPages = ceil(count($allMovies) / $itemsPerPage);
+        echo '<div class="pagination">';
+        if ($currentPage > 1) {
+            echo '<a href="?page=' . ($currentPage - 1) . '">Previous</a>';
+        }
+        echo ' Page ' . $currentPage . '/' . $totalPages . ' ';
+        if ($currentPage < $totalPages) {
+            echo '<a href="?page=' . ($currentPage + 1) . '">Next</a>';
+        }
+        echo '</div>';
       } else {
           echo '<p>No recommended movies found for the selected preferences.</p>';
       }
