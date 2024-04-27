@@ -2,10 +2,6 @@ html {
     font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
 }
 
-body {
-    margin-bottom: 400px;
-}
-
 body::-webkit-scrollbar {
     display: none;
 }
@@ -67,14 +63,6 @@ body::-webkit-scrollbar {
         display: none;
         /* Hide text labels on smaller screens */
     }
-}
-
-.main-content {
-    padding: 20px;
-    margin-top: 50px;
-    margin-left: 300px;
-    margin-right: 300px;
-    /* Adjust as needed */
 }
 
 
