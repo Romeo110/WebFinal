@@ -8,32 +8,83 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     exit;
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FilmFinder - Recommendations</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <header>
-    <h1>FilmFinder</h1>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="#">Comparison</a></li>
-        <li><a href="recommend.php">Recommendations</a></li>
-        <li><a href="movies.html">Movies</a></li>
-        <li><a href="#">Profile</a></li>
-      </ul>
-    </nav>
-  </header>
+    <!DOCTYPE html>
+    <html lang="en">
 
-  <main>
-    <section id="recommendations">
-      <h2>Recommended Movies</h2>
-      <?php
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <script src="https://kit.fontawesome.com/46b7ceee20.js" crossorigin="anonymous"></script>
+        <title>FilmFinder - Movies</title>
+        <link rel="stylesheet" href="css/recommend.css">
+    </head>
+
+    <body>
+        <!-- horizontal navbar -->
+        <div class="navbar">
+            <div class="horizontal-navbar">
+                <ul>
+                    <li>
+                        <a href="index.html" class="nav-link">
+                            <span class="item-icon">
+                            <i class='bx bxs-home'></i>
+                        </span>
+                            <span class="item-txt">
+                            Home
+                        </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="movies.html" class="nav-link">
+                            <span class="item-icon">
+                            <i class='bx bx-movie'></i>
+                        </span>
+                            <span class="item-txt">
+                            Movies
+                        </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="recommend.php" class="nav-link">
+                            <span class="item-icon">
+                            <i class='bx bxs-dish'></i>
+                        </span>
+                            <span class="item-txt">
+                            MadeForYou
+                        </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="watch_list.php" class="nav-link">
+                            <span class="item-icon">
+                            <i class='bx bxs-user'></i>
+                        </span>
+                            <span class="item-txt">
+                            WatchList
+                        </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="preferences.php" class="nav-link">
+                            <span class="item-icon">
+                            <i class='bx bx-cog'></i>
+                        </span>
+                            <span class="item-txt">
+                            Preferences
+                        </span>
+                        </a>
+                    </li>
+                    <!-- Additional menu items if needed -->
+                </ul>
+            </div>
+        </div>
+
+
+        <main>
+            <section id="recommendations">
+                <h2>Recommended Movies</h2>
+                <?php
       // Start a session
       session_start();
 
@@ -338,11 +389,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
           echo '<p>No recommended movies found for the selected preferences.</p>';
       }
       ?>
-    </section>
-  </main>
+            </section>
+        </main>
 
-  <footer>
-    <p>&copy; 2024 FilmFinder. All rights reserved.</p>
-  </footer>
-</body>
-</html>
+        <footer>
+            <p>&copy; 2024 FilmFinder. All rights reserved.</p>
+        </footer>
+    </body>
+
+    </html>
