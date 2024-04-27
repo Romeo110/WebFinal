@@ -25,43 +25,52 @@ const tl = gsap.timeline({
 });
 
 const header = document.querySelector('h1');
+const headerText = header.textContent; // Save the header text
 let prevScrollPosition = window.scrollY;
 
 window.addEventListener('scroll', () => {
     const scrollPosition = window.scrollY;
 
     const hideThreshold = 870;
+    const smallScreenThreshold = 768;
 
-    if (scrollPosition >= hideThreshold) {
-        // Use GSAP to fade out the h1 element
-        gsap.to(header, {
-            opacity: 0,
-            duration: 0.1, // Adjust duration as needed for the fade animation
-            onComplete: () => {
-                header.style.display = "none"; // Hide the text after fading out
-            }
-        });
+    if (window.innerWidth >= smallScreenThreshold) {
+        if (scrollPosition >= hideThreshold) {
+            // Use GSAP to fade out the h1 element
+            gsap.to(header, {
+                opacity: 0,
+                duration: 0.1, // Adjust duration as needed for the fade animation
+                onComplete: () => {
+                    header.style.display = "none"; // Hide the text after fading out
+                }
+            });
+        } else {
+            // Use GSAP to fade in the h1 element
+            gsap.to(header, {
+                opacity: 1,
+                duration: 0.3 // Adjust duration as needed for the fade animation
+            });
+
+            // Gradually change text color to white as scrolling to 860 pixels
+            const maxColorValue = 255; // Maximum color value for RGB
+            const textColor = Math.min(maxColorValue, Math.round((scrollPosition / hideThreshold) * maxColorValue));
+            header.style.color = `rgb(${textColor}, ${textColor}, ${textColor})`;
+        }
+
+        // Check if scrolling up and the header is hidden, then show it again
+        if (scrollPosition < prevScrollPosition && header.style.display === "none") {
+            header.textContent = headerText; // Restore the header text
+            header.style.display = "block";
+            gsap.to(header, { opacity: 1, duration: 0.3 });
+        }
     } else {
-        // Use GSAP to fade in the h1 element
-        gsap.to(header, {
-            opacity: 1,
-            duration: 0.3 // Adjust duration as needed for the fade animation
-        });
-
-        // Gradually change text color to white as scrolling to 860 pixels
-        const maxColorValue = 255; // Maximum color value for RGB
-        const textColor = Math.min(maxColorValue, Math.round((scrollPosition / hideThreshold) * maxColorValue));
-        header.style.color = `rgb(${textColor}, ${textColor}, ${textColor})`;
-    }
-
-    // Check if scrolling up and the header is hidden, then show it again
-    if (scrollPosition < prevScrollPosition && header.style.display === "none") {
-        header.style.display = "block";
-        gsap.to(header, { opacity: 1, duration: 0.3 });
+        // Hide the header for smaller screens
+        header.style.display = "none";
     }
 
     prevScrollPosition = scrollPosition;
 });
+
 
 
 // Revealing homepage section on scroll

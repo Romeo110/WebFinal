@@ -4,6 +4,10 @@ html {
     font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
 }
 
+body {
+    overflow: hidden;
+}
+
 .horizontal-navbar {
     background-color: #333;
     padding: 10px 0;
@@ -139,4 +143,11 @@ html {
     /* Add underline to indicate link */
     font-weight: bold;
     /* Increase font weight for better readability */
+}
+
+@media (max-width: 768px) {
+    .horizontal-navbar li {
+        margin-right: 10px;
+        /* Reduce margin for smaller screens */
+    }
 }
