@@ -1,0 +1,158 @@
+/* CSS for horizontal navbar */
+
+html {
+    font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
+}
+
+.horizontal-navbar {
+    background-color: #333;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    left: 0px;
+}
+
+.horizontal-navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.horizontal-navbar li {
+    margin-right: 20px;
+}
+
+.horizontal-navbar a {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.horizontal-navbar a .item-icon {
+    margin-right: 5px;
+}
+
+.horizontal-navbar a:hover {
+    background-color: #555;
+}
+
+@media (max-width: 768px) {
+    .horizontal-navbar .item-txt {
+        display: none;
+    }
+}
+
+
+/* Footer Styles */
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    z-index: -1;
+}
+
+.footer {
+    display: block;
+}
+
+.show-footer footer {
+    opacity: 1;
+}
+
+
+/* Introductory Paragraph Styles */
+
+.intro-paragraph {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #333;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 300px;
+    margin-left: 300px;
+    margin-right: 300px;
+}
+
+.card {
+    width: 100%;
+    padding: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-top: 50px;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.intro-paragraph {
+    color: #555;
+}
+
+fieldset {
+    border-radius: 10px;
+    border-color: #cf66c5;
+}
+
+h2 {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #401238;
+}
+
+legend {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #401238;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 45%;
+    /* Shorter width */
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 16px;
+}
+
+select {
+    appearance: none;
+    background-color: #fff;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="6" viewBox="0 0 12 6"><path fill="%23000" d="M6 6l6-6H0z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: calc(100% - 10px) center;
+    padding-right: 30px;
+}
+
+@media only screen and (max-width: 768px) {
+    .container {
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-bottom: 100px;
+    }
+    .card {
+        width: 90%;
+        margin-top: 30px;
+    }
+    h2 {
+        font-size: 1.5em;
+    }
+}

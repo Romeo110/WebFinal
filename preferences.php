@@ -1,69 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Preference Form</title>
-    <style>
-        .preference-section {
-            margin-bottom: 20px;
-        }
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://kit.fontawesome.com/46b7ceee20.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/preferences.css">
 
-        .preference-section input[type="text"] {
-            width: 200px;
-            padding: 5px;
-            margin-bottom: 5px;
-        }
-
-        .preference-section .dropdown {
-            display: none;
-            position: absolute;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            max-height: 150px;
-            overflow-y: auto;
-            width: 200px;
-            z-index: 1;
-        }
-
-        .preference-section .dropdown li {
-            list-style-type: none;
-            cursor: pointer;
-            padding: 5px;
-        }
-
-        .preference-section .dropdown li:hover {
-            background-color: #f0f0f0;
-        }
-
-        .preference-section .selected-items {
-            margin-bottom: 10px;
-        }
-
-        .preference-section .selected-items span {
-            background-color: #f0f0f0;
-            padding: 5px;
-            border-radius: 5px;
-            margin-right: 5px;
-        }
-
-        .preference-section .selected-items span button {
-            margin-left: 5px;
-            cursor: pointer;
-            background-color: #ff4d4d;
-            border: none;
-            border-radius: 50%;
-            color: white;
-            padding: 2px 6px;
-        }
-    </style>
+    <title>Building Your Library</title>
 </head>
+
 <body>
-    <h1>Movie Preference Form</h1>
-    <form action="process_preferences.php" method="post">
-        <fieldset>
-            <legend>Favorite Genres</legend>
-            <?php
+    <!-- <h1>Movie Preference Form</h1> -->
+    <!-- nav bar with only home button -->
+    <div class="navbar">
+        <div class="horizontal-navbar">
+            <ul>
+                <li>
+                    <a href="index.html" class="nav-link">
+                        <span class="item-icon">
+                            <i class='bx bxs-home'></i>
+                        </span>
+                        <span class="item-txt">
+                            Home
+                        </span>
+                    </a>
+                </li>
+                <!-- Additional menu items if needed -->
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <!-- Introductory Card -->
+        <div class="card">
+            <div class="card-body">
+                <h2>What Is This Form?</h2>
+                <p class="intro-paragraph">FilmFinder offers you the opportunity to tailor your movie recommendations by sharing your preferences. This form allows you to specify your favorite movie genres, preferred actors or directors, desired movie release decades, and preferred
+                    languages. Your inputs will assist us in curating personalized movie suggestions tailored to your tastes and preferences. Simply fill out the form below to enhance your FilmFinder experience and discover movies that resonate with you
+                    on a deeper level.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <form action="process_preferences.php" method="post">
+                    <fieldset>
+                        <legend>Favorite Genres</legend>
+                        <?php
                 // Fetch the list of genres from the TMDB API
                 $apiKey = 'd5697eb16a89b204a004af1f8fea130c'; // Replace with your actual API key
                 $genresUrl = "https://api.themoviedb.org/3/genre/movie/list?api_key=$apiKey&language=en-US";
@@ -79,38 +63,115 @@
                     echo "Failed to fetch genres.";
                 }
             ?>
-            <label><input type="checkbox" id="noPreferenceGenre" name="no_preference_genre" value="no_preference"> No Preference</label>
-        </fieldset>
-        <br><br>
-        <fieldset class="preference-section">
-            <legend>Favorite Actor/Director</legend>
-            <div class="selected-items" id="selectedActorsDirectors"></div>
-            <input type="text" name="actors_directors[]" id="actor_director" placeholder="Enter actor/director name" multiple>
-            <input type="hidden" name="selected_actors_directors" id="selectedActorsDirectorsInput">
-            <ul id="actorDirectorDropdown" class="dropdown"></ul>
-            <label><input type="checkbox" id="noPreferenceActorDirector" name="no_preference_actor_director" value="no_preference"> No Preference</label>
-        </fieldset>
-        <br><br>
-        <fieldset>
-            <legend>Decade Preference</legend>
-            <label for="minDecade">From:</label>
-            <input type="text" name="min_decade" id="minDecade" placeholder="Enter minimum decade (e.g., 1990s)">
-            <label for="maxDecade">To:</label>
-            <input type="text" name="max_decade" id="maxDecade" placeholder="Enter maximum decade (e.g., 2010s)">
-            <label><input type="checkbox" id="noPreferenceDecade" name="no_preference_decade" value="no_preference"> No Preference</label>
-        </fieldset>
-        <br><br>
-        <fieldset class="preference-section">
-            <legend>Language Preference</legend>
-            <div class="selected-items" id="selectedLanguages"></div>
-            <input type="text" id="languageInput" placeholder="Type a language">
-            <input type="hidden" name="selected_languages" id="selectedLanguagesInput">
-            <ul id="languageDropdown" class="dropdown"></ul>
-            <label><input type="checkbox" id="noPreferenceLanguage" name="no_preference_language" value="no_preference"> No Preference</label>
-        </fieldset>
-        <br><br>
-        <input type="submit" value="Submit Preferences">
-    </form>
+                            <label><input type="checkbox" id="noPreferenceGenre" name="no_preference_genre" value="no_preference"> No Preference</label>
+                    </fieldset>
+                    <br><br>
+                    <fieldset class="preference-section">
+                        <legend>Favorite Actor/Director</legend>
+                        <div class="selected-items" id="selectedActorsDirectors"></div>
+                        <input type="text" name="actors_directors[]" id="actor_director" placeholder="Enter actor/director name" multiple>
+                        <input type="hidden" name="selected_actors_directors" id="selectedActorsDirectorsInput">
+                        <ul id="actorDirectorDropdown" class="dropdown"></ul>
+                        <label><input type="checkbox" id="noPreferenceActorDirector" name="no_preference_actor_director" value="no_preference"> No Preference</label>
+                    </fieldset>
+                    <br><br>
+                    <fieldset>
+                        <legend>Decade Preference</legend>
+                        <label for="minDecade">From:</label>
+                        </br>
+                        <input type="text" name="min_decade" id="minDecade" placeholder="Enter minimum decade (e.g., 1990s)">
+                        <label for="maxDecade"></br>To:</label>
+                        </br>
+                        <input type="text" name="max_decade" id="maxDecade" placeholder="Enter maximum decade (e.g., 2010s)">
+                        </br>
+                        <label><input type="checkbox" id="noPreferenceDecade" name="no_preference_decade" value="no_preference"> No Preference</label>
+                    </fieldset>
+                    <br><br>
+                    <fieldset class="preference-section">
+                        <legend>Language Preference</legend>
+                        <div class="selected-items" id="selectedLanguages"></div>
+                        <input type="text" id="languageInput" placeholder="Type a language">
+                        <input type="hidden" name="selected_languages" id="selectedLanguagesInput">
+                        <ul id="languageDropdown" class="dropdown"></ul>
+                        <label><input type="checkbox" id="noPreferenceLanguage" name="no_preference_language" value="no_preference"> No Preference</label>
+                    </fieldset>
+                    <br><br>
+                    <input type="submit" value="Submit Preferences">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="background">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100%" height="100%" viewBox="0 0 1600 900">
+                <defs>
+                    <linearGradient id="bg" x2="0%" y2="100%">
+                        <stop
+                            offset="0%"
+                            style="stop-color: #642b5b"
+                        ></stop>
+                        <stop
+                            offset="100%"
+                            style="stop-color: #fdf6fc"
+                        ></stop>
+                    </linearGradient>
+                    <path
+                        id="wave"
+                        fill="url(#bg)"
+                        d="M-363.852,502.589c0,0,236.988-41.997,505.475,0
+            s371.981,38.998,575.971,0s293.985-39.278,505.474,5.859s493.475,48.368,716.963-4.995v560.106H-363.852V502.589z"
+                    />
+                </defs>
+                <g>
+                    <use xlink:href="#wave" opacity=".3">
+                        <animateTransform
+                            attributeName="transform"
+                            attributeType="XML"
+                            type="translate"
+                            dur="8s"
+                            calcMode="spline"
+                            values="270 230; -334 180; 270 230"
+                            keyTimes="0; .5; 1"
+                            keySplines="0.42, 0, 0.58, 1.0;0.42, 0, 0.58, 1.0"
+                            repeatCount="indefinite"
+                        />
+                    </use>
+                    <use xlink:href="#wave" opacity=".6">
+                        <animateTransform
+                            attributeName="transform"
+                            attributeType="XML"
+                            type="translate"
+                            dur="6s"
+                            calcMode="spline"
+                            values="-270 230;243 220;-270 230"
+                            keyTimes="0; .6; 1"
+                            keySplines="0.42, 0, 0.58, 1.0;0.42, 0, 0.58, 1.0"
+                            repeatCount="indefinite"
+                        />
+                    </use>
+                    <use xlink:href="#wave" opacty=".9">
+                        <animateTransform
+                            attributeName="transform"
+                            attributeType="XML"
+                            type="translate"
+                            dur="4s"
+                            calcMode="spline"
+                            values="0 230;-140 200;0 230"
+                            keyTimes="0; .4; 1"
+                            keySplines="0.42, 0, 0.58, 1.0;0.42, 0, 0.58, 1.0"
+                            repeatCount="indefinite"
+                        />
+                    </use>
+                </g>
+                <text x="50%" y="93%" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="15">
+                    &copy; 2024 FilmFinder. All rights reserved.
+                </text>
+            </svg>
+        </div>
+
+    </footer>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Genre section
@@ -411,6 +472,23 @@
             });
 
         });
+        // footer swap
+        window.addEventListener('scroll', function() {
+            var scrollPosition = window.scrollY;
+            var windowHeight = window.innerHeight;
+            var documentHeight = document.documentElement.scrollHeight;
+            var threshold = 30;
+
+            // Check if the scrollbar is at the bottom of the page
+            if (scrollPosition + windowHeight >= documentHeight - threshold) {
+                // Show animated footer
+                document.body.classList.add('show-footer');
+            } else {
+                // Hide animated footer
+                document.body.classList.remove('show-footer');
+            }
+        });
     </script>
 </body>
+
 </html>
