@@ -27,10 +27,51 @@
                         </span>
                     </a>
                 </li>
+                <li>
+                    <a href="movies.html" class="nav-link">
+                        <span class="item-icon">
+                            <i class='bx bx-movie'></i>
+                        </span>
+                        <span class="item-txt">
+                            Movies
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="recommend.php" class="nav-link">
+                        <span class="item-icon">
+                            <i class='bx bxs-dish'></i>
+                        </span>
+                        <span class="item-txt">
+                            MadeForYou
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="watch_list.php" class="nav-link">
+                        <span class="item-icon">
+                            <i class='bx bxs-user'></i>
+                        </span>
+                        <span class="item-txt">
+                            WatchList
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="preferences.php" class="nav-link">
+                        <span class="item-icon">
+                            <i class='bx bx-cog'></i>
+                        </span>
+                        <span class="item-txt">
+                            Preferences
+                        </span>
+                    </a>
+                </li>
                 <!-- Additional menu items if needed -->
             </ul>
         </div>
     </div>
+
     <div class="container">
         <!-- Introductory Card -->
         <div class="card">
