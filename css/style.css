@@ -388,3 +388,35 @@ footer {
         margin-bottom: 100px;
     }
 }
+
+@media (max-width: 600px) {
+    /* Body background position */
+    body {
+        background-position: center 300px;
+    }
+    /* H1 font size */
+    h1 {
+        font-size: 4rem;
+    }
+    /* Navbar adjustments */
+    .horizontal-navbar li {
+        margin: 0 5px;
+    }
+    .horizontal-navbar a .item-txt {
+        display: none;
+    }
+    /* Info container adjustments */
+    .info-container {
+        width: calc(100% - 40px);
+        margin: 20px 20px;
+    }
+    .info-text {
+        width: 100%;
+        max-width: 100%;
+    }
+    /* Footer adjustments */
+    .bottom {
+        margin-bottom: 150px;
+    }
+    /* Additional adjustments if needed */
+}
