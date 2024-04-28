@@ -71,8 +71,7 @@ body::-webkit-scrollbar {
         margin-bottom: 100px;
     }
     .main-content {
-        margin-left: 5%;
-        margin-right: 5%;
+        width: 90%;
     }
 }
 
