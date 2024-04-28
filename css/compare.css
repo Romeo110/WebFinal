@@ -231,6 +231,9 @@ h3 {
     .horizontal-navbar li {
         margin: 0 10px;
     }
+    body {
+        margin-bottom: 150px;
+    }
     .horizontal-navbar a .item-txt {
         display: none;
         /* Hide text labels on smaller screens */
@@ -258,5 +261,10 @@ h3 {
     .movie-container {
         width: 100%;
         /* Take full width */
+    }
+    .movie-container img {
+        width: 100%;
+        max-width: 200px;
+        height: auto;
     }
 }
