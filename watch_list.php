@@ -148,6 +148,15 @@ $conn->close();
             </div>
         </div>
 
+
+    <div class="logo">
+        <a href="index.html" class="nav-link logo-link">
+            <span class="item-icon">
+            <i class='bx bxs-film'></i>
+        </span>
+        </a>
+    </div>
+
     
     <div class="main-content">
     <h2>Favorite Movies</h2>
