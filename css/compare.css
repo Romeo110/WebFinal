@@ -190,3 +190,32 @@ h3 {
         font-size: 1.5em;
     }
 }
+
+
+/* logo */
+
+.logo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 12px 20px;
+    z-index: 1000;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    /* Adjust color as needed */
+}
+
+.logo-link .item-icon {
+    margin-right: 5px;
+    color: #953889;
+}
+
+.logo-link:hover {
+    opacity: 0.8;
+    /* Adjust opacity for hover effect */
+}
