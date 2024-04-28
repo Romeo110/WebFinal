@@ -148,8 +148,11 @@ $conn->close();
             </div>
         </div>
 
-    <h1>Favorite Movies</h1>
+    
+    <div class="main-content">
+    <h2>Favorite Movies</h2>
     <div id="movie-details-container"></div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">

@@ -88,3 +88,18 @@ footer {
     opacity: 1;
     /* Show the footer */
 }
+
+.main-content {
+    padding: 40px;
+    margin-top: 100px;
+    margin-left: 300px;
+    margin-right: 300px;
+    margin-bottom: 300px;
+    /* Adjust as needed */
+}
+
+h2 {
+    font-weight: bold;
+    font-size: 24px;
+    color: #401238;
+}
