@@ -94,33 +94,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     mysqli_close($conn);
 }
 ?>
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="signup.css">
-    <title>Sign Up</title>
-</head>
-<body>
-    <div class="container">
-        <h2>Sign Up</h2>
-        <form method="POST">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <span class="error"><?php echo $email_err; ?></span>
-
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <span class="error"><?php echo $password_err; ?></span>
-
-            <button type="submit">Sign Up</button>
-            <p class="alternate-action">Already have an account? <a href="login.php">Login</a></p>
-            <span class="error"><?php echo $signup_err; ?></span>
-        </form>
-    </div>
-</body>
-</html> -->
 <!DOCTYPE html>
     <html lang="en">
 
@@ -184,7 +157,5 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     </div>
 </div>
 
-
-    </body>
-
-    </html>
+</body>
+</html>

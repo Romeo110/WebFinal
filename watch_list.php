@@ -104,6 +104,16 @@ $conn->close();
                         </a>
                     </li>
                     <li>
+                    <a href="compare.html" class="nav-link">
+                        <span class="item-icon">
+                          <i class='bx bxl-deezer'></i>
+                        </span>
+                        <span class="item-txt">
+                            Compare
+                        </span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="recommend.php" class="nav-link">
                             <span class="item-icon">
                             <i class='bx bxs-dish'></i>
@@ -133,16 +143,6 @@ $conn->close();
                         </span>
                         </a>
                     </li>
-                  <li>
-                    <a href="compare.html" class="nav-link">
-                        <span class="item-icon">
-                          <i class='bx bxl-deezer'></i>
-                  </span>
-                        <span class="item-txt">
-                      CompareTool
-                  </span>
-                    </a>
-                </li>
                     <!-- Additional menu items if needed -->
                 </ul>
             </div>

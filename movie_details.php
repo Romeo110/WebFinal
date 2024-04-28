@@ -90,7 +90,7 @@ $conn->close();
 							<i class='bx bxl-deezer'></i>
 						</span>
 						<span class="item-txt">
-							CompareTool
+							Compare
 						</span>
 					</a>
 				</li>
