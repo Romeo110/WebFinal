@@ -148,7 +148,7 @@ $conn->close();
         </div>
     </div>
 
-    <div class="main-content">
+    <div id="movie-details-container">
     <section id="recommendations">
     <h2>WatchList</h2>
     </div>
@@ -239,7 +239,7 @@ $conn->close();
                             console.error("Error from server:", movieDetails.error);
                             return;
                         }
-                        var container = document.getElementById('main-content');
+                        var container = document.getElementById('movie-details-container');
                         movieDetails.forEach(function(movie) {
                             if (movie.error) {
                                 console.error("Error loading movie details:", movie.error);
