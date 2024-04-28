@@ -201,3 +201,39 @@ select {
     opacity: 0.8;
     /* Adjust opacity for hover effect */
 }
+
+
+/* Style for dropdown */
+
+.dropdown {
+    position: absolute;
+    z-index: 1;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    margin-top: 5px;
+    list-style: none;
+    /* Remove bullet points */
+    max-height: 150px;
+    /* Limit dropdown height */
+    overflow-y: auto;
+    /* Add scroll if content exceeds height */
+}
+
+
+/* Style for dropdown items */
+
+.dropdown li {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+/* Style for dropdown items on hover */
+
+.dropdown li:hover {
+    background-color: #f2f2f2;
+}
