@@ -142,3 +142,14 @@ footer {
         border-radius: 0;
     }
 }
+
+.movie-info h3 a {
+    text-decoration: none;
+    color: inherit;
+    font-size: 20px;
+    transition: color 0.3s ease;
+}
+
+.movie-info h3 a:hover {
+    color: #b346a7;
+}
