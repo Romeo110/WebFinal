@@ -94,6 +94,14 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         </div>
     </div>
 
+    <div class="logo">
+        <a href="index.html" class="nav-link logo-link">
+            <span class="item-icon">
+            <i class='bx bxs-film'></i>
+        </span>
+        </a>
+    </div>
+
     <div class="container">
         <!-- Introductory Card -->
         <div class="card">
