@@ -248,9 +248,19 @@ $conn->close();
                             }
                             var movieDiv = document.createElement('div');
                             movieDiv.innerHTML = `
-                                <h2>${movie.title}</h2>
+                            <div class="movie-card">
+                            <div class="movie-details">
+                            <div class="movie-poster">
+                                
                                 <img src="https://image.tmdb.org/t/p/w185${movie.poster_path}" alt="${movie.title} Poster">
+                                </div>
+
+                                <div class="movie-info">
+                                <h2>${movie.title}</h2>
                                 <p>${movie.overview}</p>
+                                </div>
+                                </div>
+                                </div>
                             `;
                             container.appendChild(movieDiv);
                         });

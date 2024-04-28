@@ -103,3 +103,61 @@ h2 {
     font-size: 24px;
     color: #401238;
 }
+
+.movie-card {
+    background-color: rgb(249, 249, 249, .8);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 40px;
+}
+
+.movie-details {
+    margin-top: 20px;
+    margin-right: 20px;
+    display: flex;
+    /* Use flexbox to stack items horizontally */
+    align-items: flex-start;
+    /* Align items to the start (top) */
+    margin-bottom: 20px;
+    /* Add margin to separate each movie card */
+}
+
+.movie-poster {
+    flex: 0 0 auto;
+    /* Do not allow stretching */
+    margin-right: 20px;
+    margin-left: 20px;
+    /* Add margin between poster and details */
+}
+
+.movie-info {
+    flex: 1;
+    /* Allow details to occupy remaining space */
+    display: flex;
+    /* Use flexbox for info details */
+    flex-direction: column;
+    /* Stack info details vertically */
+    justify-content: flex-start;
+    /* Align info details to the start (top) */
+}
+
+.movie-poster img {
+    width: auto;
+    height: auto;
+    /* Allow poster to adjust its height */
+    max-height: 200px;
+    /* Limit maximum height of poster */
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.movie-card:hover .movie-poster {
+    transform: scale(1.01);
+}
+
+.movie-info p {
+    margin: 5px 0;
+    font-size: 14px;
+}
