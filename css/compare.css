@@ -1,7 +1,21 @@
-/* CSS for horizontal navbar */
+html {
+    font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
+}
+
+body {
+    margin-bottom: 400px;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
 
 html {
     font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
+}
+
+body {
+    margin-bottom: 400px;
 }
 
 body::-webkit-scrollbar {
@@ -20,7 +34,7 @@ body::-webkit-scrollbar {
     top: 0;
     width: 100%;
     z-index: 1000;
-    left: 0;
+    left: 0px;
 }
 
 .horizontal-navbar ul {
@@ -50,9 +64,20 @@ body::-webkit-scrollbar {
     background-color: #555;
 }
 
-@media (max-width: 768px) {
-    .horizontal-navbar .item-txt {
+
+/* Adjustments for smaller screen sizes */
+
+@media only screen and (max-width: 768px) {
+    .horizontal-navbar ul {
+        flex-direction: row;
+        align-items: center;
+    }
+    .horizontal-navbar li {
+        margin: 0 10px;
+    }
+    .horizontal-navbar a .item-txt {
         display: none;
+        /* Hide text labels on smaller screens */
     }
 }
 
@@ -65,7 +90,9 @@ footer {
     bottom: 0;
     width: 100%;
     opacity: 0;
+    /* Initially hide the footer */
     transition: opacity 0.5s ease-in-out;
+    /* Add transition for opacity */
     z-index: -1;
 }
 
@@ -75,25 +102,21 @@ footer {
 
 .show-footer footer {
     opacity: 1;
+    /* Show the footer */
 }
 
-
-/* Introductory Paragraph Styles */
+.main-content {
+    padding: 20px;
+    margin-top: 50px;
+    margin-left: 300px;
+    margin-right: 300px;
+    /* Adjust as needed */
+}
 
 .intro-paragraph {
     font-size: 18px;
     line-height: 1.5;
-    color: #555;
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
-    margin-bottom: 300px;
-    margin-left: 300px;
-    margin-right: 300px;
+    color: #333;
 }
 
 .card {
@@ -104,48 +127,57 @@ footer {
     background-color: rgb(249, 249, 249, .8);
 }
 
-fieldset {
-    border-radius: 10px;
-    border-color: #cf66c5;
-}
-
 h2 {
     font-weight: bold;
     font-size: 1.2em;
     color: #401238;
 }
 
-legend {
+h3 {
     font-weight: bold;
-    font-size: 1.2em;
     color: #401238;
 }
 
-input[type="text"],
-input[type="number"],
-select {
-    width: 45%;
-    /* Shorter width */
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-    font-family: inherit;
-    font-size: 16px;
+.comparison-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
 
-select {
-    appearance: none;
-    background-color: #fff;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="6" viewBox="0 0 12 6"><path fill="%23000" d="M6 6l6-6H0z"/></svg>');
-    background-repeat: no-repeat;
-    background-position: calc(100% - 10px) center;
-    padding-right: 30px;
+.movie-container {
+    width: calc(45% - 20px);
+    margin-bottom: 20px;
+    padding: 40px;
+    border: 1px solid #cf66c5;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.movie-container img {
+    border-radius: 10px;
+}
+
+.remove-btn {
+    background-color: #333;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.remove-btn:hover {
+    background-color: #555;
+}
+
+.button:hover {
+    background-color: #555;
 }
 
 @media only screen and (max-width: 768px) {
-    .container {
+    .main-content {
         margin-left: 20px;
         margin-right: 20px;
         margin-bottom: 100px;
