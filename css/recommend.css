@@ -120,6 +120,10 @@ footer {
     border-radius: 10px;
 }
 
+.movie-card:hover .movie-poster {
+    transform: scale(1.05);
+}
+
 .movie-info {
     margin-top: 15px;
 }
