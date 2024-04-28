@@ -71,7 +71,10 @@ body::-webkit-scrollbar {
         margin-bottom: 100px;
     }
     .main-content {
-        width: 90%;
+        margin-left: 20px;
+        margin-right: 40px;
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
 }
 
