@@ -102,9 +102,8 @@ footer {
 }
 
 .movie-card {
-    background-color: #fff;
+    background-color: rgb(249, 249, 249, .8);
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
     overflow: hidden;
     border-radius: 10px;
