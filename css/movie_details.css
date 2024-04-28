@@ -67,19 +67,12 @@ body::-webkit-scrollbar {
         display: none;
         /* Hide text labels on smaller screens */
     }
-    .main-content {
-        padding: 20px;
-        margin-top: 50px;
-        margin-left: 5px;
-        margin-right: 5px;
+    body {
+        margin-bottom: 100px;
     }
-    #movie-details {
-        margin-top: 20px;
-        padding: 20px;
-        border-radius: 10px;
-        margin-left: 10px;
-        margin-right: 10px;
-        max-width: 700px;
+    .main-content {
+        margin-left: 5%;
+        margin-right: 5%;
     }
 }
 
@@ -110,8 +103,8 @@ footer {
 .main-content {
     padding: 20px;
     margin-top: 50px;
-    margin-left: 300px;
-    margin-right: 300px;
+    margin-left: 20%;
+    margin-right: 20%;
     /* Adjust as needed */
 }
 
