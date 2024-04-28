@@ -21,13 +21,16 @@ if ($conn->connect_error) {
 function fetchMovieDetails($movie_id) {
     $apiKey = 'd5697eb16a89b204a004af1f8fea130c';
     $movieUrl = "https://api.themoviedb.org/3/movie/$movie_id?api_key=$apiKey&language=en-US";
-    $response = file_get_contents($movieUrl);
+    $response = @file_get_contents($movieUrl);
+    if ($response === FALSE) {
+        return ["error" => "Failed to fetch data from API."];
+    }
     return json_decode($response, true);
 }
 
 // Check if the request is coming from AJAX for user preferences
 if (isset($_POST['ajax']) && $_POST['ajax'] == 1) {
-    $user_id = $_SESSION["user_id"] ?? null;
+    $user_id = $_SESSION["id"] ?? null;
     if ($user_id === null) {
         echo json_encode(["error" => "User ID not set in session."]);
         exit;
@@ -48,7 +51,12 @@ if (isset($_POST['ajax']) && $_POST['ajax'] == 1) {
 
     $movie_details = [];
     foreach ($movie_ids as $movie_id) {
-        $movie_details[] = fetchMovieDetails($movie_id['movie_id']);
+        $details = fetchMovieDetails($movie_id['movie_id']);
+        if (isset($details['error'])) {
+            $movie_details[] = $details;
+        } else {
+            $movie_details[] = $details;
+        }
     }
 
     header('Content-Type: application/json');
@@ -81,8 +89,16 @@ $conn->close();
                 if (this.status >= 200 && this.status < 300) {
                     try {
                         var movieDetails = JSON.parse(this.response);
+                        if (movieDetails.error) {
+                            console.error("Error from server:", movieDetails.error);
+                            return;
+                        }
                         var container = document.getElementById('movie-details-container');
                         movieDetails.forEach(function(movie) {
+                            if (movie.error) {
+                                console.error("Error loading movie details:", movie.error);
+                                return;
+                            }
                             var movieDiv = document.createElement('div');
                             movieDiv.innerHTML = `
                                 <h2>${movie.title}</h2>
@@ -106,4 +122,6 @@ $conn->close();
     </script>
 </body>
 </html>
+
+
 
