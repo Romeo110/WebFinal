@@ -73,6 +73,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                             // Store user ID in local storage
                             echo "<script>localStorage.setItem('userID', $user_id);</script>";
+                            echo "Signup successful. Redirecting...";
 
                             // Redirect user to index.html
                             header("location: preferences.php");
