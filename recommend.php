@@ -75,6 +75,16 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         </span>
                         </a>
                     </li>
+                  <li>
+                    <a href="compare.html" class="nav-link">
+                        <span class="item-icon">
+                          <i class='bx bxl-deezer'></i>
+                  </span>
+                        <span class="item-txt">
+                      CompareTool
+                  </span>
+                    </a>
+                </li>
                     <!-- Additional menu items if needed -->
                 </ul>
             </div>
@@ -359,10 +369,13 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         foreach ($allMovies as $movie) {
           echo '<div class="movie-card">';
           echo '<div class="movie-details">';
+          echo '<div class="movie-poster">';
           // Add link to movie details page with movie ID as query parameter
           echo '<a href="movie_details.php?movieId=' . $movie['id'] . '">';
           echo '<img src="https://image.tmdb.org/t/p/w342/' . $movie['poster_path'] . '" alt="' . $movie['title'] . ' Poster" class="movie-poster">';
           echo '</a>';
+          echo '</div>';
+          
           // Add link to movie details page with movie ID as query parameter
           echo '<div class="movie-info">';
           echo '<h3><a href="movie_details.php?movieId=' . $movie['id'] . '">' . $movie['title'] . '</a></h3>';
