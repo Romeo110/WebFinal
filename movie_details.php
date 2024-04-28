@@ -1,4 +1,5 @@
 <?php
+session_start();
 $server = "localhost";
 $userid = "uw05kxucdm6hu";
 $pw = "n6zlygfdot3s";
@@ -16,36 +17,36 @@ function sanitize_input($data) {
     $data = htmlspecialchars($data);
     return $data;
 }
-
-// Start the session
-session_start();
-
-// Check if the user is logged in
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-  // Redirect the user to the login page if not logged in
-  header("location: login.php");
-  exit;
+// Check if the movie is already in the watchlist
+$query = "SELECT 1 FROM favorite_movies WHERE user_id = ? AND movie_id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("ii", $user_id, $movie_id);
+$stmt->execute();
+$result = $stmt->get_result();
+if ($result->num_rows > 0) {
+    // If already in the watchlist, don't add again.
+    echo json_encode(['success' => false, 'alreadyInWatchlist' => true]);
+    $stmt->close();  // Make sure to close this statement.
+    $conn->close();
+    exit;
 }
 
-// Get movie ID from URL parameter
-$movie_id = isset($_GET['movieId']) ? sanitize_input($_GET['movieId']) : '';
+$stmt->close();  // Close the statement before starting a new one.
 
-// Directly adding the movie to the watchlist
-$user_id = $_SESSION["id"];
-
-// Use prepared statements to prevent SQL injection
-$sql = "INSERT INTO favorite_movies (user_id, movie_id) VALUES (?, ?)";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param('ii', $user_id, $movie_id);
-
-if ($stmt->execute()) {
-    echo "Movie added to your watchlist.";
+// Insert the movie into the watchlist
+$insertQuery = "INSERT INTO favorite_movies (user_id, movie_id) VALUES (?, ?)";
+$insertStmt = $conn->prepare($insertQuery);
+$insertStmt->bind_param('ii', $user_id, $movie_id);
+if ($insertStmt->execute()) {
+    echo json_encode(['success' => true]);
 } else {
-    echo "Error adding movie to your watchlist: " . $stmt->error;
+    // If unable to execute the insert, return an error message
+    echo json_encode(['success' => false, 'message' => 'Error adding movie to watchlist']);
 }
 
-$stmt->close();
+$insertStmt->close();
 $conn->close();
+
 ?>
 
 <!DOCTYPE html>
@@ -209,14 +210,18 @@ $conn->close();
 
     </footer>
 
+
+
+
     <script>
+
+        
         function goBack() {
             window.history.back();
         }
 
-        function addToWatchlist(movieId) {
+        
 
-        }
 
         document.addEventListener('DOMContentLoaded', function() {
             var addToWatchlistButtons = document.querySelectorAll('.add-to-watchlist-button');
@@ -373,9 +378,16 @@ $conn->close();
             addToWatchlistButton.textContent = 'Add to Watchlist';
             addToWatchlistButton.addEventListener('click', function() {
                 // Logic to add the movie to the watchlist goes here
-                alert('Movie added to watchlist!');
+                //alert('Movie added to watchlist!');
             });
             watchlistButtonContainer.appendChild(addToWatchlistButton);
+
+            // Create and append the Compare button
+            var compareButton = document.createElement('button');
+            compareButton.textContent = 'Compare';
+            compareButton.classList.add('compare-button'); // Add a class for styling and identification
+            watchlistButtonContainer.appendChild(compareButton);
+
             movieDetailsContainer.appendChild(watchlistButtonContainer);
 
             movieDetailsContainer.appendChild(overview);
@@ -461,6 +473,96 @@ $conn->close();
         });
 
         document.addEventListener('DOMContentLoaded', function() {
+            var movieId = getMovieIdFromUrl();
+            if (movieId) {
+                fetchMovieDetails(movieId);
+            }
+
+            var watchlistButtonContainer = document.querySelector('.watchlist-button');
+            if (inWatchlist) {
+                // Change button to indicate it's already in the watchlist but make it clickable for feedback
+                watchlistButtonContainer.innerHTML = '<button id="alreadyInWatchlistButton">Already in Watchlist</button>';
+                document.getElementById('alreadyInWatchlistButton').addEventListener('click', function(event) {
+                    event.preventDefault();  // Prevent any action
+                    alert('This movie is already in your watchlist.');
+                });
+            } else {
+                var addToWatchlistButton = document.createElement('button');
+                addToWatchlistButton.textContent = 'Add to Watchlist';
+                addToWatchlistButton.addEventListener('click', function() {
+                    addToWatchlist(movieId);
+                });
+                watchlistButtonContainer.appendChild(addToWatchlistButton);
+            }
+        });
+
+        function addToWatchlist(movieId) {
+            fetch('add_to_watchlist.php', {
+                method: 'POST',
+                body: JSON.stringify({ movieId: movieId }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.alreadyInWatchlist) {
+                    alert("You can't add this movie because it is already in your watchlist.");
+                } else if (data.success) {
+                    alert('Movie successfully added to your watchlist!');
+                    var watchlistButtonContainer = document.querySelector('.watchlist-button');
+                    watchlistButtonContainer.innerHTML = '<button disabled="true">Already in Watchlist</button>';
+                } else {
+                    alert('Failed to add the movie to the watchlist: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error adding movie to watchlist:', error);
+            });
+        }
+
+        // Function to add movie ID to the compare list in local storage
+        function addToCompareList(movieId) {
+            // Get current compare movie IDs from local storage
+            var compareMovieIds = JSON.parse(localStorage.getItem('compare_movie_ids')) || [];
+
+            // Check if the compare list already has 2 or fewer items
+            if (compareMovieIds.length < 2) {
+                // Add the movie ID to the compare list
+                compareMovieIds.push(movieId);
+                // Update the compare list in local storage
+                localStorage.setItem('compare_movie_ids', JSON.stringify(compareMovieIds));
+                alert('Movie added to compare list!');
+            } else {
+                alert('You can only compare up to two movies.');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listener to the "Compare" button
+            var compareButton = document.querySelector('.compare-button');
+            compareButton.addEventListener('click', function() {
+                // Get the movie ID from url
+                var movieId = getMovieIdFromUrl()
+                // Check if movie ID exists
+                if (movieId) {
+                    // Alert when the compare button is pressed
+                    alert('Compared!');
+                    // Call function to add movie ID to compare list
+                    addToCompareList(movieId);
+                    
+                } else {
+                    console.error('Movie ID not found.');
+                }
+            });
+        });
+
+
+
+
+
+
+        document.addEventListener('DOMContentLoaded', function() {
             var backdropContainer = document.getElementById('backdrop-container');
 
             // Add event listener to each backdrop image
@@ -485,6 +587,9 @@ $conn->close();
 
             // Your existing code to fetch and display backdrop images...
         });
+    </script>
+        <script type="text/javascript">
+        var inWatchlist = <?php echo json_encode($inWatchlist); ?>;
     </script>
 </body>
 
