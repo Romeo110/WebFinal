@@ -117,6 +117,16 @@ $conn->close();
                         </span>
                     </a>
                 </li>
+                <li>
+                    <a href="compare.html" class="nav-link">
+                        <span class="item-icon">
+                          <i class='bx bxl-deezer'></i>
+                  </span>
+                        <span class="item-txt">
+                      CompareTool
+                  </span>
+                    </a>
+                </li>
                 <!-- Additional menu items if needed -->
             </ul>
         </div>
@@ -125,7 +135,7 @@ $conn->close();
 
 
     <div class="main-content">
-        <button onclick="goBack()">Back</button>
+        <!-- <button onclick="goBack()">Back</button> -->
         <div id="backdrop-container"></div>
 
         <div class="movie-details-container">
