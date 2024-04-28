@@ -75,7 +75,7 @@ $conn->close();
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <script src="https://kit.fontawesome.com/46b7ceee20.js" crossorigin="anonymous"></script>
         <title>Your Watch List</title>
-        <link rel="stylesheet" href="css/recommend.css">
+        <link rel="stylesheet" href="css/watchlist.css">
     </head>
 <body>
 
