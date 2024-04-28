@@ -213,7 +213,6 @@ select {
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 0;
-    margin-top: 5px;
     list-style: none;
     /* Remove bullet points */
     max-height: 150px;
