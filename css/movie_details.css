@@ -67,6 +67,20 @@ body::-webkit-scrollbar {
         display: none;
         /* Hide text labels on smaller screens */
     }
+    .main-content {
+        padding: 20px;
+        margin-top: 50px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    #movie-details {
+        margin-top: 20px;
+        padding: 20px;
+        border-radius: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 700px;
+    }
 }
 
 
@@ -179,9 +193,9 @@ button:hover {
 #movie-details {
     margin-top: 20px;
     padding: 20px;
-    background-color: #fff;
+    background-color: rgba(249, 249, 249, .8);
     border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); */
     /* Add a subtle shadow */
 }
 
@@ -297,7 +311,7 @@ button:hover {
     height: auto;
     border-radius: 10px;
     /* Add rounded corners to images */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
     /* Add a subtle shadow to images */
     transition: transform 0.3s ease;
     /* Add transition for smooth animation */
