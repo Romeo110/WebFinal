@@ -100,3 +100,45 @@ footer {
     margin-bottom: 300px;
     /* Adjust as needed */
 }
+
+.movie-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.movie-details {
+    padding: 20px;
+}
+
+.movie-poster {
+    width: auto;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.movie-info {
+    margin-top: 15px;
+}
+
+.movie-info h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.movie-info p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+
+/* Adjustments for smaller screen sizes */
+
+@media only screen and (max-width: 768px) {
+    .movie-card {
+        border-radius: 0;
+    }
+}

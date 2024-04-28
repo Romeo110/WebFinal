@@ -357,7 +357,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       // Display recommended movies
       if (!empty($allMovies)) {
         foreach ($allMovies as $movie) {
-          echo '<div class="movie">';
+          echo '<div class="movie-card">';
           echo '<div class="movie-details">';
           // Add link to movie details page with movie ID as query parameter
           echo '<a href="movie_details.php?movieId=' . $movie['id'] . '">';
