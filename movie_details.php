@@ -25,7 +25,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     // If already in the watchlist, don't add again.
-    // echo json_encode(['success' => false, 'alreadyInWatchlist' => true]);
+    echo json_encode(['success' => false, 'alreadyInWatchlist' => true]);
     $stmt->close();  // Make sure to close this statement.
     $conn->close();
     exit;
@@ -38,10 +38,10 @@ $insertQuery = "INSERT INTO favorite_movies (user_id, movie_id) VALUES (?, ?)";
 $insertStmt = $conn->prepare($insertQuery);
 $insertStmt->bind_param('ii', $user_id, $movie_id);
 if ($insertStmt->execute()) {
-    // echo json_encode(['success' => true]);
+    echo json_encode(['success' => true]);
 } else {
     // If unable to execute the insert, return an error message
-    // echo json_encode(['success' => false, 'message' => 'Error adding movie to watchlist']);
+    echo json_encode(['success' => false, 'message' => 'Error adding movie to watchlist']);
 }
 
 $insertStmt->close();
