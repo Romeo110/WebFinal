@@ -80,8 +80,6 @@
         </div>
     </div>
 
-
-
     <main>
         <div class="main-content">
             <div class="card">
@@ -178,105 +176,130 @@
               </text>
           </svg>
         </div>
-
     </footer>
-
     <script>
-        // Step 1: Retrieve movie IDs from local storage
-        // var movieIds = JSON.parse(localStorage.getItem('movieIds'));
-        var movieIds = [1011985, 9502];
-        var apiKey = 'd5697eb16a89b204a004af1f8fea130c';
+      // Step 1: Retrieve movie IDs from local storage
+      var movieIds = JSON.parse(localStorage.getItem('compare_movie_ids')) || [];
+      var apiKey = 'd5697eb16a89b204a004af1f8fea130c';
 
-        if (movieIds && movieIds.length === 2) {
-            // Step 2: Fetch movie details from TMDB API
-            var movies = [];
-            var promises = [];
+      if (movieIds.length > 0) {
+        // Step 2: Fetch movie details from TMDB API
+        var movies = [];
+        var promises = [];
 
-            movieIds.forEach(function(movieId) {
-                var movieUrl = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`;
-                promises.push(fetch(movieUrl).then(response => response.json()));
-            });
-
-            Promise.all(promises).then(function(responses) {
-                responses.forEach(function(movieData) {
-                    if (movieData) {
-                        movies.push(movieData);
-                    }
-                });
-
-                // Step 3: Compare the movies based on rating, popularity, revenue, etc.
-                var recommendation = '';
-                if (movies.length === 2) {
-                    if (movies[0].vote_average > movies[1].vote_average) {
-                        recommendation = movies[0].title;
-                    } else {
-                        recommendation = movies[1].title;
-                    }
-                } else {
-                    recommendation = 'Please select two movies for comparison.';
-                }
-
-                // Step 4: Display movie details dynamically
-                var comparisonContainer = document.getElementById('comparison-container');
-                comparisonContainer.innerHTML = '';
-
-                movies.forEach(function(movie) {
-                    var movieContainer = document.createElement('div');
-                    movieContainer.classList.add('movie-container');
-
-                    var image = document.createElement('img');
-                    image.src = `https://image.tmdb.org/t/p/w342/${movie.poster_path}`;
-                    image.alt = movie.title;
-
-                    var title = document.createElement('h2');
-                    title.textContent = movie.title;
-
-                    var rating = document.createElement('p');
-                    rating.textContent = 'Rating: ' + movie.vote_average;
-
-                    var popularity = document.createElement('p');
-                    popularity.textContent = 'Popularity: ' + movie.popularity;
-
-                    var revenue = document.createElement('p');
-                    revenue.textContent = 'Revenue: $' + movie.revenue.toLocaleString();
-
-                    var removeBtn = document.createElement('button');
-                    removeBtn.classList.add('remove-btn');
-                    removeBtn.dataset.movieId = movie.id;
-                    removeBtn.textContent = 'Remove from Compare';
-
-                    movieContainer.appendChild(image);
-                    movieContainer.appendChild(title);
-                    movieContainer.appendChild(rating);
-                    movieContainer.appendChild(popularity);
-                    movieContainer.appendChild(revenue);
-                    movieContainer.appendChild(removeBtn);
-
-                    comparisonContainer.appendChild(movieContainer);
-                });
-
-                // Step 5: Display the recommendation
-                document.getElementById('recommendation-text').textContent = recommendation;
-            });
-        }
-
-        // footer swap
-        window.addEventListener('scroll', function() {
-            var scrollPosition = window.scrollY;
-            var windowHeight = window.innerHeight;
-            var documentHeight = document.documentElement.scrollHeight;
-            var threshold = 30;
-
-            // Check if the scrollbar is at the bottom of the page
-            if (scrollPosition + windowHeight >= documentHeight - threshold) {
-                // Show animated footer
-                document.body.classList.add('show-footer');
-            } else {
-                // Hide animated footer
-                document.body.classList.remove('show-footer');
-            }
+        movieIds.forEach(function(movieId) {
+          var movieUrl = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`;
+          promises.push(fetch(movieUrl).then(response => response.json()));
         });
+
+        Promise.all(promises).then(function(responses) {
+          responses.forEach(function(movieData) {
+            if (movieData) {
+              movies.push(movieData);
+            }
+          });
+
+          // Step 3: Compare the movies based on rating, popularity, revenue, etc.
+          var recommendation = '';
+          if (movies.length >= 2) {
+            // Compare each criterion separately
+            var ratingDiff = movies[0].vote_average - movies[1].vote_average;
+            var popularityDiff = movies[0].popularity - movies[1].popularity;
+            var revenueDiff = movies[0].revenue - movies[1].revenue;
+
+            var betterCriteriaCount = 0;
+
+            if (ratingDiff > 0) betterCriteriaCount++;
+            if (popularityDiff > 0) betterCriteriaCount++;
+            if (revenueDiff > 0) betterCriteriaCount++;
+
+            if (betterCriteriaCount >= 2) {
+              recommendation = 'We recommend ' + movies[0].title + ' based on achieving at least two out of three criteria: rating, popularity, and revenue.';
+            } else {
+              recommendation = 'We recommend ' + movies[1].title + ' based on achieving at least two out of three criteria: rating, popularity, and revenue.';
+            }
+          } else {
+            recommendation = 'Please select two or more movies for comparison.';
+          }
+
+          // Step 4: Display movie details dynamically
+          var comparisonContainer = document.getElementById('comparison-container');
+          comparisonContainer.innerHTML = '';
+
+          movies.forEach(function(movie) {
+            var movieContainer = document.createElement('div');
+            movieContainer.classList.add('movie-container');
+
+            var image = document.createElement('img');
+            image.src = `https://image.tmdb.org/t/p/w342/${movie.poster_path}`;
+            image.alt = movie.title;
+
+            var title = document.createElement('h2');
+            title.textContent = movie.title;
+
+            var rating = document.createElement('p');
+            rating.textContent = 'Rating: ' + movie.vote_average;
+
+            var popularity = document.createElement('p');
+            popularity.textContent = 'Popularity: ' + movie.popularity;
+
+            var revenue = document.createElement('p');
+            revenue.textContent = 'Revenue: $' + movie.revenue.toLocaleString();
+
+            var removeBtn = document.createElement('button');
+            removeBtn.classList.add('remove-btn');
+            removeBtn.dataset.movieId = movie.id;
+            removeBtn.textContent = 'Remove from Compare';
+
+            removeBtn.addEventListener('click', function() {
+              // Remove the movie ID from the compare list in local storage
+              var index = movieIds.indexOf(movie.id.toString());
+              if (index !== -1) {
+                movieIds.splice(index, 1);
+                localStorage.setItem('compare_movie_ids', JSON.stringify(movieIds));
+                // Remove the movie container from the comparison page
+                movieContainer.remove();
+                // Update the recommendation if there are less than two movies
+                if (movieIds.length < 2) {
+                  document.getElementById('recommendation-text').textContent = 'Please select two movies for comparison.';
+                }
+              }
+            });
+
+            movieContainer.appendChild(image);
+            movieContainer.appendChild(title);
+            movieContainer.appendChild(rating);
+            movieContainer.appendChild(popularity);
+            movieContainer.appendChild(revenue);
+            movieContainer.appendChild(removeBtn);
+
+            comparisonContainer.appendChild(movieContainer);
+          });
+
+          // Step 5: Display the recommendation
+          document.getElementById('recommendation-text').textContent = recommendation;
+        });
+      } else {
+        // Display message if there are no movies in the comparison list
+        document.getElementById('recommendation-text').textContent = 'Please select two movies for comparison.';
+      }
+
+      // footer swap
+      window.addEventListener('scroll', function() {
+        var scrollPosition = window.scrollY;
+        var windowHeight = window.innerHeight;
+        var documentHeight = document.documentElement.scrollHeight;
+        var threshold = 30;
+
+        // Check if the scrollbar is at the bottom of the page
+        if (scrollPosition + windowHeight >= documentHeight - threshold) {
+          // Show animated footer
+          document.body.classList.add('show-footer');
+        } else {
+          // Hide animated footer
+          document.body.classList.remove('show-footer');
+        }
+      });
     </script>
 </body>
-
 </html>

@@ -9,7 +9,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     exit;
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -402,7 +401,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 			var movieId = getMovieIdFromUrl();
 			console.log('Movie ID:', movieId); // Log movieId to console
 			if (movieId) {
-				localStorage.setItem('movie_id', movieId); // Store movieId in local storage
 				fetchMovieDetails(movieId);
 			} else {
 				console.error('Movie ID not found in URL.');
@@ -423,13 +421,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 			} else {
 				// Hide animated footer
 				document.body.classList.remove('show-footer');
-			}
-		});
-
-		document.addEventListener('DOMContentLoaded', function() {
-			var movieId = getMovieIdFromUrl();
-			if (movieId) {
-					fetchMovieDetails(movieId);
 			}
 		});
 
@@ -458,39 +449,50 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 				});
     }
 
+		// Function to check if the compare list has reached its maximum capacity
+		function isCompareListFull() {
+			var compareMovieIds = JSON.parse(localStorage.getItem('compare_movie_ids')) || [];
+			return compareMovieIds.length >= 2;
+		}
+
 		// Function to add movie ID to the compare list in local storage
 		function addToCompareList(movieId) {
-			// Get current compare movie IDs from local storage
 			var compareMovieIds = JSON.parse(localStorage.getItem('compare_movie_ids')) || [];
 
-			// Check if the compare list already has 2 or fewer items
-			if (compareMovieIds.length < 2) {
-				// Add the movie ID to the compare list
-				compareMovieIds.push(movieId);
-				// Update the compare list in local storage
-				localStorage.setItem('compare_movie_ids', JSON.stringify(compareMovieIds));
-				alert('Movie added to compare list!');
-			} else {
-				alert('You can only compare up to two movies.');
+			// Check if the movie ID already exists in the compare list
+			if (compareMovieIds.includes(movieId)) {
+        alert('You have already added this movie to the compare list.');
+    	} else {
+				// Check if the compare list has reached its maximum capacity
+				if (!isCompareListFull()) {
+					// Add the movie ID to the compare list
+					compareMovieIds.push(movieId);
+					// Update the compare list in local storage
+					localStorage.setItem('compare_movie_ids', JSON.stringify(compareMovieIds));
+					alert('Movie added to compare list!');
+				} else {
+					alert('You already have two movies in your compare list.');
+				}
 			}
 		}
 
-		document.addEventListener('DOMContentLoaded', function() {
-			// Add event listener to the "Compare" button
-			var compareButton = document.querySelector('.compare-button');
-			compareButton.addEventListener('click', function() {
-				// Get the movie ID from url
-				var movieId = getMovieIdFromUrl()
+		document.addEventListener('click', function(event) {
+			var compareButton = event.target.closest('.compare-button');
+			if (compareButton) {
+				// Get the movie ID from the URL
+				var movieId = getMovieIdFromUrl();
 				// Check if movie ID exists
 				if (movieId) {
-					// Alert when the compare button is pressed
-					alert('Compared!');
 					// Call function to add movie ID to compare list
 					addToCompareList(movieId);
+					// Disable the Compare button if the compare list is full
+					if (isCompareListFull()) {
+						compareButton.disabled = true;
+					}
 				} else {
-						console.error('Movie ID not found.');
+					console.error('Movie ID not found.');
 				}
-			});
+			}
 		});
 
 		document.addEventListener('DOMContentLoaded', function() {
