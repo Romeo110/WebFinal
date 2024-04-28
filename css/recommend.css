@@ -112,23 +112,43 @@ footer {
 
 .movie-details {
     display: flex;
-    align-items: center;
-    margin: 20px;
+    /* Use flexbox to stack items horizontally */
+    align-items: flex-start;
+    /* Align items to the start (top) */
+    margin-bottom: 20px;
+    /* Add margin to separate each movie card */
 }
 
 .movie-poster {
+    flex: 0 0 auto;
+    /* Do not allow stretching */
+    margin-right: 20px;
+    /* Add margin between poster and details */
+}
+
+.movie-info {
+    flex: 1;
+    /* Allow details to occupy remaining space */
+    display: flex;
+    /* Use flexbox for info details */
+    flex-direction: column;
+    /* Stack info details vertically */
+    justify-content: flex-start;
+    /* Align info details to the start (top) */
+}
+
+.movie-poster img {
     width: auto;
-    height: 60%;
+    height: auto;
+    /* Allow poster to adjust its height */
+    max-height: 200px;
+    /* Limit maximum height of poster */
     border-radius: 10px;
     transition: transform 0.3s ease;
 }
 
 .movie-card:hover .movie-poster {
-    transform: scale(1.05);
-}
-
-.movie-info {
-    margin-top: 15px;
+    transform: scale(1.02);
 }
 
 .movie-info h3 {
