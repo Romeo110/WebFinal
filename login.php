@@ -5,7 +5,7 @@ session_start();
 $server = "localhost";
 $userid = "uw05kxucdm6hu";
 $pw = "n6zlygfdot3s";
-$db = "dbbyejddos2r5c";
+$db = "dboyek8cty39tn";
 $conn = new mysqli($server, $userid, $pw, $db);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

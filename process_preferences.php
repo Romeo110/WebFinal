@@ -12,7 +12,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 $server = "localhost";
 $userid = "uw05kxucdm6hu";
 $pw = "n6zlygfdot3s";
-$db = "dbbyejddos2r5c";
+$db = "dboyek8cty39tn";
 $conn = new mysqli($server, $userid, $pw, $db);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -63,5 +63,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Close the database connection
 $conn->close();
-header("location: index.html");
+header("location: recommend.php");
 ?>
