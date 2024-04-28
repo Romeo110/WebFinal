@@ -76,7 +76,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             echo "Signup successful. Redirecting...";
 
                             // Redirect user to index.html
-                            header("location: preferences.php");
+                            header("location: https://romelloh.sgedu.site/WebFinal/preferences.php");
                             exit;
                         } else{
                             $signup_err = "Oops! Something went wrong. Please try again later.";
