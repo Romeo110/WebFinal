@@ -75,7 +75,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             echo "<script>localStorage.setItem('userID', $user_id);</script>";
 
                             // Redirect user to index.html
-                            header("location: index.html");
+                            header("location: preferences.php");
                             exit;
                         } else{
                             $signup_err = "Oops! Something went wrong. Please try again later.";
