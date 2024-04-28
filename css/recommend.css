@@ -88,3 +88,14 @@ footer {
     opacity: 1;
     /* Show the footer */
 }
+
+
+/* styles for main content */
+
+.main-content {
+    padding: 20px;
+    margin-top: 100px;
+    margin-left: 300px;
+    margin-right: 300px;
+    /* Adjust as needed */
+}
