@@ -159,7 +159,7 @@ select {
     }
 }
 
-button {
+.submit-button {
     padding: 10px 20px;
     background-color: #333;
     color: #fff;
@@ -169,7 +169,7 @@ button {
     margin-right: 15px;
 }
 
-button:hover {
+.submit-button:hover {
     background-color: #555;
 }
 

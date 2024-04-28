@@ -167,7 +167,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         <label><input type="checkbox" id="noPreferenceLanguage" name="no_preference_language" value="no_preference"> No Preference</label>
                     </fieldset>
                     <br><br>
-                    <input type="submit" value="Submit Preferences">
+                    <input type="submit" value="Submit Preferences" class="submit-button">
                 </form>
             </div>
         </div>
