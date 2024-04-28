@@ -219,3 +219,44 @@ h3 {
     opacity: 0.8;
     /* Adjust opacity for hover effect */
 }
+
+
+/* Adjustments for smaller screen sizes */
+
+@media only screen and (max-width: 768px) {
+    .horizontal-navbar ul {
+        flex-direction: row;
+        align-items: center;
+    }
+    .horizontal-navbar li {
+        margin: 0 10px;
+    }
+    .horizontal-navbar a .item-txt {
+        display: none;
+        /* Hide text labels on smaller screens */
+    }
+    .main-content {
+        margin-left: 20px;
+        margin-right: 40px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .card {
+        width: 90%;
+        margin-top: 30px;
+    }
+    h2 {
+        font-size: 1.5em;
+        /* Adjust font size */
+    }
+    .comparison-container {
+        flex-direction: column;
+        /* Stack movie containers vertically */
+        align-items: center;
+        /* Center movie containers horizontally */
+    }
+    .movie-container {
+        width: 100%;
+        /* Take full width */
+    }
+}
