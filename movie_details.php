@@ -10,7 +10,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -67,20 +67,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         if(mysqli_stmt_execute($stmt)){
                             // Retrieve the user ID of the newly inserted user
                             $user_id = mysqli_insert_id($conn);
-
+                        
                             // Close statement
                             mysqli_stmt_close($stmt);
-
-                            // Store user ID in local storage
-                            echo "<script>localStorage.setItem('userID', $user_id);</script>";
-                            echo "Signup successful. Redirecting...";
-
-                            // Redirect user to index.html
+                        
+                            // Set session variables
+                            $_SESSION["id"] = $user_id;
+                            $_SESSION["loggedin"] = true;
+                        
+                            // Redirect user to preferences.php
                             header("location: preferences.php");
                             exit;
                         } else{
                             $signup_err = "Oops! Something went wrong. Please try again later.";
-                        }
+                        }                        
                     }
                 }
             } else{
