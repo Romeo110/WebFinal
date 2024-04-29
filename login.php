@@ -147,6 +147,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </div>
 
     <script>
+        var compareMovieIds = [];
+        localStorage.setItem('compare_movie_ids', JSON.stringify(compareMovieIds));
         // Store user ID in local storage after successful login
         <?php if(isset($_SESSION['id'])) : ?>
             localStorage.setItem('userID', <?php echo $_SESSION['id']; ?>);
