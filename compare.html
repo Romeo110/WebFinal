@@ -110,7 +110,7 @@
             <div class="card">
                 <div class="recommendation" id="recommendation">
                     <h3>Our Recommendation</h3>
-                    <p id="recommendation-text">Please select two movies for comparison.</p>
+                    <p id="recommendation-text">Please select two movies for comparison in <a href="movies.html">Movies</a> or <a href="recommend.php">MadeForYou</a>.</p>
                 </div>
             </div>
         </div>
@@ -227,7 +227,7 @@
                         recommendation = 'We recommend ' + movies[1].title + ' based on achieving at least two out of three criteria: rating, popularity, and revenue.';
                     }
                 } else {
-                    recommendation = 'Please select two or more movies for comparison.';
+                    recommendation = 'Please select two movies for comparison in <a href="movies.html">Movies</a> or <a href="recommend.php">MadeForYou</a>.';
                 }
 
                 // Step 4: Display movie details dynamically
@@ -270,7 +270,7 @@
                             movieContainer.remove();
                             // Update the recommendation if there are less than two movies
                             if (movieIds.length < 2) {
-                                document.getElementById('recommendation-text').textContent = 'Please select two movies for comparison.';
+                              document.getElementById('recommendation-text').innerHTML = 'Please select two movies for comparison in <a href="movies.html">Movies</a> or <a href="recommend.php">MadeForYou</a>.';
                             }
                         }
                     });
@@ -286,11 +286,12 @@
                 });
 
                 // Step 5: Display the recommendation
-                document.getElementById('recommendation-text').textContent = recommendation;
+                document.getElementById('recommendation-text').innerHTML = recommendation;
             });
         } else {
             // Display message if there are no movies in the comparison list
-            document.getElementById('recommendation-text').textContent = 'Please select two movies for comparison.';
+            var recommendationText = 'Please select two movies for comparison in <a href="movies.html">Movies</a> or <a href="recommend.php">MadeForYou</a>.';
+            document.getElementById('recommendation-text').innerHTML = recommendationText;
         }
 
         // footer swap
