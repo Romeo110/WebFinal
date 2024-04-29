@@ -110,7 +110,6 @@ h2 {
 .movie-card {
     background-color: rgb(249, 249, 249, .8);
     border-radius: 10px;
-    margin-bottom: 20px;
     overflow: hidden;
     border-radius: 10px;
     margin-bottom: 40px;
@@ -230,8 +229,8 @@ h2 {
         margin-bottom: 100px;
     }
     .main-content {
-        margin-left: 20px;
-        margin-right: 40px;
+        margin-left: 0px;
+        margin-right: 20px;
         margin-top: 20px;
         margin-bottom: 20px;
     }
