@@ -263,8 +263,8 @@ h3 {
         /* Take full width */
     }
     .movie-container img {
-        width: 100%;
+        width: auto;
         max-width: 200px;
-        height: auto;
+        height: 30%;
     }
 }
