@@ -257,7 +257,8 @@
                     var removeBtn = document.createElement('button');
                     removeBtn.classList.add('remove-btn');
                     removeBtn.dataset.movieId = movie.id;
-                    removeBtn.textContent = 'Remove from Compare';
+                    removeBtn.innerHTML = '<i class="bx bxs-trash"></i>';
+
 
                     removeBtn.addEventListener('click', function() {
                         // Remove the movie ID from the compare list in local storage
