@@ -239,7 +239,7 @@ h3 {
         /* Hide text labels on smaller screens */
     }
     .main-content {
-        margin-left: 20px;
+        margin-left: 0px;
         margin-right: 40px;
         margin-top: 20px;
         margin-bottom: 20px;
