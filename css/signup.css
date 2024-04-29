@@ -5,6 +5,13 @@ html {
 }
 
 body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* Ensure full viewport height */
+    margin: 0;
+    /* Remove default body margin */
     overflow: hidden;
 }
 
@@ -47,25 +54,19 @@ body {
     background-color: #555;
 }
 
-@media (max-width: 768px) {
-    .horizontal-navbar .item-txt {
-        display: none;
-        /* Hide the text labels on small screens */
-    }
-}
-
 
 /* CSS for sign-up card */
 
 .signup-card {
-    margin: 300px auto;
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 80%;
     max-width: 800px;
     display: flex;
-    background: linear-gradient(to right, #b346a7 50%, #ffffff 50%);
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, #389544 50%, #ffffff 50%);
 }
 
 .intro-section,
@@ -149,5 +150,12 @@ body {
     .horizontal-navbar li {
         margin-right: 10px;
         /* Reduce margin for smaller screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .horizontal-navbar .item-txt {
+        display: none;
+        /* Hide the text labels on small screens */
     }
 }
