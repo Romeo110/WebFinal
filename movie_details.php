@@ -99,7 +99,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     </div>
 
 	<div class="main-content">
-		<!-- <button onclick="goBack()">Back</button> -->
+		<button onclick="goBack()">Back</button>
 		<div id="backdrop-container"></div>
 
 		<div class="movie-details-container">
