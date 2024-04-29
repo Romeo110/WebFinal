@@ -1,4 +1,4 @@
-    /* CSS for horizontal navbar */
+/* CSS for horizontal navbar */
 
 html {
     font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
@@ -169,3 +169,4 @@ body {
     .signup-card {
         background: rgba(249, 249, 249, .8);
     }
+}
