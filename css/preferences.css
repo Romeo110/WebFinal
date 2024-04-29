@@ -144,21 +144,6 @@ select {
     padding-right: 30px;
 }
 
-@media only screen and (max-width: 768px) {
-    .container {
-        margin-left: 20px;
-        margin-right: 20px;
-        margin-bottom: 100px;
-    }
-    .card {
-        width: 90%;
-        margin-top: 30px;
-    }
-    h2 {
-        font-size: 1.5em;
-    }
-}
-
 .submit-button {
     padding: 10px 20px;
     background-color: #333;
@@ -236,4 +221,23 @@ select {
 
 .dropdown li:hover {
     background-color: #f2f2f2;
+}
+
+@media only screen and (max-width: 768px) {
+    .container {
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-bottom: 100px;
+    }
+    .card {
+        width: 90%;
+        margin-top: 30px;
+    }
+    h2 {
+        font-size: 1.5em;
+    }
+    .logo {
+        display: none;
+        /* Hide the logo on small screens */
+    }
 }

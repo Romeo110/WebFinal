@@ -218,4 +218,8 @@ h2 {
         margin-bottom: 20px;
         padding: 0px;
     }
+    .logo {
+        display: none;
+        /* Hide the logo on small screens */
+    }
 }

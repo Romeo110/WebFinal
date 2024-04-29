@@ -256,4 +256,8 @@ h3 {
         max-width: 200px;
         height: auto;
     }
+    .logo {
+        display: none;
+        /* Hide the logo on small screens */
+    }
 }

@@ -413,8 +413,12 @@ footer {
         opacity: 1;
     }
     .bottom {
-        margin-top: 200px;
+        margin-top: 400px;
         margin-bottom: 100px;
+    }
+    .logo {
+        display: none;
+        /* Hide the logo on small screens */
     }
 }
 
@@ -447,5 +451,4 @@ footer {
     .bottom {
         margin-bottom: 150px;
     }
-    /* Additional adjustments if needed */
 }

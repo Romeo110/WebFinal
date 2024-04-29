@@ -366,6 +366,10 @@ footer {
         margin-bottom: 7px;
         /* Reset margin for the icon */
     }
+    .logo {
+        display: none;
+        /* Hide the logo on small screens */
+    }
 }
 
 
