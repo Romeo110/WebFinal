@@ -1,4 +1,4 @@
-/* CSS for horizontal navbar */
+    /* CSS for horizontal navbar */
 
 html {
     font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
@@ -158,4 +158,14 @@ body {
         display: none;
         /* Hide the text labels on small screens */
     }
-}
+    .intro-section {
+        display: none;
+        /* Hide the intro section */
+    }
+    .form-section {
+        flex: 2;
+        /* Extend the form section */
+    }
+    .signup-card {
+        background: rgba(249, 249, 249, .8);
+    }
