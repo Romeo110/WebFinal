@@ -1,8 +1,4 @@
 <?php
-// Enable error reporting
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 session_start();
 
 $server = "localhost";
@@ -12,8 +8,6 @@ $db = "dboyek8cty39tn";
 $conn = new mysqli($server, $userid, $pw, $db);
 
 if ($conn->connect_error) {
-    // Log connection error
-    error_log("Connection failed: " . $conn->connect_error);
     die("Connection failed: " . $conn->connect_error);
 }
 
@@ -44,8 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($insertStmt->execute()) {
         exit(json_encode(["success" => true]));
     } else {
-        // If unable to execute the insert, return an error message
-        error_log("Error adding movie to watchlist: " . $conn->error);
         http_response_code(500);
         exit(json_encode(["success" => false, "message" => "Error adding movie to watchlist"]));
     }
