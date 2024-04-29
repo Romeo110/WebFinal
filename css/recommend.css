@@ -49,23 +49,6 @@ body::-webkit-scrollbar {
 }
 
 
-/* Adjustments for smaller screen sizes */
-
-@media only screen and (max-width: 768px) {
-    .horizontal-navbar ul {
-        flex-direction: row;
-        align-items: center;
-    }
-    .horizontal-navbar li {
-        margin: 0 10px;
-    }
-    .horizontal-navbar a .item-txt {
-        display: none;
-        /* Hide text labels on smaller screens */
-    }
-}
-
-
 /* Footer Styles */
 
 footer {
@@ -233,5 +216,6 @@ h2 {
         margin-right: 20px;
         margin-top: 20px;
         margin-bottom: 20px;
+        padding: 0px;
     }
 }
