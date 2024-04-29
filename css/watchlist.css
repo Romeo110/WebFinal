@@ -97,6 +97,7 @@ h2 {
 }
 
 .movie-details {
+    position: relative;
     margin-top: 20px;
     margin-right: 20px;
     display: flex;
@@ -175,15 +176,16 @@ h2 {
 }
 
 .remove-from-watchlist-btn {
-    width: 40px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
     padding: 8px 8px;
+    /* Adjust padding */
     background-color: #333;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-right: 15px;
-    margin-top: -10px;
 }
 
 .remove-from-watchlist-btn:hover {
