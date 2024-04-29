@@ -154,6 +154,10 @@ h3 {
 }
 
 .movie-container img {
+    width: 70%;
+    max-width: 200px;
+    /* Set maximum width for smaller screens */
+    height: auto;
     border-radius: 10px;
 }
 
@@ -174,21 +178,6 @@ h3 {
 
 .button:hover {
     background-color: #555;
-}
-
-@media only screen and (max-width: 768px) {
-    .main-content {
-        margin-left: 20px;
-        margin-right: 20px;
-        margin-bottom: 100px;
-    }
-    .card {
-        width: 90%;
-        margin-top: 30px;
-    }
-    h2 {
-        font-size: 1.5em;
-    }
 }
 
 
@@ -263,8 +252,8 @@ h3 {
         /* Take full width */
     }
     .movie-container img {
-        width: auto;
+        width: 100%;
         max-width: 200px;
-        height: 30%;
+        height: auto;
     }
 }
