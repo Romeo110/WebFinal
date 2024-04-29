@@ -117,35 +117,35 @@ section {
 }
 
 .img:nth-of-type(1) {
-    background-image: url("https://cdn.pixabay.com/photo/2022/07/11/08/44/tower-7314495_1280.jpg");
+    background-image: url("https://static.wikia.nocookie.net/studio-ghibli/images/c/c5/Spirited_Away.jpg/revision/latest?cb=20220121193910");
 }
 
 .img:nth-of-type(2) {
-    background-image: url("https://cdn.pixabay.com/photo/2013/10/05/17/06/silhouette-191102_640.jpg");
+    background-image: url("https://imageio.forbes.com/blogs-images/erikkain/files/2015/11/Zelda-2.jpg?format=jpg&width=1440");
 }
 
 .img:nth-of-type(3) {
-    background-image: url("https://cdn.pixabay.com/photo/2013/10/05/18/13/railroad-191128_640.jpg");
+    background-image: url("https://cdna.artstation.com/p/assets/images/images/040/612/118/large/daniel-georgiev-the-mandalorian-poster-design.jpg?1629376034");
 }
 
 .img:nth-of-type(4) {
-    background-image: url("https://cdn.pixabay.com/photo/2013/11/19/10/51/big-flower-213169_640.jpg");
+    background-image: url("https://ih1.redbubble.net/image.1121583872.2111/flat,750x,075,f-pad,750x1000,f8f8f8.jpg");
 }
 
 .img:nth-of-type(5) {
-    background-image: url("https://cdn.pixabay.com/photo/2018/05/09/08/41/coast-3384845_640.jpg");
+    background-image: url("https://i.etsystatic.com/25432943/r/il/5fad6c/5854661127/il_570xN.5854661127_l6e3.jpg");
 }
 
 .img:nth-of-type(6) {
-    background-image: url("https://cdn.pixabay.com/photo/2013/09/23/15/06/polonnaruwa-185290_640.jpg");
+    background-image: url("https://lumiere-a.akamaihd.net/v1/images/p_cars_19643_4405006d.jpeg");
 }
 
 .img:nth-of-type(7) {
-    background-image: url("https://cdn.pixabay.com/photo/2013/08/25/15/17/leading-line-175732_640.jpg");
+    background-image: url("https://i.ebayimg.com/images/g/FC0AAOSwWwBbdom2/s-l1200.webp");
 }
 
 .img:nth-of-type(8) {
-    background-image: url("https://cdn.pixabay.com/photo/2017/08/23/21/41/sri-lanka-2674418_640.jpg");
+    background-image: url("https://i.ebayimg.com/images/g/8~QAAOSwyQtVoRQC/s-l1600.jpg");
 }
 
 
@@ -334,6 +334,35 @@ footer {
 }
 
 
+/* logo */
+
+.logo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 12px 20px;
+    z-index: 1000;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    /* Adjust color as needed */
+}
+
+.logo-link .item-icon {
+    margin-right: 5px;
+    color: #953889;
+}
+
+.logo-link:hover {
+    opacity: 0.8;
+    /* Adjust opacity for hover effect */
+}
+
+
 /* For smaller screens, adjust layout */
 
 @media (max-width: 768px) {
@@ -419,33 +448,4 @@ footer {
         margin-bottom: 150px;
     }
     /* Additional adjustments if needed */
-}
-
-
-/* logo */
-
-.logo {
-    position: fixed;
-    top: 0;
-    left: 0;
-    padding: 12px 20px;
-    z-index: 1000;
-}
-
-.logo-link {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: #fff;
-    /* Adjust color as needed */
-}
-
-.logo-link .item-icon {
-    margin-right: 5px;
-    color: #953889;
-}
-
-.logo-link:hover {
-    opacity: 0.8;
-    /* Adjust opacity for hover effect */
 }
