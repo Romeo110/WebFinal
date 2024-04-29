@@ -17,6 +17,30 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Check if the request is coming from AJAX to remove a movie from the watchlist
+if (isset($_POST['removeFromWatchlist']) && $_POST['removeFromWatchlist'] == 1) {
+    $user_id = $_SESSION["id"] ?? null;
+    $movie_id = $_POST['movieId'] ?? null;
+
+    if ($user_id === null || $movie_id === null) {
+        echo json_encode(["error" => "User ID or Movie ID not provided."]);
+        exit;
+    }
+
+    $sql = "DELETE FROM favorite_movies WHERE user_id = ? AND movie_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('ii', $user_id, $movie_id);
+    $stmt->execute();
+
+    if ($stmt->affected_rows > 0) {
+        echo json_encode(["success" => "Movie removed from watchlist successfully."]);
+    } else {
+        echo json_encode(["error" => "Failed to remove movie from watchlist."]);
+    }
+    $stmt->close();
+    exit;
+}
+
 // Function to fetch movie details by ID from the external API
 function fetchMovieDetails($movie_id) {
     $apiKey = 'd5697eb16a89b204a004af1f8fea130c';
@@ -63,7 +87,6 @@ if (isset($_POST['ajax']) && $_POST['ajax'] == 1) {
     echo json_encode($movie_details);
     exit;
 }
-
 $conn->close();
 ?>
 
@@ -235,76 +258,101 @@ $conn->close();
         </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var formData = new FormData();
-            formData.append('ajax', 1);
+			document.addEventListener('DOMContentLoaded', function() {
+				var formData = new FormData();
+				formData.append('ajax', 1);
 
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', window.location.href, true);
-            xhr.onload = function () {
-                if (this.status >= 200 && this.status < 300) {
-                    try {
-                        var movieDetails = JSON.parse(this.response);
-                        if (movieDetails.error) {
-                            console.error("Error from server:", movieDetails.error);
-                            return;
-                        }
-                        var container = document.getElementById('movie-details-container');
-                        movieDetails.forEach(function(movie) {
-                            if (movie.error) {
-                                console.error("Error loading movie details:", movie.error);
-                                return;
-                            }
-                            var movieDiv = document.createElement('div');
-                            movieDiv.innerHTML = `
-                            <div class="movie-card">
-                            <div class="movie-details">
-                            <div class="movie-poster">
-                                
-                                <img src="https://image.tmdb.org/t/p/w185${movie.poster_path}" alt="${movie.title} Poster">
-                                </div>
+				var xhr = new XMLHttpRequest();
+				xhr.open('POST', window.location.href, true);
+				xhr.onload = function () {
+					if (this.status >= 200 && this.status < 300) {
+						try {
+							var movieDetails = JSON.parse(this.response);
+							if (movieDetails.error) {
+								console.error("Error from server:", movieDetails.error);
+								return;
+							}
+							var container = document.getElementById('movie-details-container');
+							movieDetails.forEach(function(movie) {
+								if (movie.error) {
+										console.error("Error loading movie details:", movie.error);
+										return;
+								}
+								var movieDiv = document.createElement('div');
+								movieDiv.innerHTML = `
+								<div class="movie-card">
+									<div class="movie-details">
+										<div class="movie-poster">
+											<img src="https://image.tmdb.org/t/p/w185${movie.poster_path}" alt="${movie.title} Poster">
+										</div>
+										<div class="movie-info">
+											<h2>${movie.title}</h2>
+											<p>${movie.overview}</p>
+											<button class="remove-from-watchlist-btn" data-movie-id="${movie.id}">Remove from Watchlist</button>
+										</div>
+									</div>
+								</div>
+								`;
+								container.appendChild(movieDiv);
+							});
+						} catch (e) {
+								console.error("Error parsing JSON:", e);
+						}
+					} else {
+							console.error("Server responded with status:", this.status);
+					}
+				};
+				xhr.onerror = function () {
+						console.error("Request failed:", this.statusText);
+				};
+				xhr.send(formData);
+				// Add event listener for the "Remove from Watchlist" button
+				document.addEventListener('click', function(event) {
+					if (event.target.classList.contains('remove-from-watchlist-btn')) {
+						var movieId = event.target.dataset.movieId;
+						removeFromWatchlist(movieId);
+					}
+    		});
+			});
 
-                                <div class="movie-info">
-                                <h2>${movie.title}</h2>
-                                <p>${movie.overview}</p>
-                                </div>
-                                </div>
-                                </div>
-                            `;
-                            container.appendChild(movieDiv);
-                        });
-                    } catch (e) {
-                        console.error("Error parsing JSON:", e);
-                    }
-                } else {
-                    console.error("Server responded with status:", this.status);
-                }
-            };
-            xhr.onerror = function () {
-                console.error("Request failed:", this.statusText);
-            };
-            xhr.send(formData);
-        });
+			function removeFromWatchlist(movieId) {
+				var formData = new FormData();
+				formData.append('removeFromWatchlist', 1);
+				formData.append('movieId', movieId);
 
-                    // footer swap
-                    window.addEventListener('scroll', function() {
-                var scrollPosition = window.scrollY;
-                var windowHeight = window.innerHeight;
-                var documentHeight = document.documentElement.scrollHeight;
-                var threshold = 30;
+				var xhr = new XMLHttpRequest();
+				xhr.open('POST', window.location.href, true);
+				xhr.onload = function() {
+					if (this.status >= 200 && this.status < 300) {
+						// Update UI to reflect the removal of the movie
+						var removedMovieCard = document.querySelector(`.remove-from-watchlist-btn[data-movie-id="${movieId}"]`).closest('.movie-card');
+						removedMovieCard.parentNode.removeChild(removedMovieCard);
+					} else {
+						console.error("Server responded with status:", this.status);
+					}
+				};
+				xhr.onerror = function() {
+					console.error("Request failed:", this.statusText);
+				};
+				xhr.send(formData);
+			}
 
-                // Check if the scrollbar is at the bottom of the page
-                if (scrollPosition + windowHeight >= documentHeight - threshold) {
-                    // Show animated footer
-                    document.body.classList.add('show-footer');
-                } else {
-                    // Hide animated footer
-                    document.body.classList.remove('show-footer');
-                }
-            });
+			// footer swap
+			window.addEventListener('scroll', function() {
+				var scrollPosition = window.scrollY;
+				var windowHeight = window.innerHeight;
+				var documentHeight = document.documentElement.scrollHeight;
+				var threshold = 30;
+
+				// Check if the scrollbar is at the bottom of the page
+				if (scrollPosition + windowHeight >= documentHeight - threshold) {
+						// Show animated footer
+						document.body.classList.add('show-footer');
+				} else {
+						// Hide animated footer
+						document.body.classList.remove('show-footer');
+				}
+			});
     </script>
-</body>
+	</body>
 </html>
-
-
-
