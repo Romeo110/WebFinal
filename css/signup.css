@@ -158,4 +158,12 @@ body {
         display: none;
         /* Hide the text labels on small screens */
     }
+    .intro-section {
+        display: none;
+        /* Hide the intro section */
+    }
+    .form-section {
+        flex: 2;
+        /* Extend the form section */
+    }
 }
