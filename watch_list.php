@@ -182,8 +182,9 @@ $conn->close();
 
     
     <div class="main-content">
-    <h2>Favorite Movies</h2>
+    <h2>Your Watchlist</h2>
     <div id="movie-details-container"></div>
+		<p id="no-movies-text" style="display: none;">Go to <a href="movies.html">Movies</a> to find your next watch.</p>
     </div>
 
     <!-- Footer -->
@@ -265,54 +266,59 @@ $conn->close();
 				var xhr = new XMLHttpRequest();
 				xhr.open('POST', window.location.href, true);
 				xhr.onload = function () {
-					if (this.status >= 200 && this.status < 300) {
-						try {
-							var movieDetails = JSON.parse(this.response);
-							if (movieDetails.error) {
-								console.error("Error from server:", movieDetails.error);
-								return;
-							}
-							var container = document.getElementById('movie-details-container');
-							movieDetails.forEach(function(movie) {
-								if (movie.error) {
-										console.error("Error loading movie details:", movie.error);
-										return;
+						if (this.status >= 200 && this.status < 300) {
+								try {
+										var movieDetails = JSON.parse(this.response);
+										if (movieDetails.error) {
+												console.error("Error from server:", movieDetails.error);
+												return;
+										}
+										var container = document.getElementById('movie-details-container');
+										if (movieDetails.length === 0) {
+												document.getElementById('no-movies-text').style.display = 'block';
+										} else {
+												movieDetails.forEach(function(movie) {
+														if (movie.error) {
+																console.error("Error loading movie details:", movie.error);
+																return;
+														}
+														var movieDiv = document.createElement('div');
+														movieDiv.innerHTML = `
+																<div class="movie-card">
+																		<div class="movie-details">
+																				<div class="movie-poster">
+																						<img src="https://image.tmdb.org/t/p/w185${movie.poster_path}" alt="${movie.title} Poster">
+																				</div>
+																				<div class="movie-info">
+																						<h2>${movie.title}</h2>
+																						<p>${movie.overview}</p>
+																						<button class="remove-from-watchlist-btn" data-movie-id="${movie.id}">Remove from Watchlist</button>
+																				</div>
+																		</div>
+																</div>
+														`;
+														container.appendChild(movieDiv);
+												});
+										}
+								} catch (e) {
+										console.error("Error parsing JSON:", e);
 								}
-								var movieDiv = document.createElement('div');
-								movieDiv.innerHTML = `
-								<div class="movie-card">
-									<div class="movie-details">
-										<div class="movie-poster">
-											<img src="https://image.tmdb.org/t/p/w185${movie.poster_path}" alt="${movie.title} Poster">
-										</div>
-										<div class="movie-info">
-											<h2>${movie.title}</h2>
-											<p>${movie.overview}</p>
-											<button class="remove-from-watchlist-btn" data-movie-id="${movie.id}">Remove from Watchlist</button>
-										</div>
-									</div>
-								</div>
-								`;
-								container.appendChild(movieDiv);
-							});
-						} catch (e) {
-								console.error("Error parsing JSON:", e);
+						} else {
+								console.error("Server responded with status:", this.status);
 						}
-					} else {
-							console.error("Server responded with status:", this.status);
-					}
 				};
 				xhr.onerror = function () {
 						console.error("Request failed:", this.statusText);
 				};
 				xhr.send(formData);
+
 				// Add event listener for the "Remove from Watchlist" button
 				document.addEventListener('click', function(event) {
-					if (event.target.classList.contains('remove-from-watchlist-btn')) {
-						var movieId = event.target.dataset.movieId;
-						removeFromWatchlist(movieId);
-					}
-    		});
+						if (event.target.classList.contains('remove-from-watchlist-btn')) {
+								var movieId = event.target.dataset.movieId;
+								removeFromWatchlist(movieId);
+						}
+				});
 			});
 
 			function removeFromWatchlist(movieId) {
