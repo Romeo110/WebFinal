@@ -219,7 +219,7 @@ select {
     /* Limit dropdown height */
     overflow-y: auto;
     /* Add scroll if content exceeds height */
-    margin-top: -20px;
+    margin-top: -15px;
 }
 
 
