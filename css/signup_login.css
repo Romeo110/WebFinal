@@ -5,6 +5,13 @@ html {
 }
 
 body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* Ensure full viewport height */
+    margin: 0;
+    /* Remove default body margin */
     overflow: hidden;
 }
 
@@ -51,8 +58,6 @@ body {
 /* CSS for sign-up card */
 
 .signup-card {
-    margin: auto;
-    /* Center horizontally and vertically */
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -60,9 +65,7 @@ body {
     max-width: 800px;
     display: flex;
     justify-content: center;
-    /* Center horizontally */
     align-items: center;
-    /* Center vertically */
     background: linear-gradient(to right, #389544 50%, #ffffff 50%);
 }
 
