@@ -292,7 +292,8 @@ $conn->close();
 																				<div class="movie-info">
 																						<h2>${movie.title}</h2>
 																						<p>${movie.overview}</p>
-																						<button class="remove-from-watchlist-btn" data-movie-id="${movie.id}">Remove from Watchlist</button>
+																						<button class="remove-from-watchlist-btn" data-movie-id="${movie.id}"><i class='bx bx-trash'></i></button>
+
 																				</div>
 																		</div>
 																</div>

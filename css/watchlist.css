@@ -175,6 +175,7 @@ h2 {
 }
 
 .remove-from-watchlist-btn {
+    width: 100px;
     padding: 10px 20px;
     background-color: #333;
     color: #fff;
@@ -182,6 +183,7 @@ h2 {
     border-radius: 5px;
     cursor: pointer;
     margin-right: 15px;
+    margin-top: 40px;
 }
 
 .remove-from-watchlist-btn:hover {
